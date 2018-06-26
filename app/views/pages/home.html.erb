@@ -19,7 +19,6 @@
 
           <!-- Table rows containing informations about each order to be displayed -->
           <tbody>
-            <% date = Date.today %>
             <% @trabalhos.each do |trab| %>
 
               <tr>
@@ -27,7 +26,7 @@
 
                   <!-- Order number is generated using the order_id and customer_id -->
                   <td><%= date.strftime("%A") %></td>
-                  <td><%= date.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden, input_html: { value: date } %></td>
+                  <td><%= date.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden, input_html: { value: trab.data } %></td>
                   <td><%= f.input :entrada, {minute_step: 30} %></td>
                   <td><%= f.input :saida, {minute_step: 30}  %></td>
                   <td><%= f.association :obra, label_method: :nome, value_method: :id %></td>
@@ -36,7 +35,6 @@
                   <td><%= f.button :submit, "Enviar" %></td>
                 <% end %>
               </tr>
-              <% date -= 1 %>
             <% end %>
           </tbody>
         </table>
