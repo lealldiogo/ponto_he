@@ -1,7 +1,7 @@
 class TrabalhosController < ApplicationController
-  def create
-    @trabalho = Trabalho.new(trabalho_params)
-    if @trabalho.save
+  def update
+    @trabalho = Trabalho.find(params[:id])
+    if @trabalho.update(trabalho_params)
       redirect_to root_path
     else
       render 'pages/home'

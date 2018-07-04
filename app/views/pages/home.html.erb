@@ -1,45 +1,48 @@
 <h1>Cadastro de Ponto</h1>
 <p>Bem vindo, <%= current_user.email %></p>
   <div class="container">
+    <table class="table">
 
-   <!-- Orders informations table -->
-        <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Dia da Semana</th>
+          <th scope="col">Data de Entrada</th>
+          <th scope="col">Hora de Entrada</th>
+          <th scope="col">Hora de Saída</th>
+          <th scope="col">Obra</th>
+          <th scope="col">Enviar</th>
+        </tr>
+      </thead>
 
-          <!-- Table headers pointing which information will be displayed about the order -->
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">Dia da Semana</th>
-              <th scope="col">Data de Entrada</th>
-              <th scope="col">Hora de Entrada</th>
-              <th scope="col">Hora de Saída</th>
-              <th scope="col">Obra</th>
-              <th scope="col">Enviar</th>
-            </tr>
-          </thead>
+      <tbody>
+        <% @trabalhos.each do |trab| %>
 
-          <!-- Table rows containing informations about each order to be displayed -->
-          <tbody>
-            <% date = Date.today %>
-            <% @trabalhos.each do |trab| %>
+          <tr>
+            <% if trab.status == "Pendente" %>
+              <%= simple_form_for trab do |f| %>
 
-              <tr>
-                <%= simple_form_for trab do |f| %>
+                <td><%= trab.data.strftime("%A") %></td>
+                <td><%= trab.data.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden %></td>
+                <!-- , input_html: { value: trab.data } -->
+                <td><%= f.input :entrada, {minute_step: 30} %></td>
+                <td><%= f.input :saida, {minute_step: 30}  %></td>
+                <td><%= f.association :obra, label_method: :nome, value_method: :id %></td>
 
-                  <!-- Order number is generated using the order_id and customer_id -->
-                  <td><%= date.strftime("%A") %></td>
-                  <td><%= date.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden, input_html: { value: date } %></td>
-                  <td><%= f.input :entrada, {minute_step: 30} %></td>
-                  <td><%= f.input :saida, {minute_step: 30}  %></td>
-                  <td><%= f.association :obra, label_method: :nome, value_method: :id %></td>
-                  <!-- Link to more details about the order -->
-                  <%= f.association :user, as: :hidden, input_html: { value: current_user.id } %>
-                  <td><%= f.button :submit, "Enviar" %></td>
-                <% end %>
-              </tr>
-              <% date -= 1 %>
+                <%= f.association :user, as: :hidden, input_html: { value: current_user.id } %>
+                <td><%= f.button :submit, "Enviar" %></td>
+              <% end %>
+            <% else %>
+              <td><%= trab.data.strftime("%A") %></td>
+              <td><%= trab.data.strftime("%d/%m/%Y") %></td>
+              <td><%= trab.entrada.strftime("%H:%M") %></td>
+              <td><%= trab.saida.strftime("%H:%M") %></td>
+              <td><%= trab.obra.nome %></td>
+              <td>Enviado</td>
             <% end %>
-          </tbody>
-        </table>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
   <%= link_to "Sair", destroy_user_session_path, class: "btn btn-danger", method: :delete %>
 </div>
