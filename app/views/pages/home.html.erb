@@ -18,21 +18,26 @@
         <% @trabalhos.each do |trab| %>
 
           <tr>
-            <%= simple_form_for trab do |f| %>
+            <% if trab.status == "Pendente" %>
+              <%= simple_form_for trab do |f| %>
 
-              <td><%= trab.data.strftime("%A") %></td>
-              <td><%= trab.data.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden %></td>
-              <!-- , input_html: { value: trab.data } -->
-              <td><%= f.input :entrada, {minute_step: 30} %></td>
-              <td><%= f.input :saida, {minute_step: 30}  %></td>
-              <td><%= f.association :obra, label_method: :nome, value_method: :id %></td>
+                <td><%= trab.data.strftime("%A") %></td>
+                <td><%= trab.data.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden %></td>
+                <!-- , input_html: { value: trab.data } -->
+                <td><%= f.input :entrada, {minute_step: 30} %></td>
+                <td><%= f.input :saida, {minute_step: 30}  %></td>
+                <td><%= f.association :obra, label_method: :nome, value_method: :id %></td>
 
-              <%= f.association :user, as: :hidden, input_html: { value: current_user.id } %>
-              <% if trab.status == "Pendente" %>
+                <%= f.association :user, as: :hidden, input_html: { value: current_user.id } %>
                 <td><%= f.button :submit, "Enviar" %></td>
-              <% else %>
-                <td>Enviado</td>
               <% end %>
+            <% else %>
+              <td><%= trab.data.strftime("%A") %></td>
+              <td><%= trab.data.strftime("%d/%m/%Y") %></td>
+              <td><%= trab.entrada.strftime("%H:%M") %></td>
+              <td><%= trab.saida.strftime("%H:%M") %></td>
+              <td><%= trab.obra.nome %></td>
+              <td>Enviado</td>
             <% end %>
           </tr>
         <% end %>
