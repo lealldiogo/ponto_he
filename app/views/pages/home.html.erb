@@ -34,7 +34,15 @@
           <%  dia_da_semana ="Sexta-feira" %>
           <% end %>
 
-          <tr>
+          <% if trab.status == "Pendente" %>
+            <% bg_color = "red" %>
+          <% elsif trab.status == "Enviado" %>
+            <% bg_color = "yellow" %>
+          <% elsif trab.status == "Validado" %>
+            <% bg_color = "green" %>
+          <% end %>
+
+          <tr style="background-color: <%=bg_color%>">
             <% if trab.status == "Pendente" %>
               <%= simple_form_for trab do |f| %>
                 <td><%= dia_da_semana %></td>
@@ -53,7 +61,7 @@
               <td><%= trab.entrada.strftime("%H:%M") %></td>
               <td><%= trab.saida.strftime("%H:%M") %></td>
               <td><%= trab.obra.nome %></td>
-              <td>Enviado</td>
+              <td><%= trab.status %></td>
             <% end %>
           </tr>
         <% end %>
