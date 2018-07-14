@@ -17,11 +17,27 @@
       <tbody>
         <% @trabalhos.each do |trab| %>
 
+          <% case trab.data.strftime("%A") %>
+          <% when "Saturday" %>
+          <%  dia_da_semana ="Sábado" %>
+          <% when "Sunday" %>
+          <%  dia_da_semana ="Domingo" %>
+          <% when "Monday" %>
+          <%  dia_da_semana ="Segunda-feira" %>
+          <% when "Tuesday" %>
+          <%  dia_da_semana ="Terça-feira" %>
+          <% when "Wednesday" %>
+          <%  dia_da_semana ="Quarta-feira" %>
+          <% when "Thursday" %>
+          <%  dia_da_semana ="Quinta-feira" %>
+          <% when "Friday" %>
+          <%  dia_da_semana ="Sexta-feira" %>
+          <% end %>
+
           <tr>
             <% if trab.status == "Pendente" %>
               <%= simple_form_for trab do |f| %>
-
-                <td><%= trab.data.strftime("%A") %></td>
+                <td><%= dia_da_semana %></td>
                 <td><%= trab.data.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden %></td>
                 <!-- , input_html: { value: trab.data } -->
                 <td><%= f.input :entrada, {minute_step: 30} %></td>
@@ -32,7 +48,7 @@
                 <td><%= f.button :submit, "Enviar" %></td>
               <% end %>
             <% else %>
-              <td><%= trab.data.strftime("%A") %></td>
+              <td><%= dia_da_semana %></td>
               <td><%= trab.data.strftime("%d/%m/%Y") %></td>
               <td><%= trab.entrada.strftime("%H:%M") %></td>
               <td><%= trab.saida.strftime("%H:%M") %></td>
