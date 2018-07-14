@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :trabalhos
 
   validates :username, uniqueness: true
+  validates :cargo, presence: true
 
   def email_required?
     false
