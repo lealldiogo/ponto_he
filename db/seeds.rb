@@ -5,3 +5,29 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+=begin
+
+DELETAR destroy_all UMA VEZ QUE O APLICATIVO ESTIVER ATIVO
+
+=end
+
+Trabalho.destroy_all
+Obra.destroy_all
+User.destroy_all
+
+
+joao = User.new(username: "joao.pedreiro", password: "123456")
+joao.save!
+
+jose = User.new(username: "jose.servente", password: "123456")
+jose.save!
+
+obra1 = Obra.new(nome: "Galpão")
+obra1.save!
+
+obra2 = Obra.new(nome: "Fábrica")
+obra2.save!
+
+obra3 = Obra.new(nome: "Depósito")
+obra3.save!
