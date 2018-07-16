@@ -1,4 +1,6 @@
 class PagesController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:test]
+
   def home
     # Opção 1: find_or_create_by
     @trabalhos = []
@@ -19,5 +21,13 @@ class PagesController < ApplicationController
     # end
     # # Encontrei um método no API do Active Record que pode ser útil
     # # find_or_create_by(att: value) returns the first item or creates it and returns it.
+  end
+
+  def test
+
+    # flash[:warning] = "WARNING"
+    flash[:alert] = "ALERT"
+    flash[:notice] = "NOTICE"
+
   end
 end
