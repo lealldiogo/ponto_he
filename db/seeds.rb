@@ -17,10 +17,10 @@ Obra.destroy_all
 User.destroy_all
 
 
-joao = User.new(username: "joao.pedreiro", password: "123456")
+joao = User.new(username: "joao.pedreiro", password: "123456", cargo: "Pedreiro")
 joao.save!
 
-jose = User.new(username: "jose.servente", password: "123456")
+jose = User.new(username: "jose.servente", password: "123456", cargo: "Servente")
 jose.save!
 
 obra1 = Obra.new(nome: "Galpão")
