@@ -2,7 +2,7 @@ class TrabalhosController < ApplicationController
   def update
     @trabalho = Trabalho.find(params[:id])
     if @trabalho.update(trabalho_params)
-      redirect_to root_path
+      redirect_to root_path, info: "Apontamento de horas enviado para validação do gestor"
     else
       render 'pages/home'
     end

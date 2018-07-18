@@ -7,9 +7,19 @@
   text-align: center;
   color: white;
 }
-.alert-info {
+.alert-notice {
   background: $green;
 }
-.alert-warning {
+.alert-alert {
   background: $red;
 }
+.alert-warning {
+  background: $yellow;
+}
+.alert-info {
+  background: $blue;
+}
+
+
+
+
