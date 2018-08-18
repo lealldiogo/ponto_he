@@ -17,7 +17,9 @@
   background: $yellow;
 }
 .alert-info {
-  background: $blue;
+  // Use apenas uma das opções do palette
+  // background: $blue;
+  background: $silver;
 }
 
 

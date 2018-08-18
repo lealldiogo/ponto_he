@@ -9,7 +9,7 @@ class PagesController < ApplicationController
       @trabalhos << Trabalho.find_or_create_by(data: Date.today - i, user_id: current_user.id)
     end
 
-    # Checar quais alertas
+    # Checar quais alertas (? precisa ?)
   end
 
   def test

@@ -2,15 +2,17 @@ class Trabalho < ApplicationRecord
   belongs_to :user
   belongs_to :obra, optional: true
 
+  before_update :atualizar_status
+
   validates :data, presence: true
   validates :data, uniqueness: { scope: :user }
 
   validates :obra, presence: true, on: :update
+  validates :veiculo, presence: true, on: :update
+
   validates :entrada, presence: true, on: :update
   validates :saida, presence: true, on: :update
-
-  before_update :atualizar_status
-  before_update :calcular_jornada
+  validate :calcular_jornada, on: :update
 
   protected
 
@@ -39,5 +41,8 @@ class Trabalho < ApplicationRecord
       end
     end
     jornada = horas + (minutos.to_f/60).round(2)
+    if jornada == 0
+      errors.add(:saida, "não pode ser igual a Entrada")
+    end
   end
 end

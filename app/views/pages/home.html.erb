@@ -11,6 +11,7 @@
         <th scope="col">Hora de Entrada</th>
         <th scope="col">Hora de Saída</th>
         <th scope="col">Obra</th>
+        <th scope="col">Veículo</th>
         <th scope="col">Enviar</th>
       </tr>
     </thead>
@@ -52,6 +53,7 @@
               <td><%= f.input :entrada, {minute_step: 30} %></td>
               <td><%= f.input :saida, {minute_step: 30}  %></td>
               <td><%= f.association :obra, label_method: :nome, value_method: :id %></td>
+              <td><%= f.input :veiculo, collection: ["Kombi", "Caminhão", "Ônibus"] %></td>
 
               <%= f.association :user, as: :hidden, input_html: { value: current_user.id } %>
               <td><%= f.button :submit, "Enviar" %></td>
@@ -62,6 +64,7 @@
             <td><%= trab.entrada.strftime("%H:%M") %></td>
             <td><%= trab.saida.strftime("%H:%M") %></td>
             <td><%= trab.obra.nome %></td>
+            <td><%= trab.veiculo %></td>
             <td><%= trab.status %></td>
           <% end %>
         </tr>
@@ -69,5 +72,5 @@
     </tbody>
   </table>
 
-  <%= link_to "SAIR", destroy_user_session_path, class: "btn btn-danger btn-block", method: :delete %>
+  <%= link_to "SAIR", destroy_user_session_path, class: "btn btn-default btn-block", style: "font-weight: bold", method: :delete %>
 </div>
