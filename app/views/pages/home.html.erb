@@ -1,72 +1,76 @@
-<h1>Cadastro de Ponto</h1>
-<p>Bem vindo, <%= current_user.email %></p>
-  <div class="container">
-    <table class="table">
+<div class="container">
+  <h1>Cadastro de Ponto</h1>
+  <!-- <p>Bem vindo, <%#= current_user.username %></p> -->
+  <h4 class="text-center">QUANDO TERMINAR O APONTAMENTO DE HORAS, TERMINE A SESSÃO APERTANDO O BOTÃO "SAIR" NO FIM DA PÁGINA</h4>
+  <table class="table">
 
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">Dia da Semana</th>
-          <th scope="col">Data de Entrada</th>
-          <th scope="col">Hora de Entrada</th>
-          <th scope="col">Hora de Saída</th>
-          <th scope="col">Obra</th>
-          <th scope="col">Enviar</th>
-        </tr>
-      </thead>
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Dia da Semana</th>
+        <th scope="col">Data de Entrada</th>
+        <th scope="col">Hora de Entrada</th>
+        <th scope="col">Hora de Saída</th>
+        <th scope="col">Obra</th>
+        <th scope="col">Veículo</th>
+        <th scope="col">Enviar</th>
+      </tr>
+    </thead>
 
-      <tbody>
-        <% @trabalhos.each do |trab| %>
+    <tbody>
+      <% @trabalhos.each do |trab| %>
 
-          <% case trab.data.strftime("%A") %>
-          <% when "Saturday" %>
-          <%  dia_da_semana ="Sábado" %>
-          <% when "Sunday" %>
-          <%  dia_da_semana ="Domingo" %>
-          <% when "Monday" %>
-          <%  dia_da_semana ="Segunda-feira" %>
-          <% when "Tuesday" %>
-          <%  dia_da_semana ="Terça-feira" %>
-          <% when "Wednesday" %>
-          <%  dia_da_semana ="Quarta-feira" %>
-          <% when "Thursday" %>
-          <%  dia_da_semana ="Quinta-feira" %>
-          <% when "Friday" %>
-          <%  dia_da_semana ="Sexta-feira" %>
-          <% end %>
-
-          <% if trab.status == "Pendente" %>
-            <% bg_color = "red" %>
-          <% elsif trab.status == "Enviado" %>
-            <% bg_color = "yellow" %>
-          <% elsif trab.status == "Validado" %>
-            <% bg_color = "green" %>
-          <% end %>
-
-          <tr style="background-color: <%=bg_color%>">
-            <% if trab.status == "Pendente" %>
-              <%= simple_form_for trab do |f| %>
-                <td><%= dia_da_semana %></td>
-                <td><%= trab.data.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden %></td>
-                <!-- , input_html: { value: trab.data } -->
-                <td><%= f.input :entrada, {minute_step: 30} %></td>
-                <td><%= f.input :saida, {minute_step: 30}  %></td>
-                <td><%= f.association :obra, label_method: :nome, value_method: :id %></td>
-
-                <%= f.association :user, as: :hidden, input_html: { value: current_user.id } %>
-                <td><%= f.button :submit, "Enviar" %></td>
-              <% end %>
-            <% else %>
-              <td><%= dia_da_semana %></td>
-              <td><%= trab.data.strftime("%d/%m/%Y") %></td>
-              <td><%= trab.entrada.strftime("%H:%M") %></td>
-              <td><%= trab.saida.strftime("%H:%M") %></td>
-              <td><%= trab.obra.nome %></td>
-              <td><%= trab.status %></td>
-            <% end %>
-          </tr>
+        <% case trab.data.strftime("%A") %>
+        <% when "Saturday" %>
+        <%  dia_da_semana ="Sábado" %>
+        <% when "Sunday" %>
+        <%  dia_da_semana ="Domingo" %>
+        <% when "Monday" %>
+        <%  dia_da_semana ="Segunda-feira" %>
+        <% when "Tuesday" %>
+        <%  dia_da_semana ="Terça-feira" %>
+        <% when "Wednesday" %>
+        <%  dia_da_semana ="Quarta-feira" %>
+        <% when "Thursday" %>
+        <%  dia_da_semana ="Quinta-feira" %>
+        <% when "Friday" %>
+        <%  dia_da_semana ="Sexta-feira" %>
         <% end %>
-      </tbody>
-    </table>
 
-  <%= link_to "Sair", destroy_user_session_path, class: "btn btn-danger", method: :delete %>
+        <% if trab.status == "Pendente" %>
+          <% bg_color = "trabalho-pendente" %>
+        <% elsif trab.status == "Enviado" %>
+          <% bg_color = "trabalho-enviado" %>
+        <% elsif trab.status == "Validado" %>
+          <% bg_color = "trabalho-validado" %>
+        <% end %>
+
+        <tr class="<%=bg_color%>">
+          <% if trab.status == "Pendente" %>
+            <%= simple_form_for trab do |f| %>
+              <td><%= dia_da_semana %></td>
+              <td><%= trab.data.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden %></td>
+              <!-- , input_html: { value: trab.data } -->
+              <td><%= f.input :entrada, {minute_step: 30} %></td>
+              <td><%= f.input :saida, {minute_step: 30}  %></td>
+              <td><%= f.association :obra, label_method: :nome, value_method: :id %></td>
+              <td><%= f.input :veiculo, collection: ["Kombi", "Caminhão", "Ônibus"] %></td>
+
+              <%= f.association :user, as: :hidden, input_html: { value: current_user.id } %>
+              <td><%= f.button :submit, "Enviar" %></td>
+            <% end %>
+          <% else %>
+            <td><%= dia_da_semana %></td>
+            <td><%= trab.data.strftime("%d/%m/%Y") %></td>
+            <td><%= trab.entrada.strftime("%H:%M") %></td>
+            <td><%= trab.saida.strftime("%H:%M") %></td>
+            <td><%= trab.obra.nome %></td>
+            <td><%= trab.veiculo %></td>
+            <td><%= trab.status %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to "SAIR", destroy_user_session_path, class: "btn btn-default btn-block", style: "font-weight: bold", method: :delete %>
 </div>
