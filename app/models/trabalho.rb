@@ -45,4 +45,12 @@ class Trabalho < ApplicationRecord
       errors.add(:saida, "não pode ser igual a Entrada")
     end
   end
+
+  def valor_he_padrao
+    #TODO: definir valor de hora extra padrão com base no dia da semana
+  end
+
+  def sem_hora_extra
+    #TODO: pular validações caso não haja hora extra no dia
+  end
 end
