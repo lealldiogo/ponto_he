@@ -18,4 +18,7 @@ class PagesController < ApplicationController
     flash[:notice] = "NOTICE"
     flash[:info] = "INFO"
   end
+
+  def admin
+  end
 end
