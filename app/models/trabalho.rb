@@ -3,6 +3,7 @@ class Trabalho < ApplicationRecord
   belongs_to :obra, optional: true
 
   before_update :atualizar_status
+  before_update :valor_he_padrao
 
   validates :data, presence: true
   validates :data, uniqueness: { scope: :user }
@@ -47,7 +48,14 @@ class Trabalho < ApplicationRecord
   end
 
   def valor_he_padrao
-    #TODO: definir valor de hora extra padrão com base no dia da semana
+    #DONE: definir valor de hora extra padrão com base no dia da semana
+    #TODO: criar array com datas dos feriados no recife e na paraíba(ignorar municipais nesse caso?)
+    #TODO: adicionar um include?(self.data) como condição para valor_he = 100%
+    if self.data.strftime("%A") == "Sunday"
+      self.valor_he = 100
+    else
+      self.valor_he = 70
+    end
   end
 
   def sem_hora_extra
