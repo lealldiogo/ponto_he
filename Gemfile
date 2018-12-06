@@ -21,6 +21,7 @@ gem 'money-rails', '~>1.12'
 
 # Fix vulnerability issues
 # gem 'sprockets', '>= 3.7.2'
+# gem 'loofah', '>= 2.2.3'
 
 group :development, :test do
   gem 'pry-byebug'
