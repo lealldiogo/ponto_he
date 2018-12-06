@@ -17,6 +17,7 @@ gem 'jquery-rails'
 gem 'sass-rails'
 gem 'simple_form'
 gem 'uglifier'
+gem 'money-rails', '~>1.12'
 
 group :development, :test do
   gem 'pry-byebug'
