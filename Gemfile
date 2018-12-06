@@ -19,6 +19,9 @@ gem 'simple_form'
 gem 'uglifier'
 gem 'money-rails', '~>1.12'
 
+# Fix vulnerability issues
+# gem 'sprockets', '>= 3.7.2'
+
 group :development, :test do
   gem 'pry-byebug'
   gem 'pry-rails'
