@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:test]
+  skip_before_action :is_admin?, only: [:home, :test]
 
   def home
     # Opção 1: find_or_create_by

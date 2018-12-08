@@ -8,6 +8,12 @@ class User < ApplicationRecord
 
   validates :username, uniqueness: true
   validates :cargo, presence: true
+  validates :equipe, presence: true
+
+  def timeout_in
+    return 1.year if admin?
+    2.minutes
+  end
 
   def email_required?
     false

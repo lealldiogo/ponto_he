@@ -6,6 +6,10 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   get "admin", to: 'pages#admin'
+  get "cadastros", to: 'pages#cadastros'
+  get "relatorios", to: 'pages#relatorios'
+  get "recife", to: 'trabalhos#recife'
+  get "paraiba", to: 'trabalhos#paraiba'
 
   get "test", to: 'pages#test'
 end
