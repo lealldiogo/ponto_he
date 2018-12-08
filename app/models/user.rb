@@ -7,8 +7,9 @@ class User < ApplicationRecord
   has_many :trabalhos
 
   validates :username, uniqueness: true
-  validates :cargo, presence: true
-  validates :equipe, presence: true
+  validates :cargo, presence: true, unless: :admin?
+  validates :equipe, presence: true, unless: :admin?
+  validates :nome_completo, presence: :true, unless: :admin?
 
   def timeout_in
     return 1.year if admin?

@@ -1,0 +1,35 @@
+<% if verificar_pendencia(funcionario) %>
+  <div class="col-xs-12 trabalho-pendente card-funcionario">
+<% else %>
+  <div class="col-xs-12 trabalho-validado card-funcionario">
+<% end %>
+  <h2><%= funcionario.nome_completo %></h2>
+  <h3><%= funcionario.apelido %></h3>
+  <button type="button" class="text-right" data-toggle="modal" data-target="#infoFuncionarioModal" style="border: none; background-color: white;">
+    <p style="color: #00D4C7; margin-left: 500px;">Atualizar</p>
+  </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="infoFuncionarioModal" tabindex="-1" role="dialog" aria-labelledby="infoFuncionarioLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+        <p class="modal-title" id="setupDateModalLabel" style="color: #4A4A4A; font-size: 25px;">Data do Evento</p>
+      </div>
+<!--       <%#= simple_form_for @event, url: partners_event_path(@event) do |f| %>
+        <div class="modal-body">
+          <%#= f.input :start_time %>
+          <%#= f.input :end_time %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" style="background-color: #FF1256; color: #FFFFFF;">
+          Fechar
+          </button>
+          <%#= f.button :submit, "Atualizar Evento" ,class:"btn btn-success" %>
+        </div>
+      <%# end %> -->
+    </div>
+  </div>
+</div>

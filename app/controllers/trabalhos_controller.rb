@@ -1,5 +1,6 @@
 class TrabalhosController < ApplicationController
   skip_before_action :is_admin?, only: [:user_trabalho_params, :update]
+  helper InfoFuncionariosHelper
 
   def update
     @trabalho = Trabalho.find(params[:id])

@@ -16,17 +16,19 @@ Trabalho.destroy_all
 Obra.destroy_all
 User.destroy_all
 
+gestor = User.new(admin: true, username: "gerente", password: "123456")
+gestor.save!
 
-joao = User.new(username: "joao.pedreiro", password: "123456", cargo: "Pedreiro", equipe: "Paraíba")
+joao = User.new(username: "joao.pedreiro", password: "123456", cargo: "Pedreiro", equipe: "Paraíba", nome_completo: "João Silva", apelido: "careca")
 joao.save!
 
-pedro = User.new(username: "pedro.pedreiro", password: "123456", cargo: "Pedreiro", equipe: "Paraíba")
+pedro = User.new(username: "pedro.pedreiro", password: "123456", cargo: "Pedreiro", equipe: "Recife", nome_completo: "Pedro dos Santos", apelido: "rato")
 pedro.save!
 
-jose = User.new(username: "jose.servente", password: "123456", cargo: "Servente", equipe: "Recife")
+jose = User.new(username: "jose.servente", password: "123456", cargo: "Servente", equipe: "Paraíba", nome_completo: "José Ferreira", apelido: "pança")
 jose.save!
 
-ronaldo = User.new(username: "ronaldo.servente", password: "123456", cargo: "Servente", equipe: "Recife")
+ronaldo = User.new(username: "ronaldo.servente", password: "123456", cargo: "Servente", equipe: "Recife", nome_completo: "Ronaldo Lima", apelido: "bigode")
 ronaldo.save!
 
 obra1 = Obra.new(nome: "Galpão")
