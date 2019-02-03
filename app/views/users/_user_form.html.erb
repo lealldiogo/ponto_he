@@ -1,0 +1,20 @@
+<%= simple_form_for @user do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :username, label: "Login",required: true, autofocus: true %>
+    <%= f.input :nome_completo, required: true, autofocus: true %>
+    <%= f.input :apelido, required: true, autofocus: true %>
+    <%= f.input :cargo, required: true, autofocus: true %>
+    <%= f.input :salario, label: "Salário", required: true, autofocus: true %>
+    <%= f.input :equipe, required: true, autofocus: true %>
+    <%= f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length) %>
+    <%= f.input :password_confirmation, required: true %>
+    <%= f.input :admin, label: "Gestor?", required: true, autofocus: true %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Cadastrar", class:"btn btn-success", style: "font-weight: bold" %>
+    <%= link_to "Voltar", cadastros_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+  </div>
+<% end %>

@@ -1,13 +1,14 @@
 <div class="container">
   <h1>Cadastro de Ponto</h1>
   <!-- <p>Bem vindo, <%#= current_user.username %></p> -->
-  <h4 class="text-center">QUANDO TERMINAR O APONTAMENTO DE HORAS, TERMINE A SESSÃO APERTANDO O BOTÃO "SAIR" NO FIM DA PÁGINA</h4>
+  <h4 class="text-center">QUANDO TERMINAR O APONTAMENTO DE HORAS, FINALIZE A SESSÃO APERTANDO O BOTÃO "SAIR" NO FIM DA PÁGINA</h4>
   <table class="table">
 
     <thead class="thead-dark">
       <tr>
         <th scope="col">Dia da Semana</th>
         <th scope="col">Data de Entrada</th>
+        <th scope="col">Fez Hora Extra?</th>
         <th scope="col">Hora de Entrada</th>
         <th scope="col">Hora de Saída</th>
         <th scope="col">Obra</th>
@@ -46,9 +47,10 @@
 
         <tr class="<%=bg_color%>">
           <% if trab.status == "Pendente" %>
-            <%= simple_form_for trab do |f| %>
+            <%= simple_form_for trab, url: user_trabalho_path(trab) do |f| %>
               <td><%= dia_da_semana %></td>
               <td><%= trab.data.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden %></td>
+              <td><%= f.input :sem_he, label: "",as: :boolean, checked_value: true, unchecked_value: false%></td>
               <!-- , input_html: { value: trab.data } -->
               <td><%= f.input :entrada, {minute_step: 30} %></td>
               <td><%= f.input :saida, {minute_step: 30}  %></td>
@@ -61,10 +63,18 @@
           <% else %>
             <td><%= dia_da_semana %></td>
             <td><%= trab.data.strftime("%d/%m/%Y") %></td>
-            <td><%= trab.entrada.strftime("%H:%M") %></td>
-            <td><%= trab.saida.strftime("%H:%M") %></td>
-            <td><%= trab.obra.nome %></td>
-            <td><%= trab.veiculo %></td>
+            <% if trab.sem_he = true%>
+              <td><%= trab.sem_he ? "Não" : "Sim" %></td>
+              <td><%= "-" %></td>
+              <td><%= "-" %></td>
+              <td><%= "-" %></td>
+              <td><%= "-" %></td>
+            <% else %>
+              <td><%= trab.entrada.strftime("%H:%M") %></td>
+              <td><%= trab.saida.strftime("%H:%M") %></td>
+              <td><%= trab.obra.nome %></td>
+              <td><%= trab.veiculo %></td>
+            <% end %>
             <td><%= trab.status %></td>
           <% end %>
         </tr>

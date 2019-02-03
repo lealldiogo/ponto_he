@@ -1,0 +1,9 @@
+<div class="container">
+  <h1>PARAÍBA</h1>
+  <div class="row justify-content-center align-items-center">
+    <% @funcionarios.each do |func| %>
+      <%=  render 'trabalhos/infos_funcionario', funcionario: func %>
+    <% end %>
+  </div>
+  <%= link_to "Voltar", admin_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+</div>

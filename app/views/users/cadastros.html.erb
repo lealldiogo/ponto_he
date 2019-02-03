@@ -1,0 +1,32 @@
+<div class="container">
+  <h1>CADASTROS</h1>
+  <div class="col-xs-12" style="padding-bottom: 10px">
+    <%= link_to "Cadastrar novo usuário", new_user_path,class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+  </div>
+  <div class="col-xs-12" style="padding-bottom: 10px">
+    <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#usuariosExistentesModal" style="font-weight: bold">
+      Alterar informações de usuários existentes
+    </button>
+  </div>
+  <%= link_to "Voltar", admin_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="usuariosExistentesModal" tabindex="-1" role="dialog" aria-labelledby="usuariosExistentesLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+        <p class="modal-title" id="usuariosExistentesModalLabel" style="color: #4A4A4A; font-size: 25px;">Usuários existentes</p>
+      </div>
+      <% @users.each do |usuario| %>
+        <%= link_to usuario.nome_completo, edit_user_path(usuario),class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+      <% end %>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-danger"" data-dismiss="modal" style="font-weight: bold">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

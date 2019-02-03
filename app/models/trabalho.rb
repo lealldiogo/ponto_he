@@ -9,11 +9,11 @@ class Trabalho < ApplicationRecord
   validates :data, presence: true
   validates :data, uniqueness: { scope: :user }
 
-  validates :obra, presence: true, on: :update
-  validates :veiculo, presence: true, on: :update
+  validates :obra, presence: true, on: :update, unless: :sem_hora_extra?
+  validates :veiculo, presence: true, on: :update, unless: :sem_hora_extra?
 
-  validates :entrada, presence: true, on: :update
-  validates :saida, presence: true, on: :update
+  validates :entrada, presence: true, on: :update, unless: :sem_hora_extra?
+  validates :saida, presence: true, on: :update, unless: :sem_hora_extra?
 
   protected
 
@@ -63,7 +63,8 @@ class Trabalho < ApplicationRecord
     end
   end
 
-  def sem_hora_extra
+  def sem_hora_extra?
     #TODO: pular validações caso não haja hora extra no dia
+    self.sem_he
   end
 end
