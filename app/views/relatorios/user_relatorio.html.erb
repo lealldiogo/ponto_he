@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>RELATÓRIO MENSAL DE @user.nome_completo</h1>
+  <h1>RELATÓRIO MENSAL DE <%= @user.nome_completo %></h1>
   <%= form_tag baixar_relatorio_path, method: :get, class: "form-group" do %>
     <%= date_select("trabalho", "data", start_year: 2019, use_month_numbers: true,use_two_digit_numbers: true, discard_day: true, include_blank: true)%>
     <%= hidden_field_tag 'user_id', @user.id %>
