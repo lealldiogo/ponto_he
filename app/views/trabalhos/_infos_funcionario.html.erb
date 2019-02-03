@@ -5,8 +5,8 @@
 <% end %>
   <h2><%= funcionario.nome_completo %></h2>
   <h3><%= funcionario.apelido %></h3>
-  <button type="button" class="text-right" data-toggle="modal" data-target="#infoFuncionarioModal" style="border: none; background-color: white;">
-    <p style="color: #00D4C7; margin-left: 500px;">Atualizar</p>
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#infoFuncionarioModal" style="font-weight: bold">
+    Atualizar
   </button>
 </div>
 
@@ -16,20 +16,16 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
-        <p class="modal-title" id="setupDateModalLabel" style="color: #4A4A4A; font-size: 25px;">Data do Evento</p>
+        <p class="modal-title" id="infoFuncionarioModalLabel" style="color: #4A4A4A; font-size: 25px;">Horas Extras de <%= funcionario.nome_completo %></p>
       </div>
-<!--       <%#= simple_form_for @event, url: partners_event_path(@event) do |f| %>
-        <div class="modal-body">
-          <%#= f.input :start_time %>
-          <%#= f.input :end_time %>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal" style="background-color: #FF1256; color: #FFFFFF;">
+      <% funcionario.trabalhos.last(7).each do |trab| %>
+        <%=  render 'trabalhos/formulario_validacao', trabalho: trab %>
+      <% end %>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default btn-danger" data-dismiss="modal" style="font-weight: bold">
           Fechar
-          </button>
-          <%#= f.button :submit, "Atualizar Evento" ,class:"btn btn-success" %>
-        </div>
-      <%# end %> -->
+        </button>
+      </div>
     </div>
   </div>
 </div>

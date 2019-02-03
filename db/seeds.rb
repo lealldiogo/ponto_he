@@ -16,8 +16,11 @@ Trabalho.destroy_all
 Obra.destroy_all
 User.destroy_all
 
-gestor = User.new(admin: true, username: "gerente", password: "123456")
+gestor = User.new(admin: true, username: "julio.ribeiro", password: "123456")
 gestor.save!
+
+dev = User.new(admin: true, username: "diogo.leal", password: "123456")
+dev.save!
 
 joao = User.new(username: "joao.pedreiro", password: "123456", cargo: "Pedreiro", equipe: "Paraíba", nome_completo: "João Silva", apelido: "careca")
 joao.save!

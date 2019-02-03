@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :recoverable, :trackable,
   :validatable, :timeoutable#, :rememberable #, :registerable
 
+  monetize :salario_cents
+
   has_many :trabalhos
 
   validates :username, uniqueness: true

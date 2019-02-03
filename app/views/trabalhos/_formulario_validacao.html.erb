@@ -1,0 +1,37 @@
+<% case trabalho.data.strftime("%A") %>
+<% when "Saturday" %>
+<%  dia_da_semana ="Sábado" %>
+<% when "Sunday" %>
+<%  dia_da_semana ="Domingo" %>
+<% when "Monday" %>
+<%  dia_da_semana ="Segunda-feira" %>
+<% when "Tuesday" %>
+<%  dia_da_semana ="Terça-feira" %>
+<% when "Wednesday" %>
+<%  dia_da_semana ="Quarta-feira" %>
+<% when "Thursday" %>
+<%  dia_da_semana ="Quinta-feira" %>
+<% when "Friday" %>
+<%  dia_da_semana ="Sexta-feira" %>
+<% end %>
+
+<% if trabalho.status == "Pendente" %>
+  <% bg_color = "trabalho-pendente" %>
+<% elsif trabalho.status == "Enviado" %>
+  <% bg_color = "trabalho-enviado" %>
+<% elsif trabalho.status == "Validado" %>
+  <% bg_color = "trabalho-validado" %>
+<% end %>
+
+<div class="modal-body <%=bg_color%>">
+  <p><%= trabalho.data.strftime("%d/%m/%Y") %></p>
+  <p><%= dia_da_semana %></p>
+  <p><%= trabalho.status %></p>
+
+  <% if trabalho.status == "Enviado" %>
+    <%= simple_form_for trabalho, url: admin_trabalho_path(trabalho) do |f| %>
+      <%= f.input :status, as: :hidden, input_html: { value: "Validado" } %>
+      <%= f.button :submit, "Validar" ,class:"btn btn-success" %>
+    <% end %>
+  <% end %>
+</div>

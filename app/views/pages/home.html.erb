@@ -47,7 +47,7 @@
 
         <tr class="<%=bg_color%>">
           <% if trab.status == "Pendente" %>
-            <%= simple_form_for trab do |f| %>
+            <%= simple_form_for trab, url: user_trabalho_path(trab) do |f| %>
               <td><%= dia_da_semana %></td>
               <td><%= trab.data.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden %></td>
               <td><%= f.input :sem_he, label: "",as: :boolean, checked_value: true, unchecked_value: false%></td>

@@ -1,7 +1,7 @@
 module InfoFuncionariosHelper
   def verificar_pendencia(funcionario)
     trabalhos = []
-    3.times do |i|
+    7.times do |i|
       # Ache ou crie um trabalho do usuário para a data
       trabalhos << Trabalho.find_or_create_by(data: Date.today - i, user_id: funcionario.id)
     end
