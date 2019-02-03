@@ -14,9 +14,10 @@ Rails.application.routes.draw do
 
   get "admin", to: 'pages#admin'
   get "cadastros", to: 'users#cadastros'
-  get "relatorios", to: 'pages#relatorios'
+  get "relatorios", to: 'relatorios#relatorios'
   get "recife", to: 'trabalhos#recife'
   get "paraiba", to: 'trabalhos#paraiba'
+  get "baixar_relatorio", to: 'relatorios#baixar_relatorio'
 
   get "test", to: 'pages#test'
 end

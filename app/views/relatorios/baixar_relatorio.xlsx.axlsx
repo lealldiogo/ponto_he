@@ -1,0 +1,8 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Trabalhos") do |sheet|
+  sheet.add_row ["Trabalhos de " + @user.nome_completo]
+  sheet.add_row ["Data", "Hora de entrada", "Hora de saída"]
+  @trabalhos.each do |trabalho|
+    sheet.add_row [trabalho.data.strftime("%d/%m/%Y"), trabalho.entrada.strftime("%H:%M"), trabalho.saida.strftime("%H:%M")]
+  end
+end
