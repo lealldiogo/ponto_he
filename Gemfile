@@ -24,6 +24,8 @@ gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c8ac844'
 gem 'axlsx_rails'
 #gem 'acts_as_xlsx'
 
+gem 'serviceworker-rails'
+
 # Fix vulnerability issues
 # gem 'sprockets', '>= 3.7.2'
 # gem 'loofah', '>= 2.2.3'

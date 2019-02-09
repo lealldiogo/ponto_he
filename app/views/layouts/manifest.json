@@ -1,0 +1,11 @@
+{
+  "name" : "Ponto Tecon",
+  "display" : "fullscreen",
+  "start_url" : "/",
+  "short_name" : "PontoHE",
+  "theme_color" : "#52489c",
+  "orientation" : "any",
+  "background_color" : "#ada0a6",
+  "icons" : [
+  ]
+}
