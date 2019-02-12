@@ -8,7 +8,6 @@ gem 'puma'
 gem 'rails', '5.0.7'
 gem 'redis'
 gem 'devise'
-gem 'forest_liana'
 
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass'

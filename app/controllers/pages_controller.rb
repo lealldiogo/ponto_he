@@ -1,8 +1,8 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:test]
-  skip_before_action :is_admin?, only: [:home, :test]
+  skip_before_action :authenticate_user!, only: [:test, :home]
+  skip_before_action :is_admin?, only: [:apontamento, :test, :home]
 
-  def home
+  def apontamento
     if current_user.admin?
       redirect_to admin_path
     else
@@ -14,6 +14,10 @@ class PagesController < ApplicationController
       end
       # Checar quais alertas (? precisa ?)
     end
+  end
+
+  def home
+
   end
 
   def test

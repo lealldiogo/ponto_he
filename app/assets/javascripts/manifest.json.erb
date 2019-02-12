@@ -1,7 +1,7 @@
 <% icon_sizes = Rails.configuration.serviceworker.icon_sizes %>
 {
-  "name": "My Progressive Rails App",
-  "short_name": "Progressive",
+  "name" : "Ponto Tecon",
+  "short_name": "PontoHE",
   "start_url": "/",
   "icons": [
   <% icon_sizes.map { |s| "#{s}x#{s}" }.each.with_index do |dim, i| %>
@@ -12,8 +12,8 @@
     }<%= i == (icon_sizes.length - 1) ? '' : ',' %>
   <% end %>
   ],
-  "theme_color": "#000000",
-  "background_color": "#FFFFFF",
   "display": "fullscreen",
-  "orientation": "portrait"
+  "orientation" : "any",
+  "theme_color" : "#52489c",
+  "background_color" : "#ada0a6"
 }
