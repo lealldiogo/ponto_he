@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     if current_user.admin?
       admin_path
     else
-      root_path
+      apontamento_path
     end
   end
 
@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
 
   def is_admin?
     unless current_user.admin?
-      redirect_to root_path, alert: "Você não tem autorização para acessar esta página"
+      redirect_to apontamento_path, alert: "Você não tem autorização para acessar esta página"
     end
   end
 end

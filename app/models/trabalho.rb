@@ -2,7 +2,6 @@ class Trabalho < ApplicationRecord
   belongs_to :user
   belongs_to :obra, optional: true
 
-  before_update :atualizar_status
   before_update :valor_he_padrao
   before_update :calcular_jornada
 
@@ -14,6 +13,8 @@ class Trabalho < ApplicationRecord
 
   validates :entrada, presence: true, on: :update, unless: :sem_hora_extra?
   validates :saida, presence: true, on: :update, unless: :sem_hora_extra?
+
+  after_update :atualizar_status
 
   protected
 
