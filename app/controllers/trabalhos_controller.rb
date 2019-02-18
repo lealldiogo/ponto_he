@@ -4,7 +4,6 @@ class TrabalhosController < ApplicationController
 
   def user_update
     @trabalho = Trabalho.find(params[:id])
-    byebug
     if @trabalho.update(user_trabalho_params)
       redirect_to apontamento_path, info: "Apontamento de horas enviado para validação do gestor"
     else

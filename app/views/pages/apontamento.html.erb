@@ -50,7 +50,7 @@
             <%= simple_form_for trab, url: user_trabalho_path(trab) do |f| %>
               <td><%= dia_da_semana %></td>
               <td><%= trab.data.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden %></td>
-              <td><%= f.input_field :sem_he, inline_label: "Não fiz hora extra neste dia", as: :boolean %></td>
+              <td><%= f.input :sem_he, label: "Não fiz hora extra neste dia", as: :boolean %></td>
               <!-- , input_html: { value: trab.data } -->
               <td><%= f.input :entrada, {minute_step: 30} %></td>
               <td><%= f.input :saida, {minute_step: 30}  %></td>
@@ -63,13 +63,14 @@
           <% else %>
             <td><%= dia_da_semana %></td>
             <td><%= trab.data.strftime("%d/%m/%Y") %></td>
-            <% if trab.sem_he = true %>
-              <td><%= trab.sem_he ? "Não" : "Sim" %></td>
+            <% if trab.sem_he == true %>
+              <td><%= "Não" %></td>
               <td><%= "-" %></td>
               <td><%= "-" %></td>
               <td><%= "-" %></td>
               <td><%= "-" %></td>
             <% else %>
+              <td><%= "Sim" %></td>
               <td><%= trab.entrada.strftime("%H:%M") %></td>
               <td><%= trab.saida.strftime("%H:%M") %></td>
               <td><%= trab.obra.nome %></td>

@@ -4,6 +4,7 @@ class Trabalho < ApplicationRecord
 
   before_update :valor_he_padrao
   before_update :calcular_jornada
+  before_update :atualizar_status
 
   validates :data, presence: true
   validates :data, uniqueness: { scope: :user }
@@ -14,7 +15,6 @@ class Trabalho < ApplicationRecord
   validates :entrada, presence: true, on: :update, unless: :sem_hora_extra?
   validates :saida, presence: true, on: :update, unless: :sem_hora_extra?
 
-  after_update :atualizar_status
 
   protected
 
