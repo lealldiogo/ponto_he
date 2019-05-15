@@ -7,10 +7,10 @@ gem 'pg'
 gem 'puma'
 gem 'rails', '5.0.7'
 gem 'redis'
-gem 'devise'
+gem 'devise', ">= 4.6.0"
 
 gem 'autoprefixer-rails'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', ">=3.4.1"
 gem 'font-awesome-sass'
 gem 'jquery-rails'
 gem 'sass-rails'
