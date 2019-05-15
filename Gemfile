@@ -7,11 +7,10 @@ gem 'pg'
 gem 'puma'
 gem 'rails', '5.0.7'
 gem 'redis'
-gem 'devise'
-gem 'forest_liana'
+gem 'devise', ">= 4.6.0"
 
 gem 'autoprefixer-rails'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', ">=3.4.1"
 gem 'font-awesome-sass'
 gem 'jquery-rails'
 gem 'sass-rails'
@@ -23,6 +22,8 @@ gem 'rubyzip', '>= 1.2.1'
 gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c8ac844'
 gem 'axlsx_rails'
 #gem 'acts_as_xlsx'
+
+gem 'serviceworker-rails'
 
 # Fix vulnerability issues
 # gem 'sprockets', '>= 3.7.2'
