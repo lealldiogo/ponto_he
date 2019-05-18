@@ -9,6 +9,7 @@ gem 'rails', '5.0.7'
 gem 'redis'
 gem 'devise', ">= 4.6.0"
 
+gem 'rails-assets-bootstrap-datepicker', source: 'https://rails-assets.org'
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass', ">=3.4.1"
 gem 'font-awesome-sass'

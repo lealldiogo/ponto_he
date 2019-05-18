@@ -4,6 +4,11 @@ class ApplicationController < ActionController::Base
   before_action :is_admin?
   add_flash_types(:warning, :info)
 
+  def params_para_data(date_hash)
+    date_array = []
+    date_hash.each_pair { |k,v| date_array << v}
+    return Date.new(date_array[2].to_i, date_array[1].to_i, date_array[0].to_i)
+  end
 
   def after_sign_in_path_for(resource)
     if current_user.admin?
