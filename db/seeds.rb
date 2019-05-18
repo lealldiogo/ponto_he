@@ -42,3 +42,12 @@ obra2.save!
 
 obra3 = Obra.new(nome: "Depósito")
 obra3.save!
+
+veiculo1 = Veiculo.new(nome: "Kombi")
+veiculo1.save!
+
+veiculo2 = Veiculo.new(nome: "Caminhão")
+veiculo2.save!
+
+veiculo3 = Veiculo.new(nome: "Ônibus")
+veiculo3.save!

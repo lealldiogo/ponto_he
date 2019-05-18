@@ -15,7 +15,7 @@ class User < ApplicationRecord
 
   def timeout_in
     return 1.year if admin?
-    2.minutes
+    5.minutes
   end
 
   def email_required?

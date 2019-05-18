@@ -2,6 +2,23 @@
   <h1>Cadastro de Ponto</h1>
   <!-- <p>Bem vindo, <%#= current_user.username %></p> -->
   <h4 class="text-center">QUANDO TERMINAR O APONTAMENTO DE HORAS, FINALIZE A SESSÃO APERTANDO O BOTÃO "SAIR" NO FIM DA PÁGINA</h4>
+  <div class="row">
+    <%= form_tag baixar_relatorio_path, method: :get, class: "form-group" do %>
+      <div class="col-xs-3">
+        <p>Início</p>
+        <%= date_select("periodo", "de", start_year: 2019, use_month_numbers: true,use_two_digit_numbers: true, order: [:day, :month, :year], prompt: true) %>
+      </div>
+      <div class="col-xs-3">
+        <p>Fim</p>
+        <%= date_select("periodo", "ate", start_year: 2019, use_month_numbers: true,use_two_digit_numbers: true, order: [:day, :month, :year], prompt: true) %>
+        <%#= hidden_field_tag 'user_id', @user.id %>
+      </div>
+      <div class="col-xs-3">
+        <%= submit_tag "Aplicar", class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+
   <table class="table">
 
     <thead class="thead-dark">
