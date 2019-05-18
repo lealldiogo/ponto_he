@@ -46,7 +46,7 @@ class TrabalhosController < ApplicationController
   private
 
   def user_trabalho_params
-    params.require(:trabalho).permit(:data, :entrada, :saida, :user_id, :obra_id, :veiculo, :sem_he)
+    params.require(:trabalho).permit(:data, :entrada, :saida, :user_id, :obra_id, :veiculo_id, :sem_he)
   end
 
   def admin_trabalho_params

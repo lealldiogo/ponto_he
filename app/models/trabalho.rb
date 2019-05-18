@@ -1,6 +1,7 @@
 class Trabalho < ApplicationRecord
   belongs_to :user
   belongs_to :obra, optional: true
+  belongs_to :veiculo, optional: true
 
   before_update :valor_he_padrao
   before_update :calcular_jornada
