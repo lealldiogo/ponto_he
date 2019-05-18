@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root to: 'pages#home'
   resources :trabalhos, except: [:update]
   resources :users
+  resources :grupos
 
   get "apontamento", to: 'pages#apontamento'
 

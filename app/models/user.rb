@@ -8,6 +8,8 @@ class User < ApplicationRecord
 
   has_many :trabalhos
 
+  has_and_belongs_to_many :groups
+
   validates :username, uniqueness: true
   validates :cargo, presence: true, unless: :admin?
   validates :equipe, presence: true, unless: :admin?

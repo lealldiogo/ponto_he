@@ -1,0 +1,12 @@
+<div class="container">
+  <h1>GRUPOS</h1>
+  <div class="col-xs-12" style="padding-bottom: 10px">
+    <%= link_to "Criar novo grupo", new_grupo_path,class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+  </div>
+  <% @grupos.each do |grupo| %>
+    <div class="col-xs-12" style="padding-bottom: 10px">
+      <%= link_to grupo.nome, grupo_path(grupo),class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+    </div>
+  <% end %>
+  <%= link_to "Voltar", admin_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+</div>
