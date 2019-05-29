@@ -30,10 +30,7 @@ class GruposController < ApplicationController
   private
 
   def grupo_params
-    params.require(:grupo).permit(:nome, :user_ids) #:membros_attibutes => [:grupo_id, :user_id])
+    params.require(:grupo).permit(:nome, user_ids: []) #:membros_attibutes => [:grupo_id, :user_id])
   end
 
-  def membro_params
-    params.require(:grupo).permit(:nome, :user_ids)
-  end
 end
