@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190518194614) do
+ActiveRecord::Schema.define(version: 20190528234054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,8 +19,15 @@ ActiveRecord::Schema.define(version: 20190518194614) do
     t.string   "nome"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "membros", force: :cascade do |t|
+    t.integer  "grupo_id"
     t.integer  "user_id"
-    t.index ["user_id"], name: "index_grupos_on_user_id", using: :btree
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["grupo_id"], name: "index_membros_on_grupo_id", using: :btree
+    t.index ["user_id"], name: "index_membros_on_user_id", using: :btree
   end
 
   create_table "obras", force: :cascade do |t|
@@ -67,9 +74,7 @@ ActiveRecord::Schema.define(version: 20190518194614) do
     t.string   "salario_currency",       default: "BRL", null: false
     t.boolean  "admin",                  default: false, null: false
     t.string   "nome_completo"
-    t.integer  "grupo_id"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
-    t.index ["grupo_id"], name: "index_users_on_grupo_id", using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
@@ -80,9 +85,7 @@ ActiveRecord::Schema.define(version: 20190518194614) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "grupos", "users"
   add_foreign_key "trabalhos", "obras"
   add_foreign_key "trabalhos", "users"
   add_foreign_key "trabalhos", "veiculos"
-  add_foreign_key "users", "grupos"
 end

@@ -1,3 +1,5 @@
 class Grupo < ApplicationRecord
-  has_and_belongs_to_many :users
+  has_many :membros
+  has_many :users, through: :membros
+  #accepts_nested_attributes_for :membros
 end

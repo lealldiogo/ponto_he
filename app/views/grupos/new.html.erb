@@ -6,9 +6,10 @@
 
     <div class="form-inputs">
       <%= f.input :nome, label: "Nome do Grupo",required: true, autofocus: true %>
-      <%= f.select(:users, User.all.collect {|u| [ u.nome_completo, u.id ] },
-                                           { :prompt => "Please select"},
-                                           { :multiple => true, :size => 5 }) %>
+      <%= f.association :users %>
+      <%#= f.simple_fields_for :membros do |m| %>
+        <%#= m.association :user, as: :select %>
+      <%# end %>
     </div>
 
     <div class="form-actions">
