@@ -1,0 +1,12 @@
+<div class="container">
+  <h1>VEÍCULOS</h1>
+  <div class="col-xs-12" style="padding-bottom: 10px">
+    <%= link_to "Criar novo veiculo", new_veiculo_path,class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+  </div>
+  <% @veiculos.each do |veiculo| %>
+    <div class="col-xs-12" style="padding-bottom: 10px">
+      <%= link_to veiculo.nome, edit_veiculo_path(veiculo),class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+    </div>
+  <% end %>
+  <%= link_to "Voltar", admin_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+</div>

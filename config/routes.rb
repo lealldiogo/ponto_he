@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   resources :trabalhos, except: [:update]
   resources :users
   resources :grupos
+  resources :obras
+  resources :veiculos
 
   get "apontamento", to: 'pages#apontamento'
 

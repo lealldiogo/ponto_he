@@ -1,0 +1,12 @@
+<div class="container">
+  <h1>OBRAS</h1>
+  <div class="col-xs-12" style="padding-bottom: 10px">
+    <%= link_to "Criar nova obra", new_obra_path,class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+  </div>
+  <% @obras.each do |obra| %>
+    <div class="col-xs-12" style="padding-bottom: 10px">
+      <%= link_to obra.nome, edit_obra_path(obra),class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+    </div>
+  <% end %>
+  <%= link_to "Voltar", admin_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+</div>

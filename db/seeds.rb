@@ -14,6 +14,7 @@ DELETAR destroy_all UMA VEZ QUE O APLICATIVO ESTIVER ATIVO
 
 Trabalho.destroy_all
 Obra.destroy_all
+Veiculo.destroy_all
 User.destroy_all
 
 gestor = User.new(admin: true, username: "julio.ribeiro", password: "123456")

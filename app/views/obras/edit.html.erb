@@ -1,0 +1,17 @@
+<div class="container">
+  <h1>EDITAR OBRA <%= @obra.nome %></h1>
+
+  <%= simple_form_for @obra do |f| %>
+    <%= f.error_notification %>
+
+    <div class="form-inputs">
+      <%= f.input :nome, label: "Nome da Obra",required: true, autofocus: true %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.button :submit, "Cadastrar", class:"btn btn-success", style: "font-weight: bold" %>
+      <%= link_to "Voltar", obras_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+    </div>
+  <% end %>
+
+</div>
