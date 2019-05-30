@@ -10,8 +10,10 @@ class PagesController < ApplicationController
         fim = Date.today
         inicio = Date.today - 7
       else
-        fim = params_para_data(params[:fim])
-        inicio = params_para_data(params[:inicio])
+        inicio = Date.strptime(params[:inicio], "%d/%m/%Y")
+        fim = Date.strptime(params[:fim], "%d/%m/%Y")
+        # fim = params_para_data(params[:fim])
+        # inicio = params_para_data(params[:inicio])
       end
       # Opção 1: find_or_create_by
       @trabalhos = []
