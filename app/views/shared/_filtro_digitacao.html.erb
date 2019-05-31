@@ -1,0 +1,26 @@
+<div class="filtro col-xs-8" style="padding-bottom: 10px">
+  <input type="text" class="form-control">
+</div>
+
+<div class="col-xs-4">
+  <button class="btn btn-default btn-block">Filtrar</button>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $('.filtro input').change(function() {
+      var str_filt = $(this).val();
+      console.log(str_filt)
+      $('.itens').each(function() {
+        var str_ref = $(this).find(".referencia-filt").text();
+        if (retira_acentos(str_ref.toLowerCase().substr(0,str_filt.length)) == retira_acentos(str_filt.toLowerCase())) {
+          $(this).show();
+          console.log("Mostrou" + str_ref)
+        } else {
+          $(this).hide();
+          console.log("Escondeu" + str_ref)
+        }
+      });
+    });
+  });
+</script>
