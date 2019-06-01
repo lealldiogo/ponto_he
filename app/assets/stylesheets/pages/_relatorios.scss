@@ -1,0 +1,60 @@
+#page {
+  width: 210mm;
+  height: 297mm;
+  padding: 15mm 20mm;
+}
+
+.planilha {
+  display: grid; grid-template: repeat(4, 1fr) / repeat(2, 1fr);
+  // width: 100%;
+  // height: 100%;
+}
+
+.titulo {
+  grid-row: 1 / 2;
+  grid-column: 1 / 3;
+  border: 1px solid black;
+}
+
+.empregado {
+  grid-row: 2 / 4;
+  grid-column: 1 / 3;
+  border: 1px solid black;
+}
+
+.seg {
+  grid-row: 4 / 5;
+  grid-column: 1 / 2;
+  border: 1px solid black;
+}
+
+.seg-data {
+  grid-row: 4 / 5;
+  grid-column: 2 / 3;
+  border: 1px solid black;
+}
+
+.entrada {
+  grid-row: 5 / 6;
+  grid-column: 1 / 2;
+  border: 1px solid black;
+}
+
+.saida {
+  grid-row: 5 / 6;
+  grid-column: 2 / 3;
+  border: 1px solid black;
+}
+
+.total-he {
+  grid-row: 4 / 5;
+  grid-column: 2 / 3;
+  border: 1px solid black;
+}
+
+.seg-data {
+  grid-row: 4 / 5;
+  grid-column: 2 / 3;
+  border: 1px solid black;
+}
+

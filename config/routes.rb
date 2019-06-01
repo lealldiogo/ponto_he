@@ -27,5 +27,7 @@ Rails.application.routes.draw do
   get "relatorios", to: 'relatorios#relatorios'
   get "baixar_relatorio", to: 'relatorios#baixar_relatorio'
 
+  get "recife_imprimivel", to: 'relatorios#recife_imprimivel'
+
   get "test", to: 'pages#test'
 end
