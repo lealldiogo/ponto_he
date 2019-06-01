@@ -46,6 +46,8 @@ class Trabalho < ApplicationRecord
     jornada = horas + (minutos.to_f/60).round(2)
     if jornada == 0
       errors.add(:saida, "não pode ser igual a Entrada")
+    else
+      self.horas_extras = jornada
     end
   end
 

@@ -1,7 +1,26 @@
 class RelatoriosController < ApplicationController
+  helper RelatoriosHelper
 
   def relatorios
     @users = User.all
+  end
+
+  def recife_imprimivel
+    @periodo = params_para_data(params)
+    @funcionarios = User.where(equipe: "Recife").joins(:trabalhos).where(trabalhos: {sem_he: false}).group(:id)
+  end
+
+  def relatorios_recife
+
+  end
+
+  def paraiba_imprimivel
+    @periodo = params_para_data(params)
+    @funcionarios = User.where(equipe: "Paraíba").joins(:trabalhos).where(trabalhos: {sem_he: false}).uniq
+  end
+
+  def relatorios_paraiba
+
   end
 
   def user_relatorio
@@ -22,9 +41,6 @@ class RelatoriosController < ApplicationController
     # end
   end
 
-  def recife_imprimivel
-
-  end
 
   def nome_do_arquivo(user, trabalhos)
     nome_do_arquivo = trabalhos.last.data.strftime("%d-%m") + "_a_" + trabalhos.first.data.strftime("%d-%m") + "_" + user.username.gsub(/\./, '_') + ".xlsx"
