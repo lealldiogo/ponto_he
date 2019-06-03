@@ -13,7 +13,7 @@ class GruposController < ApplicationController
   end
 
   def edit
-
+    @grupo = Grupo.find(params[:id])
   end
 
   def create
@@ -25,10 +25,19 @@ class GruposController < ApplicationController
     end
   end
 
+  def update
+    @grupo = Grupo.find(params[:id])
+    if @grupo.update(grupo_params)
+      redirect_to grupos_path
+    else
+      render :edit
+    end
+  end
+
   private
 
   def grupo_params
-    params.require(:grupo).permit(:nome, user_ids: [])
+    params.require(:grupo).permit(:nome, user_ids: [], :valor_he_exce, :inicio_exce, :fim_exce)
   end
 
 end

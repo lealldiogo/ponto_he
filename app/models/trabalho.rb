@@ -9,6 +9,7 @@ class Trabalho < ApplicationRecord
 
   validates :data, presence: true
   validates :data, uniqueness: { scope: :user }
+  validate :condicoes_data, on: :update
 
   validates :obra, presence: true, on: :update, unless: :sem_hora_extra?
   validates :veiculo, presence: true, on: :update, unless: :sem_hora_extra?
@@ -64,6 +65,28 @@ class Trabalho < ApplicationRecord
       # else
       self.valor_he = 70
       # end
+    end
+  end
+
+  def condicoes_data
+    data_exce = false
+    if self.user.groups.any?
+      self.user.groups.each do |group|
+        if (self.data >= group.inicio_exce) && (self.data <= group.fim_exce)
+          data_exce = true
+        end
+      end
+    end
+    if data_exce = false
+      if (Date.today - self.data) > 7
+        errors.add(:data, "não pode ser anterior a " + (Date.today - 7).strftime("%d/%m/%Y"))
+        return false
+      elsif (Date.today - self.data) < 0
+        errors.add(:data, "não pode ser anterior a " + (Date.today - 7).strftime("%d/%m/%Y"))
+        return false
+      else
+        return true
+      end
     end
   end
 
