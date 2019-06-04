@@ -1,5 +1,5 @@
 class Grupo < ApplicationRecord
-  has_many :membros
+  has_many :membros, dependent: :destroy
   has_many :users, through: :membros
 
   validate :inicio_ante_fim
@@ -17,7 +17,7 @@ class Grupo < ApplicationRecord
     self.users.each do |func|
       if func.grupos.any?
         func.grupos.each do |grupo|
-          if (grupo.inicio_exce < self.fim_exce) && (self.inicio_exce < grupo.fim_exce)
+          if (grupo.inicio_exce < self.fim_exce) && (self.inicio_exce < grupo.fim_exce) && (grupo.id != self.id)
             errors.add(:users, "não podem fazer parte de mais de um grupo para uma mesma data. O funcionário " + func.nome_completo + " já faz parte do grupo " + grupo.nome)
           end
         end
