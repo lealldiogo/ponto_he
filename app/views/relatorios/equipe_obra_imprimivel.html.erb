@@ -3,7 +3,7 @@
   <% columns = 3 %>
   <div class="text-center" style="display: grid; grid-template: repeat(<%= rows %>, 1fr) / repeat(<%= columns %>, 1fr);">
     <div class="titulo-equipe">
-      H.E - PB <%= @periodo[0].strftime("%d/%m") %> a <%= @periodo[1].strftime("%d/%m") %> pago em __/__/2019
+      H.E - <%= @cabecalho %> <%= @periodo[0].strftime("%d/%m") %> a <%= @periodo[1].strftime("%d/%m") %> pago em __/__/2019
     </div>
     <div class="declara">
       RECEBEMOS DA TECON ENGENHARIA O VALOR ABAIXO REFERENTE ÀS HORAS EXTRAS

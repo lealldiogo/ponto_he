@@ -27,10 +27,14 @@ Rails.application.routes.draw do
   get "relatorios", to: 'relatorios#relatorios'
   get "baixar_relatorio", to: 'relatorios#baixar_relatorio'
 
-  get "recife_imprimivel", to: 'relatorios#recife_imprimivel'
+  get "user_imprimivel", to: 'relatorios#user_imprimivel'
   get "relatorios_recife", to: 'relatorios#relatorios_recife'
-  get "paraiba_imprimivel", to: 'relatorios#paraiba_imprimivel'
+  get "equipe_user_imprimivel", to: 'relatorios#equipe_user_imprimivel'
   get "relatorios_paraiba", to: 'relatorios#relatorios_paraiba'
+
+  get "relatorios_obra/:id", to: 'relatorios#relatorios_obra'
+  get "obras_para_relatorios", to: 'relatorios#obras_para_relatorios'
+
 
   get "test", to: 'pages#test'
 end

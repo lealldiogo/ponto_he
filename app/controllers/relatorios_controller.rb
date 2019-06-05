@@ -5,22 +5,38 @@ class RelatoriosController < ApplicationController
     @users = User.all
   end
 
-  def recife_imprimivel
+  def user_imprimivel
     @periodo = params_para_data(params)
-    @funcionarios = User.where(equipe: "Recife").joins(:trabalhos).where(trabalhos: {sem_he: false}).group(:id)
   end
 
   def relatorios_recife
 
   end
 
-  def paraiba_imprimivel
+  def equipe_obra_imprimivel
     @periodo = params_para_data(params)
-    @funcionarios = User.where(equipe: "Paraíba").joins(:trabalhos).where(trabalhos: {sem_he: false}).uniq
+    @cabecalho = params[:cabecalho]
+    case
+    when "PB"
+      @funcionarios = User.where(equipe: "Paraíba").joins(:trabalhos).where(trabalhos: {sem_he: false}).uniq
+    when "REC"
+      @funcionarios = User.where(equipe: "Recife").joins(:trabalhos).where(trabalhos: {sem_he: false}).uniq
+    else
+      @funcionarios = User.joins(:trabalhos).where(obra_id: cabecalho).uniq
+      @obra = Obra.find(cabecalho.to_i)
+    end
   end
 
   def relatorios_paraiba
 
+  end
+
+  def relatorios_obra
+    @obra = Obra.find(params[:id])
+  end
+
+  def obras_para_relatorios
+    @obras = Obra.all
   end
 
   def user_relatorio

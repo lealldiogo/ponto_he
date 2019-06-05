@@ -1,0 +1,16 @@
+<div class="container">
+  <h1>RELATÓRIOS DE OBRAS</h1>
+  <div class="row">
+    <%= render 'shared/filtro_digitacao' %>
+    <% @obras.each do |obra| %>
+      <div class="col-xs-12 itens" style="padding-bottom: 10px">
+        <%= link_to obra.nome, relatorios_obra_path(obra),class: "btn btn-primary btn-block referencia-filt", style: "font-weight: bold" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="col-xs-12" >
+      <%= link_to "Voltar", relatorios_path, class: "btn btn-danger btn-block", style: "font-weight: bold" %>
+    </div>
+  </div>
+</div>
