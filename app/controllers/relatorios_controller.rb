@@ -2,7 +2,6 @@ class RelatoriosController < ApplicationController
   helper RelatoriosHelper
 
   def relatorios
-    @users = User.all
   end
 
   def user_imprimivel
@@ -15,15 +14,17 @@ class RelatoriosController < ApplicationController
 
   def equipe_obra_imprimivel
     @periodo = params_para_data(params)
-    @cabecalho = params[:cabecalho]
-    case
+    case params[:cabecalho]
     when "PB"
-      @funcionarios = User.where(equipe: "Paraíba").joins(:trabalhos).where(trabalhos: {sem_he: false}).uniq
+      @funcionarios = User.where(equipe: "Paraíba").joins(:trabalhos).where(trabalhos: {sem_he: false}).distinct
+      @cabecalho = params[:cabecalho]
     when "REC"
-      @funcionarios = User.where(equipe: "Recife").joins(:trabalhos).where(trabalhos: {sem_he: false}).uniq
+      @funcionarios = User.where(equipe: "Recife").joins(:trabalhos).where(trabalhos: {sem_he: false}).distinct
+      @cabecalho = params[:cabecalho]
     else
-      @funcionarios = User.joins(:trabalhos).where(obra_id: cabecalho).uniq
-      @obra = Obra.find(cabecalho.to_i)
+      @obra = Obra.find(params[:cabecalho])
+      @cabecalho = @obra.nome
+      @funcionarios = User.joins(:trabalhos).where(trabalhos: {obra_id: @obra.id}).distinct
     end
   end
 

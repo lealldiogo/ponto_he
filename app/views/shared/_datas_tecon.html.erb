@@ -9,6 +9,9 @@
       <p>Fim</p>
       <input type="text" name="fim" class="form-control">
     </div>
+    <% if cabecalho.present? %>
+      <input type="hidden" name="cabecalho" value="<%= cabecalho %>" >
+    <% end %>
     <div class="col-xs-3">
       <%= submit_tag "Aplicar", class: 'btn btn-primary' %>
     </div>
