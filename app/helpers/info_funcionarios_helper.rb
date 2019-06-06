@@ -8,7 +8,6 @@ module InfoFuncionariosHelper
     pendente = false
     trabalhos.each do |trabalho|
       if trabalho.status == "Pendente"
-        puts trabalho.status
         pendente = true
       end
     end

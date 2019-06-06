@@ -2,6 +2,16 @@ class TrabalhosController < ApplicationController
   skip_before_action :is_admin?, only: [:user_trabalho_params, :user_update]
   helper InfoFuncionariosHelper
 
+  def trabalhos_funcionario
+    @funcionario = User.find(params[:id])
+    periodo = params_para_data(params)
+    @trabalhos = []
+    ((periodo[1]-periodo[0]).to_i + 1).times do |i|
+      # Ache ou crie um trabalho do usuário para a data
+      @trabalhos << Trabalho.find_or_create_by(data: periodo[1] - i, user_id: @funcionario.id)
+    end
+  end
+
   def user_update
     @trabalho = Trabalho.find(params[:id])
     if @trabalho.update(user_trabalho_params)
@@ -50,6 +60,6 @@ class TrabalhosController < ApplicationController
   end
 
   def admin_trabalho_params
-    params.require(:trabalho).permit(:status)
+    params.require(:trabalho).permit(:data, :entrada, :saida, :user_id, :obra_id, :veiculo_id, :sem_he, :status)
   end
 end

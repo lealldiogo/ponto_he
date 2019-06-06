@@ -27,6 +27,8 @@ Rails.application.routes.draw do
   get "relatorios", to: 'relatorios#relatorios'
   get "baixar_relatorio", to: 'relatorios#baixar_relatorio'
 
+  get "trabalhos_funcionario/:id", to: 'trabalhos#trabalhos_funcionario', as: :trabalhos_funcionario
+
   get "user_imprimivel", to: 'relatorios#user_imprimivel'
   get "relatorios_recife", to: 'relatorios#relatorios_recife'
   get "equipe_obra_imprimivel", to: 'relatorios#equipe_obra_imprimivel'

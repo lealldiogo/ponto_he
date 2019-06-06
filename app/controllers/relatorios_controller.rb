@@ -13,6 +13,7 @@ class RelatoriosController < ApplicationController
   end
 
   def equipe_obra_imprimivel
+    # Os trabalhos ainda não estão sendo filtrados por data
     @periodo = params_para_data(params)
     case params[:cabecalho]
     when "PB"
