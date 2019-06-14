@@ -1,0 +1,21 @@
+<div class="container">
+  <h1>EDITAR GRUPO</h1>
+
+  <%= simple_form_for @grupo do |f| %>
+    <%= f.error_notification %>
+
+    <div class="form-inputs">
+      <%= f.input :nome, label: "Nome do Grupo",required: true, autofocus: true %>
+      <%= f.input :valor_he_exce, label: "Valor da Hora Extra",required: true, autofocus: true %>
+      <%= f.input :inicio_exce, label: "Início",required: true, autofocus: true %>
+      <%= f.input :fim_exce, label: "Fim",required: true, autofocus: true %>
+      <%= f.association :users, label: "Funcionários",required: true, autofocus: true %>
+    </div>
+
+    <div class="form-actions">
+      <%= f.button :submit, "Cadastrar", class:"btn btn-success", style: "font-weight: bold" %>
+      <%= link_to "Voltar", grupos_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+    </div>
+  <% end %>
+
+</div>

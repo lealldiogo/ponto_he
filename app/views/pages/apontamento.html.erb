@@ -2,6 +2,9 @@
   <h1>Cadastro de Ponto</h1>
   <!-- <p>Bem vindo, <%#= current_user.username %></p> -->
   <h4 class="text-center">QUANDO TERMINAR O APONTAMENTO DE HORAS, FINALIZE A SESSÃO APERTANDO O BOTÃO "SAIR" NO FIM DA PÁGINA</h4>
+
+  <%= render 'shared/datas_tecon', reload_path: apontamento_path %>
+
   <table class="table">
 
     <thead class="thead-dark">
@@ -55,7 +58,7 @@
               <td><%= f.input :entrada, {minute_step: 30} %></td>
               <td><%= f.input :saida, {minute_step: 30}  %></td>
               <td><%= f.association :obra, label_method: :nome, value_method: :id %></td>
-              <td><%= f.input :veiculo, collection: ["Kombi", "Caminhão", "Ônibus"] %></td>
+              <td><%= f.association :veiculo, label_method: :nome, value_method: :id %></td>
 
               <%= f.association :user, as: :hidden, input_html: { value: current_user.id } %>
               <td><%= f.button :submit, "Enviar" %></td>
@@ -74,7 +77,7 @@
               <td><%= trab.entrada.strftime("%H:%M") %></td>
               <td><%= trab.saida.strftime("%H:%M") %></td>
               <td><%= trab.obra.nome %></td>
-              <td><%= trab.veiculo %></td>
+              <td><%= trab.veiculo.nome %></td>
             <% end %>
             <td><%= trab.status %></td>
           <% end %>

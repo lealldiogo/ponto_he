@@ -1,13 +1,11 @@
 class Trabalho < ApplicationRecord
   belongs_to :user
   belongs_to :obra, optional: true
-
-  before_update :valor_he_padrao
-  before_update :calcular_jornada
-  before_update :atualizar_status
+  belongs_to :veiculo, optional: true
 
   validates :data, presence: true
   validates :data, uniqueness: { scope: :user }
+  validate :condicoes_data, on: :update
 
   validates :obra, presence: true, on: :update, unless: :sem_hora_extra?
   validates :veiculo, presence: true, on: :update, unless: :sem_hora_extra?
@@ -15,6 +13,9 @@ class Trabalho < ApplicationRecord
   validates :entrada, presence: true, on: :update, unless: :sem_hora_extra?
   validates :saida, presence: true, on: :update, unless: :sem_hora_extra?
 
+  before_update :valor_he_padrao
+  before_update :calcular_jornada
+  before_update :atualizar_status
 
   protected
 
@@ -45,6 +46,8 @@ class Trabalho < ApplicationRecord
     jornada = horas + (minutos.to_f/60).round(2)
     if jornada == 0
       errors.add(:saida, "não pode ser igual a Entrada")
+    else
+      self.horas_extras = jornada
     end
   end
 
@@ -53,14 +56,43 @@ class Trabalho < ApplicationRecord
     #TODO: criar array com datas dos feriados no recife e na paraíba(ignorar municipais nesse caso?)
     #TODO: adicionar um include?(self.data) como condição para valor_he = 100%
     # feriados = Feriado.all
-    if self.data.strftime("%A") == "Sunday"
-      self.valor_he = 100
-    else
-      # if feriados.include?(self.data)
-        # self.valor_he = 100
-      # else
-      self.valor_he = 70
-      # end
+    if self.user.grupos.any?
+      data_exce = false
+      self.user.grupos.each do |grupo|
+        if (self.data >= grupo.inicio_exce) && (self.data <= grupo.fim_exce)
+          self.valor_he = grupo.valor_he_exce
+          data_exce = true
+        end
+      end
+    end
+    if data_exce == false
+      if self.data.strftime("%A") == "Sunday"
+        self.valor_he = 100
+      else
+        # if feriados.include?(self.data)
+          # self.valor_he = 100
+        # else
+        self.valor_he = 70
+        # end
+      end
+    end
+  end
+
+  def condicoes_data
+    data_exce = false
+    if self.user.grupos.any?
+      self.user.grupos.each do |grupo|
+        if (self.data >= grupo.inicio_exce) && (self.data <= grupo.fim_exce)
+          data_exce = true
+        end
+      end
+    end
+    if data_exce == false
+      if (Date.today - self.data) > 7
+        errors.add(:data, "não pode ser anterior a " + (Date.today - 7).strftime("%d/%m/%Y"))
+      elsif (Date.today - self.data) < 0
+        errors.add(:data, "não pode ser uma data futura")
+      end
     end
   end
 

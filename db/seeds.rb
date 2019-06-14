@@ -12,8 +12,11 @@ DELETAR destroy_all UMA VEZ QUE O APLICATIVO ESTIVER ATIVO
 
 =end
 
+Membro.destroy_all
+Grupo.destroy_all
 Trabalho.destroy_all
 Obra.destroy_all
+Veiculo.destroy_all
 User.destroy_all
 
 gestor = User.new(admin: true, username: "julio.ribeiro", password: "123456")
@@ -42,3 +45,16 @@ obra2.save!
 
 obra3 = Obra.new(nome: "Depósito")
 obra3.save!
+
+veiculo1 = Veiculo.new(nome: "Kombi")
+veiculo1.save!
+
+veiculo2 = Veiculo.new(nome: "Caminhão")
+veiculo2.save!
+
+veiculo3 = Veiculo.new(nome: "Ônibus")
+veiculo3.save!
+
+grupo1 = Grupo.new(valor_he_exce: 100, inicio_exce: Date.new(2019,04,15), fim_exce: Date.new(2019,05,15))
+grupo1.users << [pedro, ronaldo]
+grupo1.save!

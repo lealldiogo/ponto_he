@@ -1,8 +1,23 @@
 <div class="container">
   <h1>RELATÓRIOS</h1>
-  <% @users.each do |usuario| %>
-    <%= link_to usuario.nome_completo, user_relatorio_path(usuario), class: "btn btn-primary btn-block", style: "font-weight: bold" %>
-  <% end %>
+  <div class="row justify-content-center align-items-center">
+    <div class="col-xs-12" style="padding-bottom: 10px">
+      <%= link_to "RECIFE", relatorios_recife_path, class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+    </div>
+    <div class="col-xs-12" style="padding-bottom: 10px">
+      <%= link_to "PARAÍBA", relatorios_paraiba_path, class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+    </div>
+    <!-- <div class="col-xs-12" style="padding-bottom: 10px">
+      <%#= link_to "GRUPOS", relatorios_grupos_path, class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+    </div> -->
+    <div class="col-xs-12" style="padding-bottom: 10px">
+      <%= link_to "OBRAS", obras_para_relatorios_path, class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+    </div>
+  </div>
+
+  <%#@users.each do |usuario| %>
+    <%#= link_to usuario.nome_completo, user_relatorio_path(usuario), class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+  <%# end %>
   <%= link_to "Voltar", admin_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
 </div>
 

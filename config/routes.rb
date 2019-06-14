@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   root to: 'pages#home'
   resources :trabalhos, except: [:update]
   resources :users
+  resources :grupos
+  resources :obras
+  resources :veiculos
 
   get "apontamento", to: 'pages#apontamento'
 
@@ -23,6 +26,17 @@ Rails.application.routes.draw do
   get "user_relatorio/:id", to: 'relatorios#user_relatorio', as: :user_relatorio
   get "relatorios", to: 'relatorios#relatorios'
   get "baixar_relatorio", to: 'relatorios#baixar_relatorio'
+
+  get "trabalhos_funcionario/:id", to: 'trabalhos#trabalhos_funcionario', as: :trabalhos_funcionario
+
+  get "user_imprimivel", to: 'relatorios#user_imprimivel'
+  get "relatorios_recife", to: 'relatorios#relatorios_recife'
+  get "equipe_obra_imprimivel", to: 'relatorios#equipe_obra_imprimivel'
+  get "relatorios_paraiba", to: 'relatorios#relatorios_paraiba'
+
+  get "obras_para_relatorios", to: 'relatorios#obras_para_relatorios'
+  get "relatorios_obra/:id", to: 'relatorios#relatorios_obra', as: :relatorios_obra
+
 
   get "test", to: 'pages#test'
 end

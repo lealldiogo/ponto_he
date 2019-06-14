@@ -8,6 +8,9 @@ class User < ApplicationRecord
 
   has_many :trabalhos
 
+  has_many :membros
+  has_many :grupos, through: :membros
+
   validates :username, uniqueness: true
   validates :cargo, presence: true, unless: :admin?
   validates :equipe, presence: true, unless: :admin?
@@ -15,7 +18,7 @@ class User < ApplicationRecord
 
   def timeout_in
     return 1.year if admin?
-    2.minutes
+    5.minutes
   end
 
   def email_required?

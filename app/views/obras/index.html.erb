@@ -1,0 +1,19 @@
+<div class="container">
+  <h1>OBRAS</h1>
+  <div class="row">
+    <div class="col-xs-12" style="padding-bottom: 10px">
+      <%= link_to "Criar nova obra", new_obra_path,class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+    </div>
+    <%= render 'shared/filtro_digitacao' %>
+    <% @obras.each do |obra| %>
+      <div class="col-xs-12 itens" style="padding-bottom: 10px">
+        <%= link_to obra.nome, edit_obra_path(obra),class: "btn btn-primary btn-block referencia-filt", style: "font-weight: bold" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="row">
+    <div class="col-xs-12" >
+      <%= link_to "Voltar", admin_path, class: "btn btn-danger btn-block", style: "font-weight: bold" %>
+    </div>
+  </div>
+</div>

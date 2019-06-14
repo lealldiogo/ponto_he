@@ -1,7 +1,44 @@
 class RelatoriosController < ApplicationController
+  helper RelatoriosHelper
 
   def relatorios
-    @users = User.all
+  end
+
+  def user_imprimivel
+    @periodo = params_para_data(params)
+  end
+
+  def relatorios_recife
+
+  end
+
+  def equipe_obra_imprimivel
+    # Os trabalhos ainda não estão sendo filtrados por data
+    @periodo = params_para_data(params)
+    case params[:cabecalho]
+    when "PB"
+      @funcionarios = User.where(equipe: "Paraíba").joins(:trabalhos).where(trabalhos: {sem_he: false}).distinct
+      @cabecalho = params[:cabecalho]
+    when "REC"
+      @funcionarios = User.where(equipe: "Recife").joins(:trabalhos).where(trabalhos: {sem_he: false}).distinct
+      @cabecalho = params[:cabecalho]
+    else
+      @obra = Obra.find(params[:cabecalho])
+      @cabecalho = @obra.nome
+      @funcionarios = User.joins(:trabalhos).where(trabalhos: {obra_id: @obra.id}).distinct
+    end
+  end
+
+  def relatorios_paraiba
+
+  end
+
+  def relatorios_obra
+    @obra = Obra.find(params[:id])
+  end
+
+  def obras_para_relatorios
+    @obras = Obra.all
   end
 
   def user_relatorio
@@ -21,6 +58,7 @@ class RelatoriosController < ApplicationController
     #   format.xlsx {render xlsx: "relatorios/baixar_relatorio", filename: "trabalhos.xlsx"}
     # end
   end
+
 
   def nome_do_arquivo(user, trabalhos)
     nome_do_arquivo = trabalhos.last.data.strftime("%d-%m") + "_a_" + trabalhos.first.data.strftime("%d-%m") + "_" + user.username.gsub(/\./, '_') + ".xlsx"

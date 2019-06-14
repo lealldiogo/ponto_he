@@ -6,11 +6,12 @@ class PagesController < ApplicationController
     if current_user.admin?
       redirect_to admin_path
     else
+      periodo = params_para_data(params)
       # Opção 1: find_or_create_by
       @trabalhos = []
-      3.times do |i|
+      ((periodo[1]-periodo[0]).to_i + 1).times do |i|
         # Ache ou crie um trabalho do usuário para a data
-        @trabalhos << Trabalho.find_or_create_by(data: Date.today - i, user_id: current_user.id)
+        @trabalhos << Trabalho.find_or_create_by(data: periodo[1] - i, user_id: current_user.id)
       end
       # Checar quais alertas (? precisa ?)
     end

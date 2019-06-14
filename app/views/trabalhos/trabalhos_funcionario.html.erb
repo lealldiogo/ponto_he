@@ -1,0 +1,87 @@
+<div class="container">
+  <h1>JORNADAS FUNCIONÁRIO <%= @funcionario.nome_completo %> (<%= @funcionario.apelido %>)</h1>
+<!--   <div class="row justify-content-center align-items-center">
+  </div> -->
+
+  <%= render 'shared/datas_tecon', reload_path: trabalhos_funcionario_path, cabecalho: nil %>
+
+  <table class="table">
+
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Dia da Semana</th>
+        <th scope="col">Data de Entrada</th>
+        <th scope="col">Fez Hora Extra?</th>
+        <th scope="col">Hora de Entrada</th>
+        <th scope="col">Hora de Saída</th>
+        <th scope="col">Obra</th>
+        <th scope="col">Veículo</th>
+        <th scope="col">Valor H.E</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @trabalhos.each do |trab| %>
+
+        <% case trab.data.strftime("%A") %>
+        <% when "Saturday" %>
+        <%  dia_da_semana ="Sábado" %>
+        <% when "Sunday" %>
+        <%  dia_da_semana ="Domingo" %>
+        <% when "Monday" %>
+        <%  dia_da_semana ="Segunda-feira" %>
+        <% when "Tuesday" %>
+        <%  dia_da_semana ="Terça-feira" %>
+        <% when "Wednesday" %>
+        <%  dia_da_semana ="Quarta-feira" %>
+        <% when "Thursday" %>
+        <%  dia_da_semana ="Quinta-feira" %>
+        <% when "Friday" %>
+        <%  dia_da_semana ="Sexta-feira" %>
+        <% end %>
+
+        <% if trab.status == "Pendente" %>
+          <% bg_color = "trabalho-pendente" %>
+        <% elsif trab.status == "Enviado" %>
+          <% bg_color = "trabalho-enviado" %>
+        <% elsif trab.status == "Validado" %>
+          <% bg_color = "trabalho-validado" %>
+        <% end %>
+
+        <tr class="<%=bg_color%>">
+          <% if trab.status == "Pendente" %>
+            <td><%= "-" %></td>
+            <td><%= "-" %></td>
+            <td><%= "-" %></td>
+            <td><%= "-" %></td>
+            <td><%= "-" %></td>
+            <td><%= "-" %></td>
+            <td><%= "-" %></td>
+            <td><%= "-" %></td>
+            <td><%= trab.status %></td>
+          <% else %>
+            <%= simple_form_for trab, url: admin_trabalho_path(trab) do |f| %>
+              <td><%= dia_da_semana %></td>
+              <td><%= trab.data.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden %></td>
+              <td><%= f.input :sem_he, label: "Não fez hora extra neste dia", as: :boolean %></td>
+              <!-- , input_html: { value: trab.data } -->
+              <td><%= f.input :entrada, {minute_step: 30} %></td>
+              <td><%= f.input :saida, {minute_step: 30}  %></td>
+              <td><%= f.association :obra, label_method: :nome, value_method: :id %></td>
+              <td><%= f.association :veiculo, label_method: :nome, value_method: :id %></td>
+              <%= f.association :user, as: :hidden, input_html: { value: @funcionario.id } %>
+              <td><%= f.input :valor_he  %></td>
+              <td>
+                <%= trab.status %>
+                <br>
+                <%= f.button :submit, "Atualizar" %>
+              </td>
+            <% end %>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= link_to "Voltar", @funcionario.equipe == "Recife" ? recife_path : paraiba_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+</div>

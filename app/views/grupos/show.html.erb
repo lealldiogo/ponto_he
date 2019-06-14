@@ -1,0 +1,10 @@
+<div class="container">
+  <h1>GRUPO <%= @grupo.nome %></h1>
+  <% @grupo.users.each do |user| %>
+    <div class="col-xs-12" style="padding-bottom: 10px">
+      <p class= "btn btn-primary btn-block" style= "font-weight: bold"><%= user.nome_completo %></p>
+    </div>
+  <% end %>
+  <%= link_to "Voltar", grupos_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+</div>
+

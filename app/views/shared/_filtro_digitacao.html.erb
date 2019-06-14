@@ -1,0 +1,19 @@
+<div class="filtro col-xs-12" style="padding-bottom: 10px">
+  <input type="text" class="form-control">
+</div>
+
+<script>
+  $(document).ready(function(){
+    $('.filtro input').keyup(function() {
+      var str_filt = $(this).val();
+      $('.itens').each(function() {
+        var str_ref = $(this).find(".referencia-filt").text();
+        if (retira_acentos(str_ref.toLowerCase().substr(0,str_filt.length)) == retira_acentos(str_filt.toLowerCase())) {
+          $(this).show();
+        } else {
+          $(this).hide();
+        }
+      });
+    });
+  });
+</script>

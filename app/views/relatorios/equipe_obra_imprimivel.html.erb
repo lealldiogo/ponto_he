@@ -1,0 +1,44 @@
+<div id="page">
+  <% rows = @funcionarios.size + 5 %>
+  <% columns = 3 %>
+  <div class="text-center" style="display: grid; grid-template: repeat(<%= rows %>, 1fr) / repeat(<%= columns %>, 1fr);">
+    <div class="titulo-equipe">
+      H.E - <%= @cabecalho %> <%= @periodo[0].strftime("%d/%m") %> a <%= @periodo[1].strftime("%d/%m") %> pago em __/__/2019
+    </div>
+    <div class="declara">
+      RECEBEMOS DA TECON ENGENHARIA O VALOR ABAIXO REFERENTE ÀS HORAS EXTRAS
+      <br>
+      ASSINATURAS
+    </div>
+    <div class="funcionarios">
+      FUNCIONÁRIOS
+    </div>
+    <div class="valor-cab">
+      VALOR
+    </div>
+    <% moa_somas = 0 %>
+    <% i = 0 %>
+    <% @funcionarios.each do |func| %>
+      <% soma_func = soma_he_funcionario(func, @periodo) %>
+      <div class="nome-funcionario" style="grid-row: <%= i + 4 %> / <%= i + 5 %>;">
+        <%= func.nome_completo %>
+      </div>
+      <div class="valores" style="grid-row: <%= i + 4 %> / <%= i + 5 %>;">
+        <%= soma_func %>
+      </div>
+      <div class="celula-vazia" style="grid-row: <%= i + 4 %> / <%= i + 5 %>; grid-column: 3 / 4 ;" >
+        </div>
+      <% moa_somas += soma_func %>
+      <% i += 1 %>
+    <% end %>
+    <div class="total" style="grid-row: <%= rows - 1 %> / <%= rows + 1 %>;">
+      TOTAL:
+    </div>
+    <div class="somatorio-total" style="grid-row: <%= rows - 1 %> / <%= rows + 1 %>;" >
+      <%= moa_somas %>
+    </div>
+    <div class="quitacao" style="grid-row: <%= rows - 1 %> / <%= rows + 1 %>;" >
+      O QUAL ACUSAMOS RECEBIMENTO, E DAMOS PLENA E TOTAL QUITAÇÃO
+    </div>
+  </div>
+</div>
