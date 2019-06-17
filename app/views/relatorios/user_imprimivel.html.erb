@@ -1,6 +1,6 @@
 <div id="page">
-  <% rows = (@periodo[1]-@periodo[0]).to_i + 4 %>
-  <% columns = 16 %>
+  <% rows = (@periodo[1]-@periodo[0]).to_i + 5 %>
+  <% columns = 18 %>
   <div class="text-center" style="display: grid; grid-template: repeat(<%= rows %>, 1fr) / repeat(<%= columns %>, 1fr);">
     <div class="titulo-funcionario">
       H.EXTRA
@@ -11,9 +11,9 @@
     <div class="empregado">
       EMPREGADO
     </div>
-    <div class="celula-vazia" style="grid-row: 2 / 3; grid-column: 3 / 17;">
+    <div class="celula-vazia" style="grid-row: 2 / 3; grid-column: 3 / 19;">
       <!-- Mudar para objeto usuario -->
-      RONALDO LIMA
+      <%= @funcionario.nome_completo %>
     </div>
     <div class="mes-data">
       <%= @periodo[0].strftime("%b/%y") %>
@@ -31,14 +31,25 @@
       <div class="dia-data" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;">
         <%= (@periodo[1] - i).strftime("%d/%m") %>
       </div>
-      <% 4.times do |c| %>
+      <% 5.times do |c| %>
         <div class="celula-vazia" style="grid-row: <%= i + 5 %> / <%= i + 6 %>; grid-column: <%= 2*c + 3 %> / <%= 2*c + 5 %>;" >
         </div>
       <% end %>
       <% 2.times do |x| %>
-      <div class="celula-vazia" style="grid-row: <%= i + 5 %> / <%= i + 6 %>; grid-column: <%= 3*x + 11 %> / <%= 3*x + 14 %>;" >
+      <div class="celula-vazia" style="grid-row: <%= i + 5 %> / <%= i + 6 %>; grid-column: <%= 3*x + 13 %> / <%= 3*x + 16 %>;" >
         </div>
       <% end %>
+    <% end %>
+    <div class="valor-total" style="grid-row: <%= 6 + (@periodo[1]-@periodo[0]).to_i %> / <%= 7 + (@periodo[1]-@periodo[0]).to_i %>;">
+      VALOR TOTAL
+    </div>
+    <% 5.times do |c| %>
+      <div class="celula-vazia" style="grid-row: <%= 6 + (@periodo[1]-@periodo[0]).to_i %> / <%= 7 + (@periodo[1]-@periodo[0]).to_i %>; grid-column: <%= 2*c + 3 %> / <%= 2*c + 5 %>;" >
+      </div>
+    <% end %>
+    <% 2.times do |x| %>
+    <div class="celula-vazia" style="grid-row: <%= 6 + (@periodo[1]-@periodo[0]).to_i %> / <%= 7 + (@periodo[1]-@periodo[0]).to_i %>; grid-column: <%= 3*x + 13 %> / <%= 3*x + 16 %>;" >
+      </div>
     <% end %>
     <div class="entrada">
       ENTRADA
@@ -46,11 +57,14 @@
     <div class="saida">
       SAIDA
     </div>
+    <div class="obras-rel">
+      OBRA
+    </div>
     <div class="total-he">
       TOT.HE
     </div>
-    <div class="obras-rel">
-      OBRAS
+    <div class="valor-he">
+      VALOR.HE
     </div>
     <div class="assinatura">
       ASSINATURA

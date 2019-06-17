@@ -6,6 +6,7 @@ class RelatoriosController < ApplicationController
 
   def user_imprimivel
     @periodo = params_para_data(params)
+    @funcionario = User.find(params[:id])
   end
 
   def relatorios_recife
