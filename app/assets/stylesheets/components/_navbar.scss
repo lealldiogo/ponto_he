@@ -1,7 +1,14 @@
 .navbar {
+  display: flex;
   justify-content: space-between;
   background: $blue;
+  align-items: center;
   flex-grow: 0;
+  height: 40px;
+}
+
+.nav-item {
+  flex: 1 1 auto;
 }
 
 // .navbar-lewagon .navbar-brand img {

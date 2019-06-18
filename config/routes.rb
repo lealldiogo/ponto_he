@@ -29,7 +29,7 @@ Rails.application.routes.draw do
 
   get "trabalhos_funcionario/:id", to: 'trabalhos#trabalhos_funcionario', as: :trabalhos_funcionario
 
-  get "user_imprimivel", to: 'relatorios#user_imprimivel'
+  get "user_imprimivel/:id", to: 'relatorios#user_imprimivel', as: :user_imprimivel
   get "relatorios_recife", to: 'relatorios#relatorios_recife'
   get "equipe_obra_imprimivel", to: 'relatorios#equipe_obra_imprimivel'
   get "relatorios_paraiba", to: 'relatorios#relatorios_paraiba'

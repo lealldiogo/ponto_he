@@ -1,14 +1,13 @@
 <div class="navbar">
-  <% if current_user.nil? %>
-    <%= cl_image_tag("Logo1", height: 40, crop: :fill) %>
-  <% else %>
-    <p>Olá, <%= current_user.nome_completo %></p>
+  <% unless current_user.nil? %>
+    <p class="nav-item">Olá, <%= current_user.nome_completo %></p>
+    <%= link_to "SAIR", destroy_user_session_path, class: "btn btn-default nav-item", style: "font-weight: bold", method: :delete %>
   <% end %>
   <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
+    <%#= cl_image_tag("Logo1", height: 40, crop: :fill) %>
     <!-- <ul class="navbar-nav mr-auto">
 
       <li class="nav-item"> -->
-        <%= link_to "SAIR", destroy_user_session_path, class: "btn btn-default", style: "font-weight: bold", method: :delete %>
 <!--       </li>
     </ul> -->
   <!-- </div> -->

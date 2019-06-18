@@ -4,11 +4,15 @@ class TrabalhosController < ApplicationController
 
   def trabalhos_funcionario
     @funcionario = User.find(params[:id])
-    periodo = params_para_data(params)
-    @trabalhos = []
-    ((periodo[1]-periodo[0]).to_i + 1).times do |i|
-      # Ache ou crie um trabalho do usuário para a data
-      @trabalhos << Trabalho.find_or_create_by(data: periodo[1] - i, user_id: @funcionario.id)
+    if params[:commit] == "Relatório"
+      redirect_to user_imprimivel_path(@funcionario, fim: params[:fim], inicio: params[:inicio])
+    else
+      periodo = params_para_data(params)
+      @trabalhos = []
+      ((periodo[1]-periodo[0]).to_i + 1).times do |i|
+        # Ache ou crie um trabalho do usuário para a data
+        @trabalhos << Trabalho.find_or_create_by(data: periodo[1] - i, user_id: @funcionario.id)
+      end
     end
   end
 
