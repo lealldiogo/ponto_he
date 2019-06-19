@@ -21,8 +21,11 @@ class Trabalho < ApplicationRecord
   protected
 
   def atualizar_status
+    # byebug
     if self.status == "Pendente"
       self.status = "Enviado"
+    elsif self.status == "Enviado"
+      self.status = "Validado"
     end
   end
 

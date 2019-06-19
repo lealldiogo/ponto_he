@@ -1,4 +1,4 @@
-<div class="navbar">
+<div class="navbar-tecon">
   <% unless current_user.nil? %>
     <p class="nav-item">Olá, <%= current_user.nome_completo %></p>
     <%= link_to "SAIR", destroy_user_session_path, class: "btn btn-default nav-item", style: "font-weight: bold", method: :delete %>

@@ -31,8 +31,27 @@
       <div class="dia-data" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;">
         <%= (@periodo[1] - i).strftime("%d/%m") %>
       </div>
-      <% 5.times do |c| %>
-        <div class="celula-vazia" style="grid-row: <%= i + 5 %> / <%= i + 6 %>; grid-column: <%= 2*c + 3 %> / <%= 2*c + 5 %>;" >
+      <% if @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).sem_he || @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).status == "Pendente" %>
+        <% 5.times do |c| %>
+          <div class="celula-vazia" style="grid-row: <%= i + 5 %> / <%= i + 6 %>; grid-column: <%= 2*c + 3 %> / <%= 2*c + 5 %>;" >
+            -
+        </div>
+        <% end %>
+      <% else %>
+        <div class="dia-entrada" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;" >
+          <%= @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).entrada.strftime("%H:%M") %>
+        </div>
+        <div class="dia-saida" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;" >
+          <%= @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).saida.strftime("%H:%M") %>
+        </div>
+        <div class="dia-he" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;" >
+          <%= @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).horas_extras %>
+        </div>
+        <div class="dia-valor" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;" >
+          <%= @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).valor_he %>
+        </div>
+        <div class="dia-obra" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;" >
+          <%= @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).obra.nome %>
         </div>
       <% end %>
       <% 2.times do |x| %>

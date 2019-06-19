@@ -43,17 +43,19 @@ class TrabalhosController < ApplicationController
   def admin_update
     @trabalho = Trabalho.find(params[:id])
     if @trabalho.update(admin_trabalho_params)
-      if @trabalho.user.equipe == "Recife"
-        redirect_to recife_path, info: "Horas extras validadas com sucesso"
-      else
-        redirect_to paraiba_path, info: "Horas extras validadas com sucesso"
-      end
+      redirect_to trabalhos_funcionario_path(@trabalho.user), info: "Horas extras validadas com sucesso"
+      # if @trabalho.user.equipe == "Recife"
+      #   redirect_to recife_path, info: "Horas extras validadas com sucesso"
+      # else
+      #   redirect_to paraiba_path, info: "Horas extras validadas com sucesso"
+      # end
     else
-      if @trabalho.user.equipe == "Recife"
-        redirect_to recife_path, info: "Algo deu errado... por favor, tente de novo"
-      else
-        redirect_to paraiba_path, info: "Algo deu errado... por favor, tente de novo"
-      end
+      redirect_to trabalhos_funcionario_path(@trabalho.user), info: "Algo deu errado... por favor, tente de novo"
+      # if @trabalho.user.equipe == "Recife"
+      #   redirect_to recife_path, info: "Algo deu errado... por favor, tente de novo"
+      # else
+      #   redirect_to paraiba_path, info: "Algo deu errado... por favor, tente de novo"
+      # end
     end
   end
 
