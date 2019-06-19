@@ -48,7 +48,7 @@
           <%= @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).horas_extras %>
         </div>
         <div class="dia-valor" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;" >
-          <%= @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).valor_he %>
+          <%= valor_he_dia(@funcionario, @funcionario.trabalhos.find_by(data: (@periodo[1] - i))) %>
         </div>
         <div class="dia-obra" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;" >
           <%= @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).obra.nome %>

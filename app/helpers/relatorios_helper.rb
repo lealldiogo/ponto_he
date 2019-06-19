@@ -8,4 +8,8 @@ module RelatoriosHelper
     end
     return soma
   end
+
+  def valor_he_dia(funcionario,trabalho)
+    (funcionario.salario/220) * trabalho.horas_extras * ((trabalho.valor_he+100)/100)
+  end
 end
