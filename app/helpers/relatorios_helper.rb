@@ -4,7 +4,7 @@ module RelatoriosHelper
     trabalhos_periodo = func.trabalhos.where(data: range_periodo)
     soma = 0.0
     trabalhos_periodo.each do |trab|
-      soma += trab.horas_extras
+      soma += (func.salario/220) * trab.horas_extras * ((trab.valor_he+100)/100)
     end
     return soma
   end

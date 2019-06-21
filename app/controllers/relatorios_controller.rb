@@ -1,16 +1,10 @@
 class RelatoriosController < ApplicationController
   helper RelatoriosHelper
-
-  def relatorios
-  end
+  layout "imprimivel"
 
   def user_imprimivel
     @periodo = params_para_data(params)
     @funcionario = User.find(params[:id])
-  end
-
-  def relatorios_recife
-
   end
 
   def equipe_obra_imprimivel
@@ -30,18 +24,6 @@ class RelatoriosController < ApplicationController
     end
   end
 
-  def relatorios_paraiba
-
-  end
-
-  def relatorios_obra
-    @obra = Obra.find(params[:id])
-  end
-
-  def obras_para_relatorios
-    @obras = Obra.all
-  end
-
   def user_relatorio
     @user = User.find(params[:id])
   end
@@ -59,7 +41,6 @@ class RelatoriosController < ApplicationController
     #   format.xlsx {render xlsx: "relatorios/baixar_relatorio", filename: "trabalhos.xlsx"}
     # end
   end
-
 
   def nome_do_arquivo(user, trabalhos)
     nome_do_arquivo = trabalhos.last.data.strftime("%d-%m") + "_a_" + trabalhos.first.data.strftime("%d-%m") + "_" + user.username.gsub(/\./, '_') + ".xlsx"

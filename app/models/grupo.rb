@@ -35,8 +35,7 @@ class Grupo < ApplicationRecord
         trabalhos << Trabalho.find_or_create_by(data: self.fim_exce - i, user_id: func.id)
       end
       trabalhos.each do |trab|
-        trab.valor_he = self.valor_he_exce
-        trab.save!
+        trab.update_columns(valor_he: self.valor_he_exce)
       end
     end
   end
