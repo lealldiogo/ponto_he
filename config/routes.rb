@@ -23,20 +23,20 @@ Rails.application.routes.draw do
   get "recife", to: 'trabalhos#recife'
   get "paraiba", to: 'trabalhos#paraiba'
 
-  get "user_relatorio/:id", to: 'relatorios#user_relatorio', as: :user_relatorio
-  get "relatorios", to: 'relatorios#relatorios'
-  get "baixar_relatorio", to: 'relatorios#baixar_relatorio'
 
   get "trabalhos_funcionario/:id", to: 'trabalhos#trabalhos_funcionario', as: :trabalhos_funcionario
 
-  get "user_imprimivel", to: 'relatorios#user_imprimivel'
-  get "relatorios_recife", to: 'relatorios#relatorios_recife'
+  get "user_imprimivel/:id", to: 'relatorios#user_imprimivel', as: :user_imprimivel
   get "equipe_obra_imprimivel", to: 'relatorios#equipe_obra_imprimivel'
-  get "relatorios_paraiba", to: 'relatorios#relatorios_paraiba'
 
-  get "obras_para_relatorios", to: 'relatorios#obras_para_relatorios'
-  get "relatorios_obra/:id", to: 'relatorios#relatorios_obra', as: :relatorios_obra
+  get "relatorios", to: 'pages#relatorios'
+  get "relatorios_recife", to: 'pages#relatorios_recife'
+  get "relatorios_paraiba", to: 'pages#relatorios_paraiba'
+  get "obras_para_relatorios", to: 'pages#obras_para_relatorios'
+  get "relatorios_obra/:id", to: 'pages#relatorios_obra', as: :relatorios_obra
 
+  get "user_relatorio/:id", to: 'relatorios#user_relatorio', as: :user_relatorio
+  get "baixar_relatorio", to: 'relatorios#baixar_relatorio'
 
   get "test", to: 'pages#test'
 end

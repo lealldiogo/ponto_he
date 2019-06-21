@@ -19,22 +19,22 @@ Obra.destroy_all
 Veiculo.destroy_all
 User.destroy_all
 
-gestor = User.new(admin: true, username: "julio.ribeiro", password: "123456")
+gestor = User.new(admin: true, username: "julio.ribeiro", password: "123456", nome_completo: "Julio Ribeiro")
 gestor.save!
 
-dev = User.new(admin: true, username: "diogo.leal", password: "123456")
+dev = User.new(admin: true, username: "diogo.leal", password: "123456", nome_completo: "Diogo Leal")
 dev.save!
 
-joao = User.new(username: "joao.pedreiro", password: "123456", cargo: "Pedreiro", equipe: "Paraíba", nome_completo: "João Silva", apelido: "careca")
+joao = User.new(username: "joao.pedreiro", password: "123456", cargo: "Pedreiro", equipe: "Paraíba", nome_completo: "João Silva", apelido: "careca", salario: 1500)
 joao.save!
 
-pedro = User.new(username: "pedro.pedreiro", password: "123456", cargo: "Pedreiro", equipe: "Recife", nome_completo: "Pedro dos Santos", apelido: "rato")
+pedro = User.new(username: "pedro.pedreiro", password: "123456", cargo: "Pedreiro", equipe: "Recife", nome_completo: "Pedro dos Santos", apelido: "rato", salario: 1500)
 pedro.save!
 
-jose = User.new(username: "jose.servente", password: "123456", cargo: "Servente", equipe: "Paraíba", nome_completo: "José Ferreira", apelido: "pança")
+jose = User.new(username: "jose.servente", password: "123456", cargo: "Servente", equipe: "Paraíba", nome_completo: "José Ferreira", apelido: "pança", salario: 2500)
 jose.save!
 
-ronaldo = User.new(username: "ronaldo.servente", password: "123456", cargo: "Servente", equipe: "Recife", nome_completo: "Ronaldo Lima", apelido: "bigode")
+ronaldo = User.new(username: "ronaldo.servente", password: "123456", cargo: "Servente", equipe: "Recife", nome_completo: "Ronaldo Lima", apelido: "bigode", salario: 2500)
 ronaldo.save!
 
 obra1 = Obra.new(nome: "Galpão")

@@ -1,20 +1,39 @@
 <div class="row">
   <%= form_tag reload_path, method: :get, class: "form-group", autocomplete: "off" do %>
     <input type="hidden" autocomplete="false">
-    <div class="col-xs-3 datas-tecon">
-      <p>Início</p>
-      <input type="text" name="inicio" class="form-control">
+    <div class="col-xs-3 text-right">
+      <p><strong>Filtrar datas</strong></p>
     </div>
     <div class="col-xs-3 datas-tecon">
-      <p>Fim</p>
-      <input type="text" name="fim" class="form-control">
+      <!-- <p>Início</p> -->
+      <input type="text" name="inicio" placeholder="Início" class="form-control">
     </div>
-    <% if cabecalho.present? %>
+    <div class="col-xs-3 datas-tecon">
+      <!-- <p>Fim</p> -->
+      <input type="text" name="fim" placeholder="Fim" class="form-control">
+    </div>
+    <% if ((cabecalho.present?) && (cabecalho != "FUNC")) %>
       <input type="hidden" name="cabecalho" value="<%= cabecalho %>" >
+      <div class="col-xs-3">
+        <%= submit_tag "Aplicar", class: 'btn btn-primary'%>
+      </div>
+    <% elsif ((cabecalho.present?) && (cabecalho == "FUNC")) %>
+      <div class="col-xs-3">
+        <div class="row">
+          <div class="col-xs-6">
+            <%= submit_tag "Aplicar", class: 'btn btn-primary'%>
+          </div>
+          <div class="col-xs-6">
+            <input type="hidden" name="id" value="<%= @funcionario.id %>" >
+            <%= submit_tag "Relatório", class: 'btn btn-primary'%>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <div class="col-xs-3">
+        <%= submit_tag "Aplicar", class: 'btn btn-primary'%>
+      </div>
     <% end %>
-    <div class="col-xs-3">
-      <%= submit_tag "Aplicar", class: 'btn btn-primary' %>
-    </div>
   <% end %>
 </div>
 <%#= javascript_include_tag 'datas_tecon' %>

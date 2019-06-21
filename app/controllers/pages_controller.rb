@@ -30,4 +30,26 @@ class PagesController < ApplicationController
 
   def admin
   end
+
+  def relatorios
+
+  end
+
+  def relatorios_recife
+
+  end
+
+  def relatorios_paraiba
+
+  end
+
+  def relatorios_obra
+    @obra = Obra.find(params[:id])
+  end
+
+  def obras_para_relatorios
+    @obras = Obra.all
+  end
+
+
 end

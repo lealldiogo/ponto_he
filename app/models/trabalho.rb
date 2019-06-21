@@ -13,15 +13,19 @@ class Trabalho < ApplicationRecord
   validates :entrada, presence: true, on: :update, unless: :sem_hora_extra?
   validates :saida, presence: true, on: :update, unless: :sem_hora_extra?
 
-  before_update :valor_he_padrao
+  # check how to handle valor_he correctly
+  before_create :valor_he_padrao
   before_update :calcular_jornada
   before_update :atualizar_status
 
   protected
 
   def atualizar_status
+    # byebug
     if self.status == "Pendente"
       self.status = "Enviado"
+    elsif self.status == "Enviado"
+      self.status = "Validado"
     end
   end
 
@@ -56,26 +60,28 @@ class Trabalho < ApplicationRecord
     #TODO: criar array com datas dos feriados no recife e na paraíba(ignorar municipais nesse caso?)
     #TODO: adicionar um include?(self.data) como condição para valor_he = 100%
     # feriados = Feriado.all
-    if self.user.grupos.any?
-      data_exce = false
-      self.user.grupos.each do |grupo|
-        if (self.data >= grupo.inicio_exce) && (self.data <= grupo.fim_exce)
-          self.valor_he = grupo.valor_he_exce
-          data_exce = true
-        end
-      end
+    # if self.user.grupos.any?
+    #   data_exce = false
+    #   self.user.grupos.each do |grupo|
+    #     if (self.data >= grupo.inicio_exce) && (self.data <= grupo.fim_exce)
+    #       self.valor_he = grupo.valor_he_exce
+    #       data_exce = true
+    #     end
+    #   end
+    # end
+    # if data_exce == false
+    if self.data.strftime("%A") == "Sunday"
+      self.valor_he = 100
+    elsif self.data.strftime("%A") == "Saturday"
+      self.valor_he = 70
+    else
+      # if feriados.include?(self.data)
+        # self.valor_he = 100
+      # else
+      self.valor_he = 50
+      # end
     end
-    if data_exce == false
-      if self.data.strftime("%A") == "Sunday"
-        self.valor_he = 100
-      else
-        # if feriados.include?(self.data)
-          # self.valor_he = 100
-        # else
-        self.valor_he = 70
-        # end
-      end
-    end
+    # end
   end
 
   def condicoes_data

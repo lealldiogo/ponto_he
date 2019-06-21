@@ -1,8 +1,13 @@
 <div class="container">
   <h1>PARAÍBA</h1>
   <div class="row justify-content-center align-items-center">
-    <% @funcionarios.each do |func| %>
-      <%=  render 'trabalhos/infos_funcionario', funcionario: func %>
+    <% @funcionarios.each do |funcionario| %>
+      <% if verificar_pendencia(funcionario) %>
+        <%= link_to funcionario.apelido, trabalhos_funcionario_path(funcionario), class: "trabalho-pendente btn btn-primary btn-block", style: "font-weight: bold" %>
+      <% else %>
+        <%= link_to funcionario.apelido, trabalhos_funcionario_path(funcionario), class: "trabalho-validado btn btn-primary btn-block", style: "font-weight: bold" %>
+      <% end %>
+      <%#=  render 'trabalhos/infos_funcionario', funcionario: func %>
     <% end %>
   </div>
   <%= link_to "Voltar", admin_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>

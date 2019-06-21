@@ -3,7 +3,7 @@
   <!-- <p>Bem vindo, <%#= current_user.username %></p> -->
   <h4 class="text-center">QUANDO TERMINAR O APONTAMENTO DE HORAS, FINALIZE A SESSÃO APERTANDO O BOTÃO "SAIR" NO FIM DA PÁGINA</h4>
 
-  <%= render 'shared/datas_tecon', reload_path: apontamento_path %>
+  <%= render 'shared/datas_tecon', reload_path: apontamento_path, cabecalho: "" %>
 
   <table class="table">
 
@@ -86,5 +86,5 @@
     </tbody>
   </table>
 
-  <%= link_to "SAIR", destroy_user_session_path, class: "btn btn-default btn-block", style: "font-weight: bold", method: :delete %>
+  <%#= link_to "SAIR", destroy_user_session_path, class: "btn btn-default btn-block", style: "font-weight: bold", method: :delete %>
 </div>

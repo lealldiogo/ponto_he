@@ -4,11 +4,15 @@ class TrabalhosController < ApplicationController
 
   def trabalhos_funcionario
     @funcionario = User.find(params[:id])
-    periodo = params_para_data(params)
-    @trabalhos = []
-    ((periodo[1]-periodo[0]).to_i + 1).times do |i|
-      # Ache ou crie um trabalho do usuário para a data
-      @trabalhos << Trabalho.find_or_create_by(data: periodo[1] - i, user_id: @funcionario.id)
+    if params[:commit] == "Relatório"
+      redirect_to user_imprimivel_path(@funcionario, fim: params[:fim], inicio: params[:inicio])
+    else
+      periodo = params_para_data(params)
+      @trabalhos = []
+      ((periodo[1]-periodo[0]).to_i + 1).times do |i|
+        # Ache ou crie um trabalho do usuário para a data
+        @trabalhos << Trabalho.find_or_create_by(data: periodo[1] - i, user_id: @funcionario.id)
+      end
     end
   end
 
@@ -39,17 +43,19 @@ class TrabalhosController < ApplicationController
   def admin_update
     @trabalho = Trabalho.find(params[:id])
     if @trabalho.update(admin_trabalho_params)
-      if @trabalho.user.equipe == "Recife"
-        redirect_to recife_path, info: "Horas extras validadas com sucesso"
-      else
-        redirect_to paraiba_path, info: "Horas extras validadas com sucesso"
-      end
+      redirect_to trabalhos_funcionario_path(@trabalho.user), info: "Horas extras validadas com sucesso"
+      # if @trabalho.user.equipe == "Recife"
+      #   redirect_to recife_path, info: "Horas extras validadas com sucesso"
+      # else
+      #   redirect_to paraiba_path, info: "Horas extras validadas com sucesso"
+      # end
     else
-      if @trabalho.user.equipe == "Recife"
-        redirect_to recife_path, info: "Algo deu errado... por favor, tente de novo"
-      else
-        redirect_to paraiba_path, info: "Algo deu errado... por favor, tente de novo"
-      end
+      redirect_to trabalhos_funcionario_path(@trabalho.user), info: "Algo deu errado... por favor, tente de novo"
+      # if @trabalho.user.equipe == "Recife"
+      #   redirect_to recife_path, info: "Algo deu errado... por favor, tente de novo"
+      # else
+      #   redirect_to paraiba_path, info: "Algo deu errado... por favor, tente de novo"
+      # end
     end
   end
 
