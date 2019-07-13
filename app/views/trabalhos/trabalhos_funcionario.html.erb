@@ -1,3 +1,6 @@
+<%= content_for :botao_voltar do %>
+  <%= link_to "<", @funcionario.equipe == "Recife" ? recife_path : paraiba_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+<% end %>
 <div class="container">
   <h1>JORNADAS FUNCIONÁRIO <%= @funcionario.nome_completo %> (<%= @funcionario.apelido %>)</h1>
 <!--   <div class="row justify-content-center align-items-center">
@@ -83,5 +86,5 @@
       <% end %>
     </tbody>
   </table>
-  <%= link_to "Voltar", @funcionario.equipe == "Recife" ? recife_path : paraiba_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+  <%#= link_to "Voltar", @funcionario.equipe == "Recife" ? recife_path : paraiba_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
 </div>

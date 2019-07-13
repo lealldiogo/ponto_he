@@ -1,3 +1,6 @@
+<%= content_for :botao_voltar do %>
+  <%= link_to "<", admin_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+<% end %>
 <div class="container">
   <h1>OBRAS</h1>
   <div class="row">
@@ -13,7 +16,7 @@
   </div>
   <div class="row">
     <div class="col-xs-12" >
-      <%= link_to "Voltar", admin_path, class: "btn btn-danger btn-block", style: "font-weight: bold" %>
+      <%#= link_to "Voltar", admin_path, class: "btn btn-danger btn-block", style: "font-weight: bold" %>
     </div>
   </div>
 </div>
