@@ -20,9 +20,9 @@ Rails.application.routes.draw do
   get "admin", to: 'pages#admin'
   get "cadastros", to: 'users#cadastros'
 
+  get "equipes", to: 'pages#equipes'
   get "recife", to: 'trabalhos#recife'
   get "paraiba", to: 'trabalhos#paraiba'
-
 
   get "trabalhos_funcionario/:id", to: 'trabalhos#trabalhos_funcionario', as: :trabalhos_funcionario
 

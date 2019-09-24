@@ -10,7 +10,7 @@
       <%= f.input :apelido, required: true, autofocus: true %>
       <%= f.input :cargo, required: true, autofocus: true %>
       <%= f.input :salario, label: "Salário", required: true, autofocus: true %>
-      <%= f.input :equipe, required: true, autofocus: true %>
+      <%= f.input :equipe, collection: ["Recife", "Paraíba"] ,required: true, autofocus: true %>
       <%= f.input :password, required: true, hint: ("Mínimo de #{@minimum_password_length} caracteres" if @minimum_password_length) %>
       <%= f.input :password_confirmation, required: true %>
       <%= f.input :admin, label: "Gestor?", required: true, autofocus: true %>

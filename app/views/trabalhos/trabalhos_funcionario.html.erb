@@ -69,8 +69,8 @@
               <td><%= trab.data.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden %></td>
               <td><%= f.input :sem_he, label: "Não fez hora extra neste dia", as: :boolean %></td>
               <!-- , input_html: { value: trab.data } -->
-              <td><%= f.input :entrada, {minute_step: 30} %></td>
-              <td><%= f.input :saida, {minute_step: 30}  %></td>
+              <td><%= f.input :entrada %></td>
+              <td><%= f.input :saida %></td>
               <td><%= f.association :obra, label_method: :nome, value_method: :id %></td>
               <td><%= f.association :veiculo, label_method: :nome, value_method: :id %></td>
               <%= f.association :user, as: :hidden, input_html: { value: @funcionario.id } %>

@@ -13,8 +13,10 @@ class User < ApplicationRecord
 
   validates :username, uniqueness: true
   validates :cargo, presence: true, unless: :admin?
-  validates :equipe, presence: true, unless: :admin?
   validates :nome_completo, presence: :true, unless: :admin?
+
+  validates :equipe, presence: true, unless: :admin?
+  validates :equipe, inclusion: { in: ["Recife", "Paraíba"] }
 
   def timeout_in
     return 1.year if admin?

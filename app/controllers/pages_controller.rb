@@ -43,6 +43,10 @@ class PagesController < ApplicationController
 
   end
 
+  def equipes
+
+  end
+
   def relatorios_obra
     @obra = Obra.find(params[:id])
   end

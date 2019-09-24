@@ -1,7 +1,7 @@
 <div class="container">
   <h1>Cadastro de Ponto</h1>
   <!-- <p>Bem vindo, <%#= current_user.username %></p> -->
-  <h4 class="text-center">QUANDO TERMINAR O APONTAMENTO DE HORAS, FINALIZE A SESSÃO APERTANDO O BOTÃO "SAIR" NO FIM DA PÁGINA</h4>
+  <h4 class="text-center">QUANDO TERMINAR O APONTAMENTO DE HORAS, FINALIZE A SESSÃO APERTANDO O BOTÃO "SAIR" NO TOPO DA PÁGINA</h4>
 
   <%= render 'shared/datas_tecon', reload_path: apontamento_path, cabecalho: "" %>
 
@@ -55,8 +55,8 @@
               <td><%= trab.data.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden %></td>
               <td><%= f.input :sem_he, label: "Não fiz hora extra neste dia", as: :boolean %></td>
               <!-- , input_html: { value: trab.data } -->
-              <td><%= f.input :entrada, {minute_step: 30} %></td>
-              <td><%= f.input :saida, {minute_step: 30}  %></td>
+              <td><%= f.input :entrada %></td>
+              <td><%= f.input :saida %></td>
               <td><%= f.association :obra, label_method: :nome, value_method: :id %></td>
               <td><%= f.association :veiculo, label_method: :nome, value_method: :id %></td>
 
