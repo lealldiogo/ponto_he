@@ -74,7 +74,7 @@
               <td><%= f.association :obra, label_method: :nome, value_method: :id %></td>
               <td><%= f.association :veiculo, label_method: :nome, value_method: :id %></td>
               <%= f.association :user, as: :hidden, input_html: { value: @funcionario.id } %>
-              <td><%= f.input :valor_he  %></td>
+              <td><%= f.input :valor_he, collection: [1.5, 1.7, 2] %></td>
               <td>
                 <%= trab.status %>
                 <br>

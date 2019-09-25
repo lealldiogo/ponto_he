@@ -13,6 +13,9 @@ class Trabalho < ApplicationRecord
   validates :entrada, presence: true, on: :update, unless: :sem_hora_extra?
   validates :saida, presence: true, on: :update, unless: :sem_hora_extra?
 
+  validates :valor_he, inclusion: { in: [1.5, 1.7, 2], allow_blank: true}, on: :create
+  validates :valor_he, inclusion: { in: [1.5, 1.7, 2], allow_blank: false}, on: :update
+
   # check how to handle valor_he correctly
   before_create :valor_he_padrao
   before_update :calcular_jornada
@@ -71,14 +74,14 @@ class Trabalho < ApplicationRecord
     # end
     # if data_exce == false
     if self.data.strftime("%A") == "Sunday"
-      self.valor_he = 100
+      self.valor_he = 2
     elsif self.data.strftime("%A") == "Saturday"
-      self.valor_he = 70
+      self.valor_he = 1.7
     else
       # if feriados.include?(self.data)
         # self.valor_he = 100
       # else
-      self.valor_he = 50
+      self.valor_he = 1.5
       # end
     end
     # end

@@ -55,6 +55,6 @@ veiculo2.save!
 veiculo3 = Veiculo.new(nome: "Ônibus")
 veiculo3.save!
 
-grupo1 = Grupo.new(valor_he_exce: 100, inicio_exce: Date.new(2019,04,15), fim_exce: Date.new(2019,05,15))
+grupo1 = Grupo.new(nome: "Seed", valor_he_exce: 2, inicio_exce: Date.new(2019,04,15), fim_exce: Date.new(2019,05,15))
 grupo1.users << [pedro, ronaldo]
 grupo1.save!

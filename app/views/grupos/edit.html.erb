@@ -7,10 +7,10 @@
 
       <div class="form-inputs">
         <%= f.input :nome, label: "Nome do Grupo",required: true, autofocus: true %>
-        <%= f.input :valor_he_exce, label: "Valor da Hora Extra",required: true, autofocus: true %>
+        <%= f.input :valor_he_exce, label: "Valor da Hora Extra", collection: [1.5, 1.7, 2], required: true, autofocus: true %>
         <%= f.input :inicio_exce, label: "Início",required: true, autofocus: true %>
         <%= f.input :fim_exce, label: "Fim",required: true, autofocus: true %>
-        <%= f.association :users, label: "Funcionários",required: true, autofocus: true %>
+        <%= f.association :users, as: :check_boxes, collection: User.where(admin: false), label: "Funcionários",label_method: :nome_completo,required: true, autofocus: true %>
       </div>
 
       <div class="form-actions">

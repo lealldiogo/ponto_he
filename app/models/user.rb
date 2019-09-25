@@ -16,7 +16,7 @@ class User < ApplicationRecord
   validates :nome_completo, presence: :true, unless: :admin?
 
   validates :equipe, presence: true, unless: :admin?
-  validates :equipe, inclusion: { in: ["Recife", "Paraíba"] }
+  validates :equipe, inclusion: { in: ["Recife", "Paraíba"] }, unless: :admin?
 
   def timeout_in
     return 1.year if admin?

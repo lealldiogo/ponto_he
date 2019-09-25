@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190604231504) do
+ActiveRecord::Schema.define(version: 20190924230925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20190604231504) do
     t.string   "nome"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.integer  "valor_he_exce"
+    t.float    "valor_he_exce"
     t.date     "inicio_exce"
     t.date     "fim_exce"
   end
@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20190604231504) do
   create_table "trabalhos", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "obra_id"
-    t.integer  "valor_he"
+    t.float    "valor_he"
     t.date     "data"
     t.time     "entrada"
     t.time     "saida"
