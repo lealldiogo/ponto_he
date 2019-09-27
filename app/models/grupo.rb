@@ -36,7 +36,6 @@ class Grupo < ApplicationRecord
         # Ache ou crie um trabalho do usuário para a data
         trabalhos << Trabalho.find_or_create_by(data: self.fim_exce - i, user_id: func.id)
       end
-      byebug
       trabalhos.each do |trab|
         trab.update_columns(valor_he: self.valor_he_exce)
       end

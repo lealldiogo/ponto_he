@@ -5,14 +5,12 @@ module RelatoriosHelper
     soma = 0.0
     trabalhos_periodo.each do |trab|
       byebug
-      soma += (func.salario/220) * trab.horas_extras * trab.valor_he
+      soma += (func.salario_cents.to_f/22000) * trab.horas_extras * trab.valor_he
     end
-    byebug
     return soma
   end
 
   def valor_he_dia(funcionario,trabalho)
-    byebug
-    return (funcionario.salario/220) * trabalho.horas_extras * trabalho.valor_he
+    return (funcionario.salario_cents.to_f/22000) * trabalho.horas_extras * trabalho.valor_he
   end
 end
