@@ -32,6 +32,9 @@ class Trabalho < ApplicationRecord
     end
   end
 
+  # Esse cálculo foi movido para o helper dos relatórios.
+  # Está sendo mantido aqui também até que essa modificação seja validada e
+  # a coluna horas_extras retirada da tabela trabalhos
   def calcular_jornada
     if self.entrada > self.saida
       if self.entrada.min > self.saida.min

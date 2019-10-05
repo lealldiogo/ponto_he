@@ -2,12 +2,18 @@ class Grupo < ApplicationRecord
   has_many :membros, dependent: :destroy
   has_many :users, through: :membros
 
+  attr_accessor :inicio_antigo
+  attr_accessor :fim_antigo
+
   validates :valor_he_exce, inclusion: { in: [1.5, 1.7, 2] }
 
   validate :inicio_ante_fim
   validate :overlap_periodos
 
-  after_create :criar_trabalhos
+  after_create :atualizar_trabalhos
+  before_update :retornar_padrao
+  after_update :atualizar_trabalhos
+  before_destroy :retornar_padrao_delete
 
   protected
 
@@ -29,7 +35,7 @@ class Grupo < ApplicationRecord
     end
   end
 
-  def criar_trabalhos
+  def atualizar_trabalhos
     self.users.each do |func|
       trabalhos = []
       ((self.fim_exce-self.inicio_exce).to_i + 1).times do |i|
@@ -37,7 +43,51 @@ class Grupo < ApplicationRecord
         trabalhos << Trabalho.find_or_create_by(data: self.fim_exce - i, user_id: func.id)
       end
       trabalhos.each do |trab|
-        trab.update_columns(valor_he: self.valor_he_exce)
+        if trab.status != "Validado"
+          trab.update_columns(valor_he: self.valor_he_exce)
+        end
+      end
+    end
+  end
+
+  def retornar_padrao
+    self.users.each do |func|
+      trabalhos = []
+      ((Date.parse(self.fim_antigo)-Date.parse(self.inicio_antigo)).to_i + 1).times do |i|
+        # Ache ou crie um trabalho do usuário para a data
+        trabalhos << Trabalho.find_or_create_by(data: Date.parse(self.fim_antigo) - i, user_id: func.id)
+      end
+      trabalhos.each do |trab|
+        if trab.status != "Validado"
+          if trab.data.strftime("%A") == "Sunday"
+            trab.update_columns(valor_he: 2)
+          elsif trab.data.strftime("%A") == "Saturday"
+            trab.update_columns(valor_he: 1.7)
+          else
+            trab.update_columns(valor_he: 1.5)
+          end
+        end
+      end
+    end
+  end
+
+  def retornar_padrao_delete
+    self.users.each do |func|
+      trabalhos = []
+      ((self.fim_exce-self.inicio_exce).to_i + 1).times do |i|
+        # Ache ou crie um trabalho do usuário para a data
+        trabalhos << Trabalho.find_or_create_by(data: self.fim_exce - i, user_id: func.id)
+      end
+      trabalhos.each do |trab|
+        if trab.status != "Validado"
+          if trab.data.strftime("%A") == "Sunday"
+            trab.update_columns(valor_he: 2)
+          elsif trab.data.strftime("%A") == "Saturday"
+            trab.update_columns(valor_he: 1.7)
+          else
+            trab.update_columns(valor_he: 1.5)
+          end
+        end
       end
     end
   end

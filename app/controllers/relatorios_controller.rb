@@ -12,10 +12,10 @@ class RelatoriosController < ApplicationController
     @periodo = params_para_data(params)
     case params[:cabecalho]
     when "PB"
-      @funcionarios = User.where(equipe: "Paraíba").joins(:trabalhos).where(trabalhos: {sem_he: false}).distinct
+      @funcionarios = User.where(equipe: "Paraíba").joins(:trabalhos).where(trabalhos: {sem_he: false}).where.not(trabalhos: {status: "Pendente"}).distinct
       @cabecalho = params[:cabecalho]
     when "REC"
-      @funcionarios = User.where(equipe: "Recife").joins(:trabalhos).where(trabalhos: {sem_he: false}).distinct
+      @funcionarios = User.where(equipe: "Recife").joins(:trabalhos).where(trabalhos: {sem_he: false}).where.not(trabalhos: {status: "Pendente"}).distinct
       @cabecalho = params[:cabecalho]
     else
       @obra = Obra.find(params[:cabecalho])

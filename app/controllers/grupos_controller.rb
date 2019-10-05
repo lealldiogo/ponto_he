@@ -34,10 +34,16 @@ class GruposController < ApplicationController
     end
   end
 
+  def destroy
+    @grupo = Grupo.find(params[:id])
+    @grupo.destroy
+    redirect_to grupos_path
+  end
+
   private
 
   def grupo_params
-    params.require(:grupo).permit(:nome, :valor_he_exce, :inicio_exce, :fim_exce, user_ids: [])
+    params.require(:grupo).permit(:nome, :valor_he_exce, :inicio_exce, :fim_exce, :inicio_antigo, :fim_antigo, user_ids: [])
   end
 
 end
