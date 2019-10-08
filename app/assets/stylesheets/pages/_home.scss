@@ -1,14 +1,20 @@
-// Specific CSS for your home-page
+// Esses ids e classes CSS foram inicialmente criadas para a home page.
+// Essa lógica foi posteriormente movida para a página app/views/pages/apontamento.html.erb,
+// e as classes e ids CSS usadas por todo o app.
+
+// Classe para horários de saída nos formulários de lançamento
 [id^="trabalho_saida"] {
   display: inline;
   width: auto
 }
 
+// Classe para horários de entrada nos formulários de lançamento
 [id^="trabalho_entrada"] {
   display: inline;
   width: auto
 }
 
+// Cores dos trabalhos variam com o status
 .trabalho-pendente{
   background-color: $red
 }
