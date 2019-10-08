@@ -4,7 +4,7 @@ class Trabalho < ApplicationRecord
   belongs_to :veiculo, optional: true
 
   validates :data, presence: true
-  validates :data, uniqueness: { scope: :user }
+  validates :data, uniqueness: { scope: :user }, unless: :multiplas_he?
   validate :condicoes_data, on: :update
 
   validates :obra, presence: true, on: :update, unless: :sem_hora_extra?
@@ -111,5 +111,19 @@ class Trabalho < ApplicationRecord
   def sem_hora_extra?
     #TODO: pular validações caso não haja hora extra no dia
     self.sem_he
+  end
+
+  def multiplas_he?
+    #TODO: adicionar checkbox nos grupos e refatorar a abordagem geral,
+    #caso decida realmente fazer isso.
+    data_exce = false
+    if self.user.grupos.any?
+      self.user.grupos.each do |grupo|
+        if (self.data >= grupo.inicio_exce) && (self.data <= grupo.fim_exce)
+          data_exce = true
+        end
+      end
+    end
+    return data_exce
   end
 end
