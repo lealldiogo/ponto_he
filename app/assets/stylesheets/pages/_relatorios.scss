@@ -5,7 +5,9 @@ para a página já com a margem para a planilha que serve como grid para todas
 as outras células do relatório e portanto já tem definido a quantidade de linhas
 e colunas. Cada célula é então posicionada no grid da planilha de acordo com os
 seu atributos grid-row e grid-column.
-
+Todos são usados nas seguintes páginas:
+ -> app/views/relatorios/user_imprimivel.html.erb
+ -> app/views/relatorios/equipe_obra_imprimivel.html.erb
 */
 
 // Geral
