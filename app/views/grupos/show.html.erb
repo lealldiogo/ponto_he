@@ -1,18 +1,29 @@
+<%= content_for :botao_voltar do %>
+  <%= link_to "<", grupos_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+<% end %>
 <div class="container">
   <h1>GRUPO <%= @grupo.nome %></h1>
-  <div class="row">
-    <h3>Início da exceção: <%= @grupo.fim_exce.strftime("%d/%m") %></h3>
-    <h3>Fim da exceção: <%= @grupo.inicio_exce.strftime("%d/%m") %></h3>
+
+  <div class="row text-center">
+    <h3>Período de exceção</h3>
+    <h4>Início: <%= @grupo.fim_exce.strftime("%d/%m") %></h4>
+    <h4>Fim: <%= @grupo.inicio_exce.strftime("%d/%m") %></h4>
+  </div>
+  <div class="row text-center">
+    <h3>Funcionários incluídos</h3>
+    <div class="align-center overflow-grupos">
+    <% @grupo.users.each do |user| %>
+        <p><%= user.nome_completo %></p>
+    <% end %>
+    </div>
+  </div>
+  <div class="row text-center">
+    <h3>Valor da Hora Extra</h3>
+    <h4><%= @grupo.valor_he_exce %></h4>
   </div>
   <div class="row">
-    <% @grupo.users.each do |user| %>
-      <div class="col-xs-12" style="padding-bottom: 10px">
-        <p class= "btn btn-primary btn-block" style= "font-weight: bold"><%= user.nome_completo %></p>
-      </div>
-    <% end %>
-  <%= link_to "Delete", grupo_path(@grupo), method: :delete, data: { confirm: "Tem certeza que quer deletar este grupo?" }, class: "btn btn-default btn-danger" , style: "font-weight: bold"%>
-  <%= link_to "Editar", edit_grupo_path(@grupo), class: "btn btn-default btn-warning", style: "font-weight: bold" %>
-  <%= link_to "Voltar", grupos_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
-
+    <%= link_to "Delete", grupo_path(@grupo), method: :delete, data: { confirm: "Tem certeza que quer deletar este grupo?" }, class: "btn btn-default btn-danger" , style: "font-weight: bold"%>
+    <%= link_to "Editar", edit_grupo_path(@grupo), class: "btn btn-default btn-warning", style: "font-weight: bold" %>
+    <%#= link_to "Voltar", grupos_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
   </div>
 </div>

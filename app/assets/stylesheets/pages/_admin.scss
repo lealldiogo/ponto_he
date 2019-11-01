@@ -7,3 +7,10 @@
   border-radius: 5px;
   box-shadow: 0.5px 0.5px 2px black;
 }
+
+.overflow-grupos {
+  width: 50%;
+  margin: 0 auto;
+  max-height: 150px;
+  overflow: auto
+}
