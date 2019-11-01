@@ -10,18 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190924230925) do
+ActiveRecord::Schema.define(version: 20191101192434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "grupos", force: :cascade do |t|
     t.string   "nome"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.float    "valor_he_exce"
     t.date     "inicio_exce"
     t.date     "fim_exce"
+    t.boolean  "selec_valor"
+    t.boolean  "selec_duplo_trab"
   end
 
   create_table "membros", force: :cascade do |t|

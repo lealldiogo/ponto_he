@@ -23,6 +23,7 @@ class Grupo < ApplicationRecord
     end
   end
 
+
   def overlap_periodos
     self.users.each do |func|
       if func.grupos.any?
@@ -35,11 +36,13 @@ class Grupo < ApplicationRecord
     end
   end
 
+  #Atualizar o valor da hora extra dos trabalhos aós a criação do grupo
   def atualizar_trabalhos
     self.users.each do |func|
       trabalhos = []
       ((self.fim_exce-self.inicio_exce).to_i + 1).times do |i|
-        # Ache ou crie um trabalho do usuário para a data
+        # TODO: buscar todos os trabalhos para o período passado (use where combinado com um each antes de fazer o append)
+        # OLD APPROACH: Ache ou crie um trabalho do usuário para a data
         trabalhos << Trabalho.find_or_create_by(data: self.fim_exce - i, user_id: func.id)
       end
       trabalhos.each do |trab|
@@ -50,11 +53,14 @@ class Grupo < ApplicationRecord
     end
   end
 
+  #Caso o período do grupo seja atualizado e o trabalho não tenha sido validado,
+  #retornar o valor de hora extra para o padrão.
   def retornar_padrao
     self.users.each do |func|
       trabalhos = []
       ((Date.parse(self.fim_antigo)-Date.parse(self.inicio_antigo)).to_i + 1).times do |i|
-        # Ache ou crie um trabalho do usuário para a data
+        # TODO: buscar todos os trabalhos para o período passado (use where)
+        # OLD APPROACH: Ache ou crie um trabalho do usuário para a data
         trabalhos << Trabalho.find_or_create_by(data: Date.parse(self.fim_antigo) - i, user_id: func.id)
       end
       trabalhos.each do |trab|
@@ -71,11 +77,14 @@ class Grupo < ApplicationRecord
     end
   end
 
+  #Caso o grupo seja excluído e o trabalho não tenha sido validado,
+  #retornar o valor de hora extra para o padrão.
   def retornar_padrao_delete
     self.users.each do |func|
       trabalhos = []
       ((self.fim_exce-self.inicio_exce).to_i + 1).times do |i|
-        # Ache ou crie um trabalho do usuário para a data
+        # TODO: buscar todos os trabalhos para o período passado (use where)
+        # OLD APPROACH: Ache ou crie um trabalho do usuário para a data
         trabalhos << Trabalho.find_or_create_by(data: self.fim_exce - i, user_id: func.id)
       end
       trabalhos.each do |trab|
