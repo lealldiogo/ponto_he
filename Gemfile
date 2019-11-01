@@ -9,9 +9,8 @@ gem 'rails', '5.0.7'
 gem 'redis'
 gem 'devise', ">= 4.6.0"
 
-gem 'rails-assets-bootstrap-datepicker', source: 'https://rails-assets.org'
-gem 'autoprefixer-rails'
 gem 'bootstrap-sass', ">=3.4.1"
+gem 'autoprefixer-rails'
 gem 'font-awesome-sass'
 gem 'jquery-rails'
 gem 'sass-rails'
@@ -19,6 +18,8 @@ gem 'simple_form'
 gem 'uglifier'
 gem 'money-rails', '~>1.12'
 gem 'cloudinary'
+gem 'bootstrap-datepicker-rails'
+# gem 'rails-assets-bootstrap-datepicker', source: 'https://rails-assets.org'
 
 gem 'rubyzip', '>= 1.2.1'
 gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c8ac844'
