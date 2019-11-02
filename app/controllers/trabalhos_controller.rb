@@ -11,7 +11,15 @@ class TrabalhosController < ApplicationController
       @trabalhos = []
       ((periodo[1]-periodo[0]).to_i + 1).times do |i|
         # Ache ou crie um trabalho do usuário para a data
-        @trabalhos << Trabalho.find_or_create_by(data: periodo[1] - i, user_id: @funcionario.id)
+        if Trabalho.exists?(data: periodo[1] - i, user_id: @funcionario.id)
+          query_trabalho = Trabalho.where(data: periodo[1] - i, user_id: @funcionario.id)
+          query_trabalho.each do |trabalho|
+            @trabalhos << trabalho
+          end
+        else
+          @trabalhos << Trabalho.new(data: periodo[1] - i, user_id: @funcionario.id, status: "Pendente")
+        end
+        #@trabalhos << Trabalho.find_or_create_by(data: periodo[1] - i, user_id: @funcionario.id)
       end
     end
   end

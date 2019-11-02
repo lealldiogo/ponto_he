@@ -57,12 +57,13 @@ class Grupo < ApplicationRecord
   #retornar o valor de hora extra para o padrão.
   def retornar_padrao
     self.users.each do |func|
-      trabalhos = []
-      ((Date.parse(self.fim_antigo)-Date.parse(self.inicio_antigo)).to_i + 1).times do |i|
+      #trabalhos = []
+      #((Date.parse(self.fim_antigo)-c).to_i + 1).times do |i|
         # TODO: buscar todos os trabalhos para o período passado (use where)
         # OLD APPROACH: Ache ou crie um trabalho do usuário para a data
-        trabalhos << Trabalho.find_or_create_by(data: Date.parse(self.fim_antigo) - i, user_id: func.id)
-      end
+        #trabalhos << Trabalho.find_or_create_by(data: Date.parse(self.fim_antigo) - i, user_id: func.id)
+      #end
+      trabalhos = Trabalho.where(data: Date.parse(self.inicio_antigo)..Date.parse(self.fim_antigo), user_id: func.id)
       trabalhos.each do |trab|
         if trab.status != "Validado"
           if trab.data.strftime("%A") == "Sunday"
@@ -81,12 +82,13 @@ class Grupo < ApplicationRecord
   #retornar o valor de hora extra para o padrão.
   def retornar_padrao_delete
     self.users.each do |func|
-      trabalhos = []
-      ((self.fim_exce-self.inicio_exce).to_i + 1).times do |i|
+      #trabalhos = []
+      #((self.fim_exce-self.inicio_exce).to_i + 1).times do |i|
         # TODO: buscar todos os trabalhos para o período passado (use where)
         # OLD APPROACH: Ache ou crie um trabalho do usuário para a data
-        trabalhos << Trabalho.find_or_create_by(data: self.fim_exce - i, user_id: func.id)
-      end
+        #trabalhos << Trabalho.find_or_create_by(data: self.fim_exce - i, user_id: func.id)
+      #end
+      trabalhos = Trabalho.where(data: Date.parse(self.inicio_antigo)..Date.parse(self.fim_antigo), user_id: func.id)
       trabalhos.each do |trab|
         if trab.status != "Validado"
           if trab.data.strftime("%A") == "Sunday"
