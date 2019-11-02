@@ -1,5 +1,5 @@
 class TrabalhosController < ApplicationController
-  skip_before_action :is_admin?, only: [:user_trabalho_params, :user_update]
+  skip_before_action :is_admin?, only: [:user_trabalho_params, :user_update, :create]
   helper InfoFuncionariosHelper
 
   def trabalhos_funcionario
@@ -16,8 +16,24 @@ class TrabalhosController < ApplicationController
     end
   end
 
+  def create
+    @trabalho = Trabalho.new(create_trabalho_params)
+    if @trabalho.save
+      redirect_to apontamento_path, info: "Apontamento de horas enviado para validação do gestor"
+    else
+      alertas = "Dados mal inseridos:"
+      msgs = @trabalho.errors.full_messages
+      ult_msg = msgs.pop
+      msgs.each do |m|
+        alertas = alertas + " " + m + ";"
+      end
+      alertas = alertas + " " + ult_msg
+      redirect_to apontamento_path, alert: alertas
+    end
+  end
+
   def user_update
-    byebug
+    #byebug
     @trabalho = Trabalho.find(params[:id])
     if @trabalho.update(user_trabalho_params)
       redirect_to apontamento_path, info: "Apontamento de horas enviado para validação do gestor"
@@ -65,6 +81,11 @@ class TrabalhosController < ApplicationController
   def user_trabalho_params
     params.require(:trabalho).permit(:data, :entrada, :saida, :user_id, :obra_id, :veiculo_id, :sem_he)
   end
+
+  def create_trabalho_params
+    params.require(:trabalho).permit(:data, :entrada, :saida, :user_id, :obra_id, :veiculo_id, :sem_he)
+  end
+
 
   def admin_trabalho_params
     params.require(:trabalho).permit(:data, :entrada, :saida, :user_id, :obra_id, :veiculo_id, :sem_he, :status)

@@ -1,0 +1,60 @@
+<% case trabalho.data.strftime("%A") %>
+<% when "Saturday" %>
+<%  dia_da_semana ="Sábado" %>
+<% when "Sunday" %>
+<%  dia_da_semana ="Domingo" %>
+<% when "Monday" %>
+<%  dia_da_semana ="Segunda-feira" %>
+<% when "Tuesday" %>
+<%  dia_da_semana ="Terça-feira" %>
+<% when "Wednesday" %>
+<%  dia_da_semana ="Quarta-feira" %>
+<% when "Thursday" %>
+<%  dia_da_semana ="Quinta-feira" %>
+<% when "Friday" %>
+<%  dia_da_semana ="Sexta-feira" %>
+<% end %>
+
+<% if trabalho.status == "Pendente" %>
+  <% bg_color = "trabalho-pendente" %>
+<% elsif trabalho.status == "Enviado" %>
+  <% bg_color = "trabalho-enviado" %>
+<% elsif trabalho.status == "Validado" %>
+  <% bg_color = "trabalho-validado" %>
+<% end %>
+
+<tr class="<%=bg_color%>">
+  <% if trabalho.status == "Pendente" %>
+    <%= simple_form_for trabalho do |f| %>
+    <%#= simple_form_for trabalho, url: user_trabalho_path(trabalho) do |f| %>
+      <td><%= dia_da_semana %></td>
+      <td><%= trabalho.data.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden %></td>
+      <td><%= f.input :sem_he, label: "Não fiz hora extra neste dia", as: :boolean %></td>
+      <!-- , input_html: { value: trabalho.data } -->
+      <td><%= f.input :entrada %></td>
+      <td><%= f.input :saida %></td>
+      <td><%= f.association :obra, label_method: :nome, value_method: :id %></td>
+      <td><%= f.association :veiculo, label_method: :nome, value_method: :id %></td>
+
+      <%= f.association :user, as: :hidden, input_html: { value: current_user.id } %>
+      <td><%= f.button :submit, "Enviar" %></td>
+    <% end %>
+  <% else %>
+    <td><%= dia_da_semana %></td>
+    <td><%= trabalho.data.strftime("%d/%m/%Y") %></td>
+    <% if trabalho.sem_he == true %>
+      <td><%= "Não" %></td>
+      <td><%= "-" %></td>
+      <td><%= "-" %></td>
+      <td><%= "-" %></td>
+      <td><%= "-" %></td>
+    <% else %>
+      <td><%= "Sim" %></td>
+      <td><%= trabalho.entrada.strftime("%H:%M") %></td>
+      <td><%= trabalho.saida.strftime("%H:%M") %></td>
+      <td><%= trabalho.obra.nome %></td>
+      <td><%= trabalho.veiculo.nome %></td>
+    <% end %>
+    <td><%= trabalho.status %></td>
+  <% end %>
+</tr>
