@@ -55,51 +55,51 @@ veiculo2.save!
 veiculo3 = Veiculo.new(nome: "Ônibus")
 veiculo3.save!
 
-trabalho_pedro1 = Trabalho.new(data: Date.today - 6, entrada: Time.parse("18:00:00"), saida: Time.parse("22:00:00"), status: "Validado")
-trabalho_pedro2 = Trabalho.new(data: Date.today - 5, entrada: Time.parse("15:00:00"), saida: Time.parse("22:00:00"), status: "Validado")
-trabalho_pedro3 = Trabalho.new(data: Date.today - 4, entrada: Time.parse("18:00:00"), saida: Time.parse("20:00:00"), status: "Validado")
-trabalho_pedro4 = Trabalho.new(data: Date.today - 3, sem_he: true)
+# trabalho_pedro1 = Trabalho.new(data: Date.today - 6, entrada: Time.parse("18:00:00"), saida: Time.parse("22:00:00"), status: "Validado")
+# trabalho_pedro2 = Trabalho.new(data: Date.today - 5, entrada: Time.parse("15:00:00"), saida: Time.parse("22:00:00"), status: "Validado")
+# trabalho_pedro3 = Trabalho.new(data: Date.today - 4, entrada: Time.parse("18:00:00"), saida: Time.parse("20:00:00"), status: "Validado")
+# trabalho_pedro4 = Trabalho.new(data: Date.today - 3, sem_he: true)
 
-trabalho_pedro1.user = pedro
-trabalho_pedro2.user = pedro
-trabalho_pedro3.user = pedro
-trabalho_pedro4.user = pedro
+# trabalho_pedro1.user = pedro
+# trabalho_pedro2.user = pedro
+# trabalho_pedro3.user = pedro
+# trabalho_pedro4.user = pedro
 
-trabalho_pedro1.obra = obra1
-trabalho_pedro2.obra = obra2
-trabalho_pedro3.obra = obra3
+# trabalho_pedro1.obra = obra1
+# trabalho_pedro2.obra = obra2
+# trabalho_pedro3.obra = obra3
 
-trabalho_pedro1.veiculo = veiculo1
-trabalho_pedro2.veiculo = veiculo2
-trabalho_pedro3.veiculo = veiculo3
+# trabalho_pedro1.veiculo = veiculo1
+# trabalho_pedro2.veiculo = veiculo2
+# trabalho_pedro3.veiculo = veiculo3
 
-trabalho_pedro1.save!
-trabalho_pedro2.save!
-trabalho_pedro3.save!
-trabalho_pedro4.save!
+# trabalho_pedro1.save!
+# trabalho_pedro2.save!
+# trabalho_pedro3.save!
+# trabalho_pedro4.save!
 
-trabalho_ronaldo1 = Trabalho.new(data: Date.today - 6, entrada: Time.parse("18:00:00"), saida: Time.parse("22:00:00"), status: "Validado")
-trabalho_ronaldo2 = Trabalho.new(data: Date.today - 5, entrada: Time.parse("15:00:00"), saida: Time.parse("22:00:00"), status: "Validado")
-trabalho_ronaldo3 = Trabalho.new(data: Date.today - 4, entrada: Time.parse("18:00:00"), saida: Time.parse("20:00:00"), status: "Validado")
-trabalho_ronaldo4 = Trabalho.new(data: Date.today - 3, sem_he: true)
+# trabalho_ronaldo1 = Trabalho.new(data: Date.today - 6, entrada: Time.parse("18:00:00"), saida: Time.parse("22:00:00"), status: "Validado")
+# trabalho_ronaldo2 = Trabalho.new(data: Date.today - 5, entrada: Time.parse("15:00:00"), saida: Time.parse("22:00:00"), status: "Validado")
+# trabalho_ronaldo3 = Trabalho.new(data: Date.today - 4, entrada: Time.parse("18:00:00"), saida: Time.parse("20:00:00"), status: "Validado")
+# trabalho_ronaldo4 = Trabalho.new(data: Date.today - 3, sem_he: true)
 
-trabalho_ronaldo1.user = ronaldo
-trabalho_ronaldo2.user = ronaldo
-trabalho_ronaldo3.user = ronaldo
-trabalho_ronaldo4.user = ronaldo
+# trabalho_ronaldo1.user = ronaldo
+# trabalho_ronaldo2.user = ronaldo
+# trabalho_ronaldo3.user = ronaldo
+# trabalho_ronaldo4.user = ronaldo
 
-trabalho_ronaldo1.obra = obra1
-trabalho_ronaldo2.obra = obra2
-trabalho_ronaldo3.obra = obra3
+# trabalho_ronaldo1.obra = obra1
+# trabalho_ronaldo2.obra = obra2
+# trabalho_ronaldo3.obra = obra3
 
-trabalho_ronaldo1.veiculo = veiculo1
-trabalho_ronaldo2.veiculo = veiculo2
-trabalho_ronaldo3.veiculo = veiculo3
+# trabalho_ronaldo1.veiculo = veiculo1
+# trabalho_ronaldo2.veiculo = veiculo2
+# trabalho_ronaldo3.veiculo = veiculo3
 
-trabalho_ronaldo1.save!
-trabalho_ronaldo2.save!
-trabalho_ronaldo3.save!
-trabalho_ronaldo4.save!
+# trabalho_ronaldo1.save!
+# trabalho_ronaldo2.save!
+# trabalho_ronaldo3.save!
+# trabalho_ronaldo4.save!
 
 grupo1 = Grupo.new(nome: "Seed", valor_he_exce: 2, inicio_exce: Date.new(2019,4,15), fim_exce: Date.new(2019,5,15))
 grupo1.users << [pedro, ronaldo]

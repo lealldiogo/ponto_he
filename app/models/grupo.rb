@@ -36,15 +36,17 @@ class Grupo < ApplicationRecord
     end
   end
 
-  #Atualizar o valor da hora extra dos trabalhos aós a criação do grupo
+  #Atualizar o valor da hora extra dos trabalhos não validados após a criação do grupo
   def atualizar_trabalhos
     self.users.each do |func|
-      trabalhos = []
-      ((self.fim_exce-self.inicio_exce).to_i + 1).times do |i|
+      #trabalhos = []
+      #((self.fim_exce-self.inicio_exce).to_i + 1).times do |i|
         # TODO: buscar todos os trabalhos para o período passado (use where combinado com um each antes de fazer o append)
         # OLD APPROACH: Ache ou crie um trabalho do usuário para a data
-        trabalhos << Trabalho.find_or_create_by(data: self.fim_exce - i, user_id: func.id)
-      end
+
+        #trabalhos << Trabalho.find_or_create_by(data: self.fim_exce - i, user_id: func.id)
+      #end
+      trabalhos = Trabalho.where(data: self.inicio_exce..self.fim_exce, user_id: func.id)
       trabalhos.each do |trab|
         if trab.status != "Validado"
           trab.update_columns(valor_he: self.valor_he_exce)

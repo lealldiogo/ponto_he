@@ -1,7 +1,7 @@
 class Trabalho < ApplicationRecord
   belongs_to :user
-  belongs_to :obra #, optional: true
-  belongs_to :veiculo #, optional: true
+  belongs_to :obra, optional: true
+  belongs_to :veiculo, optional: true
 
   validates :data, presence: true
   validates :data, uniqueness: { scope: :user }, unless: :multiplas_he?
