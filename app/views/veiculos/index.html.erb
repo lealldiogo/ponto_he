@@ -1,3 +1,6 @@
+<%= content_for :botao_voltar do %>
+  <%= link_to "<", admin_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+<% end %>
 <div class="container">
   <h1>VEÍCULOS</h1>
   <div class="col-xs-12" style="padding-bottom: 10px">
@@ -8,5 +11,5 @@
       <%= link_to veiculo.nome, edit_veiculo_path(veiculo),class: "btn btn-primary btn-block", style: "font-weight: bold" %>
     </div>
   <% end %>
-  <%= link_to "Voltar", admin_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+  <%#= link_to "Voltar", admin_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
 </div>

@@ -1,7 +1,7 @@
 <div class="container">
   <h1>Cadastro de Ponto</h1>
   <!-- <p>Bem vindo, <%#= current_user.username %></p> -->
-  <h4 class="text-center">QUANDO TERMINAR O APONTAMENTO DE HORAS, FINALIZE A SESSÃO APERTANDO O BOTÃO "SAIR" NO FIM DA PÁGINA</h4>
+  <h4 class="text-center">QUANDO TERMINAR O APONTAMENTO DE HORAS, FINALIZE A SESSÃO APERTANDO O BOTÃO "SAIR" NO TOPO DA PÁGINA</h4>
 
   <%= render 'shared/datas_tecon', reload_path: apontamento_path, cabecalho: "" %>
 
@@ -22,66 +22,7 @@
 
     <tbody>
       <% @trabalhos.each do |trab| %>
-
-        <% case trab.data.strftime("%A") %>
-        <% when "Saturday" %>
-        <%  dia_da_semana ="Sábado" %>
-        <% when "Sunday" %>
-        <%  dia_da_semana ="Domingo" %>
-        <% when "Monday" %>
-        <%  dia_da_semana ="Segunda-feira" %>
-        <% when "Tuesday" %>
-        <%  dia_da_semana ="Terça-feira" %>
-        <% when "Wednesday" %>
-        <%  dia_da_semana ="Quarta-feira" %>
-        <% when "Thursday" %>
-        <%  dia_da_semana ="Quinta-feira" %>
-        <% when "Friday" %>
-        <%  dia_da_semana ="Sexta-feira" %>
-        <% end %>
-
-        <% if trab.status == "Pendente" %>
-          <% bg_color = "trabalho-pendente" %>
-        <% elsif trab.status == "Enviado" %>
-          <% bg_color = "trabalho-enviado" %>
-        <% elsif trab.status == "Validado" %>
-          <% bg_color = "trabalho-validado" %>
-        <% end %>
-
-        <tr class="<%=bg_color%>">
-          <% if trab.status == "Pendente" %>
-            <%= simple_form_for trab, url: user_trabalho_path(trab) do |f| %>
-              <td><%= dia_da_semana %></td>
-              <td><%= trab.data.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden %></td>
-              <td><%= f.input :sem_he, label: "Não fiz hora extra neste dia", as: :boolean %></td>
-              <!-- , input_html: { value: trab.data } -->
-              <td><%= f.input :entrada, {minute_step: 30} %></td>
-              <td><%= f.input :saida, {minute_step: 30}  %></td>
-              <td><%= f.association :obra, label_method: :nome, value_method: :id %></td>
-              <td><%= f.association :veiculo, label_method: :nome, value_method: :id %></td>
-
-              <%= f.association :user, as: :hidden, input_html: { value: current_user.id } %>
-              <td><%= f.button :submit, "Enviar" %></td>
-            <% end %>
-          <% else %>
-            <td><%= dia_da_semana %></td>
-            <td><%= trab.data.strftime("%d/%m/%Y") %></td>
-            <% if trab.sem_he == true %>
-              <td><%= "Não" %></td>
-              <td><%= "-" %></td>
-              <td><%= "-" %></td>
-              <td><%= "-" %></td>
-              <td><%= "-" %></td>
-            <% else %>
-              <td><%= "Sim" %></td>
-              <td><%= trab.entrada.strftime("%H:%M") %></td>
-              <td><%= trab.saida.strftime("%H:%M") %></td>
-              <td><%= trab.obra.nome %></td>
-              <td><%= trab.veiculo.nome %></td>
-            <% end %>
-            <td><%= trab.status %></td>
-          <% end %>
-        </tr>
+        <%= render 'trabalhos/formulario_novo_trabalho', trabalho: trab %>
       <% end %>
     </tbody>
   </table>

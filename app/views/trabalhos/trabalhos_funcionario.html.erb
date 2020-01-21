@@ -1,3 +1,6 @@
+<%= content_for :botao_voltar do %>
+  <%= link_to "<", @funcionario.equipe == "Recife" ? recife_path : paraiba_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+<% end %>
 <div class="container">
   <h1>JORNADAS FUNCIONÁRIO <%= @funcionario.nome_completo %> (<%= @funcionario.apelido %>)</h1>
 <!--   <div class="row justify-content-center align-items-center">
@@ -66,12 +69,12 @@
               <td><%= trab.data.strftime("%d/%m/%Y") %> <%= f.input :data, as: :hidden %></td>
               <td><%= f.input :sem_he, label: "Não fez hora extra neste dia", as: :boolean %></td>
               <!-- , input_html: { value: trab.data } -->
-              <td><%= f.input :entrada, {minute_step: 30} %></td>
-              <td><%= f.input :saida, {minute_step: 30}  %></td>
+              <td><%= f.input :entrada %></td>
+              <td><%= f.input :saida %></td>
               <td><%= f.association :obra, label_method: :nome, value_method: :id %></td>
               <td><%= f.association :veiculo, label_method: :nome, value_method: :id %></td>
               <%= f.association :user, as: :hidden, input_html: { value: @funcionario.id } %>
-              <td><%= f.input :valor_he  %></td>
+              <td><%= f.input :valor_he, collection: [1.5, 1.7, 2] %></td>
               <td>
                 <%= trab.status %>
                 <br>
@@ -83,5 +86,5 @@
       <% end %>
     </tbody>
   </table>
-  <%= link_to "Voltar", @funcionario.equipe == "Recife" ? recife_path : paraiba_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+  <%#= link_to "Voltar", @funcionario.equipe == "Recife" ? recife_path : paraiba_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
 </div>

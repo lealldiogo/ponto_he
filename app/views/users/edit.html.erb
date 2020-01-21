@@ -10,7 +10,7 @@
       <%= f.input :apelido, required: false, autofocus: true %>
       <%= f.input :cargo, required: false, autofocus: true %>
       <%= f.input :salario, label: "Salário", required: false, autofocus: true %>
-      <%= f.input :equipe, required: false, autofocus: true %>
+      <%= f.input :equipe, collection: ["Recife", "Paraíba"], required: false, autofocus: true %>
       <%= f.input :password, required: false, hint: "Deixe em branco caso não queira alterar"%>
       <%= f.input :password_confirmation, required: false %>
       <%= f.input :admin, label: "Gestor?", required: false, autofocus: true %>

@@ -4,19 +4,22 @@ class Trabalho < ApplicationRecord
   belongs_to :veiculo, optional: true
 
   validates :data, presence: true
-  validates :data, uniqueness: { scope: :user }
-  validate :condicoes_data, on: :update
+  validates :data, uniqueness: { scope: :user }, unless: :multiplas_he?
+  validate :condicoes_data
 
-  validates :obra, presence: true, on: :update, unless: :sem_hora_extra?
-  validates :veiculo, presence: true, on: :update, unless: :sem_hora_extra?
+  validates :obra, presence: true, unless: :sem_hora_extra?
+  validates :veiculo, presence: true, unless: :sem_hora_extra?
 
-  validates :entrada, presence: true, on: :update, unless: :sem_hora_extra?
-  validates :saida, presence: true, on: :update, unless: :sem_hora_extra?
+  validates :entrada, presence: true, unless: :sem_hora_extra?
+  validates :saida, presence: true, unless: :sem_hora_extra?
+
+  validates :valor_he, inclusion: { in: [1.5, 1.7, 2], allow_blank: true}
+  # validates :valor_he, inclusion: { in: [1.5, 1.7, 2], allow_blank: true}, on: :create
 
   # check how to handle valor_he correctly
   before_create :valor_he_padrao
-  before_update :calcular_jornada
-  before_update :atualizar_status
+  before_create :calcular_jornada
+  before_create :atualizar_status
 
   protected
 
@@ -29,6 +32,9 @@ class Trabalho < ApplicationRecord
     end
   end
 
+  # Esse cálculo foi movido para o helper dos relatórios.
+  # Está sendo mantido aqui também até que essa modificação seja validada e
+  # a coluna horas_extras retirada da tabela trabalhos
   def calcular_jornada
     if self.entrada > self.saida
       if self.entrada.min > self.saida.min
@@ -60,40 +66,23 @@ class Trabalho < ApplicationRecord
     #TODO: criar array com datas dos feriados no recife e na paraíba(ignorar municipais nesse caso?)
     #TODO: adicionar um include?(self.data) como condição para valor_he = 100%
     # feriados = Feriado.all
-    # if self.user.grupos.any?
-    #   data_exce = false
-    #   self.user.grupos.each do |grupo|
-    #     if (self.data >= grupo.inicio_exce) && (self.data <= grupo.fim_exce)
-    #       self.valor_he = grupo.valor_he_exce
-    #       data_exce = true
-    #     end
-    #   end
-    # end
-    # if data_exce == false
-    if self.data.strftime("%A") == "Sunday"
-      self.valor_he = 100
-    elsif self.data.strftime("%A") == "Saturday"
-      self.valor_he = 70
-    else
+    if !data_inclusa_excecao?
+      if self.data.strftime("%A") == "Sunday"
+        self.valor_he = 2
+      elsif self.data.strftime("%A") == "Saturday"
+        self.valor_he = 1.7
+      else
       # if feriados.include?(self.data)
         # self.valor_he = 100
       # else
-      self.valor_he = 50
+        self.valor_he = 1.5
       # end
+      end
     end
-    # end
   end
 
   def condicoes_data
-    data_exce = false
-    if self.user.grupos.any?
-      self.user.grupos.each do |grupo|
-        if (self.data >= grupo.inicio_exce) && (self.data <= grupo.fim_exce)
-          data_exce = true
-        end
-      end
-    end
-    if data_exce == false
+    if !data_inclusa_excecao?
       if (Date.today - self.data) > 7
         errors.add(:data, "não pode ser anterior a " + (Date.today - 7).strftime("%d/%m/%Y"))
       elsif (Date.today - self.data) < 0
@@ -105,5 +94,32 @@ class Trabalho < ApplicationRecord
   def sem_hora_extra?
     #TODO: pular validações caso não haja hora extra no dia
     self.sem_he
+  end
+
+  def multiplas_he?
+    #TODO: adicionar checkbox nos grupos e refatorar a abordagem geral,
+    #caso decida realmente fazer isso.
+    data_exce = false
+    if self.user.grupos.any?
+      self.user.grupos.each do |grupo|
+        if (self.data >= grupo.inicio_exce) && (self.data <= grupo.fim_exce)
+          data_exce = true
+        end
+      end
+    end
+    return data_exce
+  end
+
+  def data_inclusa_excecao?
+    data_exce = false
+    if self.user.grupos.any?
+      self.user.grupos.each do |grupo|
+        if (self.data >= grupo.inicio_exce) && (self.data <= grupo.fim_exce)
+          data_exce = true
+          break
+        end
+      end
+    end
+    return data_exce
   end
 end

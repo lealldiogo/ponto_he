@@ -24,7 +24,7 @@
         <%= func.nome_completo %>
       </div>
       <div class="valores" style="grid-row: <%= i + 4 %> / <%= i + 5 %>;">
-        <%= soma_func %>
+        <%= humanized_money_with_symbol(soma_func) %>
       </div>
       <div class="celula-vazia" style="grid-row: <%= i + 4 %> / <%= i + 5 %>; grid-column: 3 / 4 ;" >
         </div>
@@ -35,7 +35,7 @@
       TOTAL:
     </div>
     <div class="somatorio-total" style="grid-row: <%= rows - 1 %> / <%= rows + 1 %>;" >
-      <%= moa_somas %>
+      <%= humanized_money_with_symbol(moa_somas) %>
     </div>
     <div class="quitacao" style="grid-row: <%= rows - 1 %> / <%= rows + 1 %>;" >
       O QUAL ACUSAMOS RECEBIMENTO, E DAMOS PLENA E TOTAL QUITAÇÃO
