@@ -1,6 +1,7 @@
 module InfoFuncionariosHelper
   def verificar_pendencia(funcionario)
     trabalhos = []
+    pendente = false
     7.times do |i|
       # Ache ou crie um trabalho do usuário para a data
       if !Trabalho.exists?(data: Date.today - i, user_id: funcionario.id)
