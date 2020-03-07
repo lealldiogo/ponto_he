@@ -33,6 +33,13 @@ class VeiculosController < ApplicationController
     end
   end
 
+  def destroy
+    @veiculo = Veiculo.find(params[:id])
+    @veiculo.destroy
+    redirect_to veiculos_path
+  end
+
+
   private
 
   def veiculo_params

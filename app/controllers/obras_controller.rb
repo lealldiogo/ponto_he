@@ -33,6 +33,12 @@ class ObrasController < ApplicationController
     end
   end
 
+  def destroy
+    @obra = Obra.find(params[:id])
+    @obra.destroy
+    redirect_to obras_path
+  end
+
   private
 
   def obra_params
