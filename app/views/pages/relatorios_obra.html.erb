@@ -1,7 +1,7 @@
 <div class="container">
   <h1>RELATÓRIOS OBRA <%= @obra.nome %></h1>
   <div class="row justify-content-center align-items-center">
-    <%= render 'shared/datas_tecon', reload_path: equipe_obra_imprimivel_path, cabecalho: @obra.id %>
+    <%= render 'shared/datas_tecon', reload_path: equipe_obra_imprimivel_path, cabecalho: "OBRA", identif: @obra.id %>
   </div>
   <div class="row">
     <div class="col-xs-12" >

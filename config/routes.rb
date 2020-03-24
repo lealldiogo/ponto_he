@@ -34,6 +34,8 @@ Rails.application.routes.draw do
   get "relatorios_paraiba", to: 'pages#relatorios_paraiba'
   get "obras_para_relatorios", to: 'pages#obras_para_relatorios'
   get "relatorios_obra/:id", to: 'pages#relatorios_obra', as: :relatorios_obra
+  get "grupos_para_relatorios", to: 'pages#grupos_para_relatorios'
+  get "relatorios_grupo/:id", to: 'pages#relatorios_grupo', as: :relatorios_grupo
 
   get "user_relatorio/:id", to: 'relatorios#user_relatorio', as: :user_relatorio
   get "baixar_relatorio", to: 'relatorios#baixar_relatorio'

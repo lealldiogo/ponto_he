@@ -13,16 +13,25 @@ class RelatoriosController < ApplicationController
     # Os trabalhos ainda não estão sendo filtrados por data
     @periodo = params_para_data(params)
     case params[:cabecalho]
-    when "PB"
-      @funcionarios = User.where(equipe: "Paraíba").joins(:trabalhos).where(trabalhos: {sem_he: false}).where.not(trabalhos: {status: "Pendente"}).distinct
-      @cabecalho = params[:cabecalho]
-    when "REC"
-      @funcionarios = User.where(equipe: "Recife").joins(:trabalhos).where(trabalhos: {sem_he: false}).where.not(trabalhos: {status: "Pendente"}).distinct
-      @cabecalho = params[:cabecalho]
-    else
-      @obra = Obra.find(params[:cabecalho])
+    when "EQUIPE"
+      @cabecalho = params[:identif]
+      if @cabecalho == "REC"
+        @funcionarios = User.where(equipe: "Paraíba").joins(:trabalhos).where(trabalhos: {sem_he: false}).where.not(trabalhos: {status: "Pendente"}).distinct
+      elsif @cabecalho == "PB"
+        @funcionarios = User.where(equipe: "Recife").joins(:trabalhos).where(trabalhos: {sem_he: false}).where.not(trabalhos: {status: "Pendente"}).distinct
+      else
+        redirect_to relatorios_path, alert: "Não foi possível identificar o tipo do relatório. Por favor, tente novamente"
+      end
+    when "OBRA"
+      @obra = Obra.find(params[:identif])
       @cabecalho = @obra.nome
       @funcionarios = User.joins(:trabalhos).where(trabalhos: {obra_id: @obra.id}).distinct
+    when "GRUPO"
+      @grupo = Grupo.find(params[:identif])
+      @cabecalho = @grupo.nome
+      @funcionarios = @grupo.users
+    else
+      redirect_to relatorios_path, alert: "Não foi possível identificar o tipo do relatório. Por favor, tente novamente"
     end
   end
 

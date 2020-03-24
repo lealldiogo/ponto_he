@@ -63,5 +63,13 @@ class PagesController < ApplicationController
     @obras = Obra.all
   end
 
+  def relatorios_grupo
+    @grupo = Grupo.find(params[:id])
+  end
+
+  def grupos_para_relatorios
+    @grupos = Grupo.all
+  end
+
 
 end
