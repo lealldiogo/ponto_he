@@ -17,6 +17,8 @@
     </div>
 
     <div class="form-actions">
+      <!-- Não posso deletar uma vez que os trabalhos pertencem ao usuário -->
+      <%= link_to "Deletar", user_path(@user, user: {ativo: false}), method: :put, data: { confirm: "Tem certeza que quer deletar este usuário?" }, class: "btn btn-default btn-danger" , style: "font-weight: bold"%>
       <%= f.button :submit, "Atualizar", class:"btn btn-success", style: "font-weight: bold" %>
       <%= link_to "Voltar", cadastros_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
     </div>

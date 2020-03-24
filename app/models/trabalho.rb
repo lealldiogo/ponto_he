@@ -25,6 +25,8 @@ class Trabalho < ApplicationRecord
 
   def atualizar_status
     # byebug
+    # Obs: isso aqui não está funcionando pq estou empurrando o valor "Validado"
+    # na partial _formulario_validacao.html.erb
     if self.status == "Pendente"
       self.status = "Enviado"
     elsif self.status == "Enviado"
@@ -36,7 +38,9 @@ class Trabalho < ApplicationRecord
   # Está sendo mantido aqui também até que essa modificação seja validada e
   # a coluna horas_extras retirada da tabela trabalhos
   def calcular_jornada
+    outro_dia = false
     if self.entrada > self.saida
+      outro_dia = true
       if self.entrada.min > self.saida.min
         horas = 24 - self.entrada.hour + self.saida.hour - 1
         minutos = 60 - self.entrada.min + self.saida.min
@@ -57,7 +61,24 @@ class Trabalho < ApplicationRecord
     if jornada == 0
       errors.add(:saida, "não pode ser igual a Entrada")
     else
-      self.horas_extras = jornada
+      if outro_dia
+        #TODO: Criar função novo_dia() para criar um novo trabalho para o novo dia uma vez que vira a noite.
+        if self.data.strftime("%A") == "Saturday" || (self.data.strftime("%A") == "Sunday")
+          self.horas_extras = jornada
+        elsif self.data.strftime("%A") == "Friday"
+          (jornada - 9) > 0 ? self.horas_extras = jornada - 9 : 0
+        else
+          (jornada - 10) > 0 ? self.horas_extras = jornada - 10 : 0
+        end
+      else
+        if self.data.strftime("%A") == "Saturday" || (self.data.strftime("%A") == "Sunday")
+          self.horas_extras = jornada
+        elsif self.data.strftime("%A") == "Friday"
+          (jornada - 9) > 0 ? self.horas_extras = jornada - 9 : 0
+        else
+          (jornada - 10) > 0 ? self.horas_extras = jornada - 10 : 0
+        end
+      end
     end
   end
 

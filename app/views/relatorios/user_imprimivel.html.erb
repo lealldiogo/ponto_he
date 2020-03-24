@@ -33,7 +33,8 @@
       <div class="dia-data" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;">
         <%= (@periodo[1] - i).strftime("%d/%m") %>
       </div>
-      <% if @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).sem_he || @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).status == "Pendente" %>
+      <%# byebug %>
+      <% if @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).nil? || @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).sem_he || @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).status == "Pendente" %>
         <% 5.times do |c| %>
           <div class="celula-vazia" style="grid-row: <%= i + 5 %> / <%= i + 6 %>; grid-column: <%= 2*c + 3 %> / <%= 2*c + 5 %>;" >
             -

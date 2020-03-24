@@ -5,6 +5,8 @@ class RelatoriosController < ApplicationController
   def user_imprimivel
     @periodo = params_para_data(params)
     @funcionario = User.find(params[:id])
+    # range_periodo = @periodo[0]..@periodo[1]
+    # @trabalhos = @funcionario.trabalhos.where(data: range_periodo).where(trabalhos: {sem_he: false}).where.not(trabalhos: {status: "Pendente"})
   end
 
   def equipe_obra_imprimivel

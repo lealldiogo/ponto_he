@@ -22,7 +22,6 @@
     <h4><%= @grupo.valor_he_exce %></h4>
   </div>
   <div class="row">
-    <%= link_to "Delete", grupo_path(@grupo), method: :delete, data: { confirm: "Tem certeza que quer deletar este grupo?" }, class: "btn btn-default btn-danger" , style: "font-weight: bold"%>
     <%= link_to "Editar", edit_grupo_path(@grupo), class: "btn btn-default btn-warning", style: "font-weight: bold" %>
     <%#= link_to "Voltar", grupos_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
   </div>
