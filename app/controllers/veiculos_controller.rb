@@ -4,7 +4,7 @@ class VeiculosController < ApplicationController
   end
 
   def index
-    @veiculos = Veiculo.all
+    @veiculos = Veiculo.where(ativo: true)
   end
 
   def show
@@ -33,16 +33,16 @@ class VeiculosController < ApplicationController
     end
   end
 
-  def destroy
-    @veiculo = Veiculo.find(params[:id])
-    @veiculo.destroy
-    redirect_to veiculos_path
-  end
+  # def destroy
+  #   @veiculo = Veiculo.find(params[:id])
+  #   @veiculo.destroy
+  #   redirect_to veiculos_path
+  # end
 
 
   private
 
   def veiculo_params
-    params.require(:veiculo).permit(:nome)
+    params.require(:veiculo).permit(:nome, :ativo)
   end
 end

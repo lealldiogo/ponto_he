@@ -58,11 +58,11 @@ class TrabalhosController < ApplicationController
   end
 
   def recife
-    @funcionarios = User.where(equipe: "Recife")
+    @funcionarios = User.where(equipe: "Recife", ativo: true)
   end
 
   def paraiba
-    @funcionarios = User.where(equipe: "Paraíba")
+    @funcionarios = User.where(equipe: "Paraíba", ativo: true)
   end
 
   def admin_update

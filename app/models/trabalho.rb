@@ -25,6 +25,8 @@ class Trabalho < ApplicationRecord
 
   def atualizar_status
     # byebug
+    # Obs: isso aqui não está funcionando pq estou empurrando o valor "Validado"
+    # na partial _formulario_validacao.html.erb
     if self.status == "Pendente"
       self.status = "Enviado"
     elsif self.status == "Enviado"

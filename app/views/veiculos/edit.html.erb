@@ -10,7 +10,7 @@
 
     <div class="form-actions">
       <!-- Não posso deletar uma vez que os trabalhos pertencem ao veículo -->
-      <%#= link_to "Deletar", veiculo_path(@veiculo), method: :delete, data: { confirm: "Tem certeza que quer deletar este veículo?" }, class: "btn btn-default btn-danger" , style: "font-weight: bold"%>
+      <%= link_to "Deletar", veiculo_path(@veiculo, veiculo: {ativo: false}), method: :put, data: { confirm: "Tem certeza que quer deletar este veículo?" }, class: "btn btn-default btn-danger" , style: "font-weight: bold"%>
       <%= f.button :submit, "Cadastrar", class:"btn btn-success", style: "font-weight: bold" %>
       <%= link_to "Voltar", veiculos_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
     </div>

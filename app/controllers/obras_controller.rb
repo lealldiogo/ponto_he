@@ -4,7 +4,7 @@ class ObrasController < ApplicationController
   end
 
   def index
-    @obras = Obra.all
+    @obras = Obra.where(ativo: true)
   end
 
   def show
@@ -33,15 +33,15 @@ class ObrasController < ApplicationController
     end
   end
 
-  def destroy
-    @obra = Obra.find(params[:id])
-    @obra.destroy
-    redirect_to obras_path
-  end
+  # def destroy
+  #   @obra = Obra.find(params[:id])
+  #   @obra.destroy
+  #   redirect_to obras_path
+  # end
 
   private
 
   def obra_params
-    params.require(:obra).permit(:nome)
+    params.require(:obra).permit(:nome, :ativo)
   end
 end

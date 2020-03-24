@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   end
 
   def cadastros
-    @users = User.all
+    @users = User.where(ativo: true)
   end
 
   def create
@@ -31,16 +31,16 @@ class UsersController < ApplicationController
     end
   end
 
-  def destroy
-    @user = User.find(params[:id])
-    @user.destroy
-    redirect_to cadastros_path
-  end
+  # def destroy
+  #   @user = User.find(params[:id])
+  #   @user.destroy
+  #   redirect_to cadastros_path
+  # end
 
   private
 
   def user_params
-    params.require(:user).permit(:username, :nome_completo, :salario, :apelido, :cargo, :equipe, :password, :admin)
+    params.require(:user).permit(:username, :nome_completo, :salario, :apelido, :cargo, :equipe, :password, :admin, :ativo)
   end
 
   def allow_without_password

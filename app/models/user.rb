@@ -18,6 +18,16 @@ class User < ApplicationRecord
   validates :equipe, presence: true, unless: :admin?
   validates :equipe, inclusion: { in: ["Recife", "Paraíba"] }, unless: :admin?
 
+  def active_for_authentication?
+    # Uncomment the below debug statement to view the properties of the returned self model values.
+    # logger.debug self.to_yaml
+    super && self.ativo?
+  end
+
+  def inactive_message
+    self.ativo? ? super : :account_inactive
+  end
+
   def timeout_in
     return 1.year if admin?
     5.minutes
