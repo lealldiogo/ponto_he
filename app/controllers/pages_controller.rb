@@ -71,5 +71,13 @@ class PagesController < ApplicationController
     @grupos = Grupo.all
   end
 
+  def relatorios_funcionario
+    @funcionario = User.find(params[:id])
+  end
+
+  def funcionarios_para_relatorios
+    @funcionarios = User.where(admin: false)
+  end
+
 
 end

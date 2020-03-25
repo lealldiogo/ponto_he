@@ -1,0 +1,11 @@
+<div class="container">
+  <h1>RELATÓRIOS FUNCIONÁRIO <%= @funcionario.nome_completo %></h1>
+  <div class="row justify-content-center align-items-center">
+    <%= render 'shared/datas_tecon', reload_path: user_imprimivel_path(@funcionario), cabecalho: "FUNC" %>
+  </div>
+  <div class="row">
+    <div class="col-xs-12" >
+      <%= link_to "Voltar", relatorios_path, class: "btn btn-danger btn-block", style: "font-weight: bold" %>
+    </div>
+  </div>
+</div>
