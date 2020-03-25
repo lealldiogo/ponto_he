@@ -79,5 +79,20 @@ class PagesController < ApplicationController
     @funcionarios = User.where(admin: false)
   end
 
+  def relatorios_equipe
+
+  end
+
+  def relatorios_todos
+
+  end
+
+  def recife_para_relatorios
+    @funcionarios = User.where(admin: false, equipe: "Recife")
+  end
+
+  def paraiba_para_relatorios
+    @funcionarios = User.where(admin: false, equipe: "Paraíba")
+  end
 
 end

@@ -2,8 +2,8 @@
   <%= link_to "<", relatorios_equipe_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
 <% end %>
 <div class="container">
-  <h1>RELATÓRIOS FUNCIONÁRIO <%= @funcionario.nome_completo %></h1>
+  <h1>RELATÓRIO DE TODOS OS FUNCIONÁRIOS</h1>
   <div class="row justify-content-center align-items-center">
-    <%= render 'shared/datas_tecon', reload_path: user_imprimivel_path(@funcionario), cabecalho: "FUNC" %>
+    <%= render 'shared/datas_tecon', reload_path: equipe_obra_imprimivel_path, cabecalho: "EQUIPE", identif: "TODOS" %>
   </div>
 </div>

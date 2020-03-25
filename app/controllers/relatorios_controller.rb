@@ -16,11 +16,11 @@ class RelatoriosController < ApplicationController
     when "EQUIPE"
       @cabecalho = params[:identif]
       if @cabecalho == "REC"
-        @funcionarios = User.where(equipe: "Paraíba").joins(:trabalhos).where(trabalhos: {sem_he: false}).where.not(trabalhos: {status: "Pendente"}).distinct
-      elsif @cabecalho == "PB"
         @funcionarios = User.where(equipe: "Recife").joins(:trabalhos).where(trabalhos: {sem_he: false}).where.not(trabalhos: {status: "Pendente"}).distinct
+      elsif @cabecalho == "PB"
+        @funcionarios = User.where(equipe: "Paraíba").joins(:trabalhos).where(trabalhos: {sem_he: false}).where.not(trabalhos: {status: "Pendente"}).distinct
       else
-        redirect_to relatorios_path, alert: "Não foi possível identificar o tipo do relatório. Por favor, tente novamente"
+        @funcionarios = User.joins(:trabalhos).where(trabalhos: {sem_he: false}).where.not(trabalhos: {status: "Pendente"}).distinct
       end
     when "OBRA"
       @obra = Obra.find(params[:identif])

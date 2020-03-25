@@ -1,0 +1,17 @@
+<%= content_for :botao_voltar do %>
+  <%= link_to "<", relatorios_equipe_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+<% end %>
+<div class="container">
+  <h1>RELATÓRIOS DA PARAÍBA</h1>
+  <div class="rowjustify-content-center align-items-center">
+    <div class="col-xs-12" style="padding-bottom: 10px">
+      <%= link_to "TODOS", relatorios_paraiba_path,class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+    </div>
+    <%= render 'shared/filtro_digitacao' %>
+    <% @funcionarios.each do |func| %>
+      <div class="col-xs-12 itens" style="padding-bottom: 10px">
+        <%= link_to func.nome_completo, relatorios_funcionario_path(func),class: "btn btn-primary btn-block referencia-filt", style: "font-weight: bold" %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<%= content_for :botao_voltar do %>
+  <%= link_to "<", relatorios_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+<% end %>
+<div class="container">
+  <h1>RELATÓRIOS DAS EQUIPES</h1>
+  <div class="row justify-content-center align-items-center">
+    <div class="col-xs-12" style="padding-bottom: 10px">
+      <%= link_to "RECIFE", recife_para_relatorios_path, class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+    </div>
+    <div class="col-xs-12" style="padding-bottom: 10px">
+      <%= link_to "PARAÍBA", paraiba_para_relatorios_path, class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+    </div>
+    <div class="col-xs-12" style="padding-bottom: 10px">
+      <%= link_to "TODOS", relatorios_todos_path, class: "btn btn-primary btn-block", style: "font-weight: bold" %>
+    </div>
+  </div>
+</div>
