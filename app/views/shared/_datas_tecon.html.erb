@@ -14,20 +14,15 @@
     </div>
     <% if ((cabecalho.present?) && (cabecalho != "FUNC")) %>
       <input type="hidden" name="cabecalho" value="<%= cabecalho %>" >
+      <input type="hidden" name="identif" value="<%= identif %>" >
       <div class="col-xs-3">
         <%= submit_tag "Aplicar", class: 'btn btn-primary'%>
       </div>
+
+    <%# As duas condições abaixo dão o mesmo resultado. Otimizar!  %>
     <% elsif ((cabecalho.present?) && (cabecalho == "FUNC")) %>
       <div class="col-xs-3">
-        <div class="row">
-          <div class="col-xs-6">
-            <%= submit_tag "Aplicar", class: 'btn btn-primary'%>
-          </div>
-          <div class="col-xs-6">
-            <input type="hidden" name="id" value="<%= @funcionario.id %>" >
-            <%= submit_tag "Relatório", class: 'btn btn-primary'%>
-          </div>
-        </div>
+        <%= submit_tag "Aplicar", class: 'btn btn-primary'%>
       </div>
     <% else %>
       <div class="col-xs-3">

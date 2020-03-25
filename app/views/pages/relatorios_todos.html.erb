@@ -1,0 +1,9 @@
+<%= content_for :botao_voltar do %>
+  <%= link_to "<", relatorios_equipe_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+<% end %>
+<div class="container">
+  <h1>RELATÓRIO DE TODOS OS FUNCIONÁRIOS</h1>
+  <div class="row justify-content-center align-items-center">
+    <%= render 'shared/datas_tecon', reload_path: equipe_obra_imprimivel_path, cabecalho: "EQUIPE", identif: "TODOS" %>
+  </div>
+</div>

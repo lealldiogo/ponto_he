@@ -2,12 +2,12 @@
   <%= link_to "<", relatorios_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
 <% end %>
 <div class="container">
-  <h1>RELATÓRIOS DE OBRAS</h1>
+  <h1>RELATÓRIOS DE GRUPOS</h1>
   <div class="row">
     <%= render 'shared/filtro_digitacao' %>
-    <% @obras.each do |obra| %>
+    <% @grupos.each do |grupo| %>
       <div class="col-xs-12 itens" style="padding-bottom: 10px">
-        <%= link_to obra.nome, relatorios_obra_path(obra),class: "btn btn-primary btn-block referencia-filt", style: "font-weight: bold" %>
+        <%= link_to grupo.nome.nil? ? "-" : grupo.nome, relatorios_grupo_path(grupo),class: "btn btn-primary btn-block referencia-filt", style: "font-weight: bold" %>
       </div>
     <% end %>
   </div>

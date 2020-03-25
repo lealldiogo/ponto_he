@@ -1,0 +1,14 @@
+<%= content_for :botao_voltar do %>
+  <%= link_to "<", grupos_para_relatorios_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+<% end %>
+<div class="container">
+  <h1>RELATÓRIOS GRUPO <%= @grupo.nome %></h1>
+  <div class="row justify-content-center align-items-center">
+    <%= render 'shared/datas_tecon', reload_path: equipe_obra_imprimivel_path, cabecalho: "GRUPO", identif: @grupo.id %>
+  </div>
+  <div class="row">
+    <div class="col-xs-12" >
+      <%= link_to "Voltar", relatorios_path, class: "btn btn-danger btn-block", style: "font-weight: bold" %>
+    </div>
+  </div>
+</div>
