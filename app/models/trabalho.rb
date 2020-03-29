@@ -13,20 +13,20 @@ class Trabalho < ApplicationRecord
   validates :entrada, presence: true, unless: :sem_hora_extra?
   validates :saida, presence: true, unless: :sem_hora_extra?
 
-  validates :valor_he, inclusion: { in: [1.5, 1.7, 2], allow_blank: true}
+  validates :valor_he, inclusion: { in: [1.5, 1.7, 2.0], allow_blank: true}
   # validates :valor_he, inclusion: { in: [1.5, 1.7, 2], allow_blank: true}, on: :create
 
   # check how to handle valor_he correctly
   before_create :valor_he_padrao
   before_create :calcular_jornada
-  before_create :atualizar_status
+  before_save :atualizar_status
 
   protected
 
   def atualizar_status
-    # byebug
     # Obs: isso aqui não está funcionando pq estou empurrando o valor "Validado"
     # na partial _formulario_validacao.html.erb
+    # Na verdade só precisava mudar o callback pra after_save
     if self.status == "Pendente"
       self.status = "Enviado"
     elsif self.status == "Enviado"
