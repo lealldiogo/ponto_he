@@ -38,15 +38,17 @@ class Trabalho < ApplicationRecord
   # Está sendo mantido aqui também até que essa modificação seja validada e
   # a coluna horas_extras retirada da tabela trabalhos
   def calcular_jornada
-    outro_dia = false
+    # outro_dia = false
     if self.entrada > self.saida
-      outro_dia = true
-      if self.entrada.min > self.saida.min
-        horas = 24 - self.entrada.hour + self.saida.hour - 1
-        minutos = 60 - self.entrada.min + self.saida.min
-      else
-        horas = 24 - self.entrada.hour + self.saida.hour
-        minutos = self.saida.min - self.entrada.min
+      # outro_dia = true
+      horas = 24 - self.entrada.hour - 1
+      minutos = 60 - self.entrada.min
+      # Tentativa de evitar erros caso a saída seja 00:00
+      if self.saida.hour != 0 || self.saida.min != 0
+        # byebug
+        novo_dia_saida = self.saida
+        novo_dia = Trabalho.create(data: (self.data + 1), entrada: Time.parse("00:00:00"), saida: novo_dia_saida, user_id: self.user.id, obra_id: self.obra.id, sem_he: false, veiculo_id: self.veiculo.id, status: "Pendente")
+        self.saida = Time.parse("00:00:00")
       end
     else
       if self.entrada.min > self.saida.min
@@ -58,28 +60,55 @@ class Trabalho < ApplicationRecord
       end
     end
     jornada = horas + (minutos.to_f/60).round(2)
+    byebug
     if jornada == 0
       errors.add(:saida, "não pode ser igual a Entrada")
     else
-      if outro_dia
-        #TODO: Criar função novo_dia() para criar um novo trabalho para o novo dia uma vez que vira a noite.
-        if self.data.strftime("%A") == "Saturday" || (self.data.strftime("%A") == "Sunday")
-          self.horas_extras = jornada
-        elsif self.data.strftime("%A") == "Friday"
-          (jornada - 9) > 0 ? self.horas_extras = jornada - 9 : 0
-        else
-          (jornada - 10) > 0 ? self.horas_extras = jornada - 10 : 0
-        end
+      # if outro_dia
+      #   #TODO: Criar função novo_dia() para criar um novo trabalho para o novo dia uma vez que vira a noite.
+      #   novo_dia
+      #   # if self.entrada.min > 0
+      #   horas = 24 - self.entrada.hour - 1
+      #   # na hora de fazer a divisão por 60 uma hora será adicionada no caso de o'clocks
+      #   minutos = 60 - self.entrada.min
+      #   # else
+      #   #   horas = 24 - self.entrada.hour
+      #   #   minutos = 0
+      #   # end
+      #   jornada = horas + (minutos.to_f/60).round(2)
+      if (self.data.strftime("%A") == "Saturday") || (self.data.strftime("%A") == "Sunday")
+        self.horas_extras = jornada
+      elsif self.data.strftime("%A") == "Friday"
+        (jornada - 9) > 0 ? self.horas_extras = jornada - 9 : 0
       else
-        if self.data.strftime("%A") == "Saturday" || (self.data.strftime("%A") == "Sunday")
-          self.horas_extras = jornada
-        elsif self.data.strftime("%A") == "Friday"
-          (jornada - 9) > 0 ? self.horas_extras = jornada - 9 : 0
-        else
-          (jornada - 10) > 0 ? self.horas_extras = jornada - 10 : 0
-        end
+        (jornada - 10) > 0 ? self.horas_extras = jornada - 10 : 0
       end
+      byebug
+      # else
+      #   if (self.data.strftime("%A") == "Saturday") || (self.data.strftime("%A") == "Sunday")
+      #     self.horas_extras = jornada
+      #   elsif self.data.strftime("%A") == "Friday"
+      #     (jornada - 9) > 0 ? self.horas_extras = jornada - 9 : 0
+      #   else
+      #     (jornada - 10) > 0 ? self.horas_extras = jornada - 10 : 0
+      #   end
+      # end
     end
+  end
+
+  def novo_dia
+    # cálculo direto, pois começa a contar a partir das 00:00
+    horas = self.saida.hour
+    minutos = self.saida.min
+    jornada = horas + (minutos.to_f/60).round(2)
+    if (self.data.strftime("%A") == "Friday") || (self.data.strftime("%A") == "Saturday")
+      nd_horas_extras = jornada
+    elsif self.data.strftime("%A") == "Thursday"
+      (jornada - 9) > 0 ? nd_horas_extras = jornada - 9 : 0
+    else
+      (jornada - 10) > 0 ? nd_horas_extras = jornada - 10 : 0
+    end
+    Trabalho.create()
   end
 
   def valor_he_padrao
@@ -143,4 +172,6 @@ class Trabalho < ApplicationRecord
     end
     return data_exce
   end
+
+
 end
