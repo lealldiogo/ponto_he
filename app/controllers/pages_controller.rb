@@ -30,10 +30,19 @@ class PagesController < ApplicationController
   end
 
   def test
-    flash[:warning] = "WARNING"
-    flash[:alert] = "ALERT"
-    flash[:notice] = "NOTICE"
-    flash[:info] = "INFO"
+    # flash[:warning] = "WARNING"
+    # flash[:alert] = "ALERT"
+    # flash[:notice] = "NOTICE"
+    # flash[:info] = "INFO"
+    @funcionarios = User.where(admin: false, equipe: "Recife")
+    @set_trabalhos_equipe = SetTrabalhosEquipe.new
+    @set_trabalhos_funcionarios = []
+    @funcionarios.each do |func|
+      @set_trabalhos_funcionarios << SetTrabalhosFuncionario.new(user_id: func.id)
+    end
+    if @funcionarios.length != @set_trabalhos_funcionarios.length
+      flash[:warning] = "Pode ser que a validação não funcione para algum funcionario"
+    end
   end
 
   def admin
