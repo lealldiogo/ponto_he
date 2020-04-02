@@ -58,12 +58,68 @@ class TrabalhosController < ApplicationController
   end
 
   def recife
-    @funcionarios = User.where(equipe: "Recife", ativo: true)
+    @periodo = params_para_data(params)
+    @set_trabalhos_equipe = SetTrabalhosEquipe.new
+    @funcionarios = User.where(admin: false, equipe: "Recife", ativo: true)
+    @set_trabalhos_funcionarios = []
+    @funcionarios.each do |func|
+      trabalhos = []
+      ((@periodo[1]-@periodo[0]).to_i + 1).times do |i|
+        # Ache ou crie um trabalho do usuário para a data
+        if Trabalho.exists?(data: @periodo[1] - i, user_id: func.id)
+          query_trabalho = Trabalho.where(data: @periodo[1] - i, user_id: func.id)
+          query_trabalho.each do |trabalho|
+            trabalhos << trabalho
+          end
+        else
+          trabalhos << Trabalho.new(data: @periodo[1] - i, user_id: func.id, status: "Pendente")
+        end
+      end
+      @set_trabalhos_funcionarios << [SetTrabalhosFuncionario.new(user_id: func.id),trabalhos]
+    end
+    if @funcionarios.length != @set_trabalhos_funcionarios.length
+      flash[:warning] = "Pode ser que a validação não funcione para algum funcionario"
+    end
   end
 
   def paraiba
-    @funcionarios = User.where(equipe: "Paraíba", ativo: true)
+    @funcionarios = User.where(admin: false, equipe: "Paraíba", ativo: true)
   end
+
+
+  def set_trabalhos_equipes
+    ste = SetTrabalhosEquipe.new(ste_params)
+    range_periodo = ste.inicio_periodo..ste.fim_periodo
+    funcionarios = User.where(admin: false, equipe: ste.equipe, ativo: true)
+    trabalhos = []
+    funcionarios.each do |func|
+      func.trabalhos.where(data: range_periodo).each do |trab|
+        trabalhos << trab
+      end
+    end
+    erro = false
+    trabalhos.each {|t| erro = true unless t.save! }
+    if erro
+      redirect_to (ste.equipe == "Recife" ? recife_path : paraiba_path), info: "Algo deu errado... por favor, tente de novo"
+    else
+      redirect_to (ste.equipe == "Recife" ? recife_path : paraiba_path), info: "Trabalhos da equipe #{ste.equipe} validados"
+    end
+  end
+
+  def set_trabalhos_funcionarios
+    stf = SetTrabalhosFuncionario.new(stf_params)
+    range_periodo = stf.inicio_periodo..stf.fim_periodo
+    trabalhos = Trabalho.where(user_id: stf.user_id, data: range_periodo)
+    erro = false
+    trabalhos.each {|t| erro = true unless t.save! }
+    if erro
+      redirect_to (User.find(stf.user_id).equipe == "Recife" ? recife_path : paraiba_path), info: "Algo deu errado... por favor, tente de novo"
+    else
+      redirect_to (User.find(stf.user_id).equipe == "Recife" ? recife_path : paraiba_path), info: "Trabalhos de #{User.find(stf.user_id).apelido} validados"
+    end
+  end
+
+
 
   def admin_update
     @trabalho = Trabalho.find(params[:id])
@@ -94,8 +150,15 @@ class TrabalhosController < ApplicationController
     params.require(:trabalho).permit(:data, :entrada, :saida, :user_id, :obra_id, :veiculo_id, :sem_he)
   end
 
-
   def admin_trabalho_params
     params.require(:trabalho).permit(:data, :entrada, :saida, :user_id, :obra_id, :veiculo_id, :sem_he, :status)
+  end
+
+  def ste_params
+    params.require(:set_trabalhos_equipe).permit(:equipe, :inicio_periodo, :fim_periodo)
+  end
+
+  def stf_params
+    params.require(:set_trabalhos_funcionario).permit(:user_id, :inicio_periodo, :fim_periodo)
   end
 end

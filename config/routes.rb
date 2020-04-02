@@ -49,11 +49,8 @@ Rails.application.routes.draw do
   get "test", to: 'pages#test'
 
 
-  put "set_trabalhos_equipes", to: 'trabalhos#set_trabalhos_equipes', as: :set_trabalhos_equipes
-  patch "set_trabalhos_equipes", to: 'trabalhos#set_trabalhos_equipes'
-
-  put "set_trabalhos_funcionarios", to: 'trabalhos#set_trabalhos_funcionarios', as: :set_trabalhos_funcionarios
-  patch "set_trabalhos_funcionarios", to: 'trabalhos#set_trabalhos_funcionarios'
+  post "set_trabalhos_equipes", to: 'trabalhos#set_trabalhos_equipes', as: :set_trabalhos_equipes
+  post "set_trabalhos_funcionarios", to: 'trabalhos#set_trabalhos_funcionarios', as: :set_trabalhos_funcionarios
 
 
 end
