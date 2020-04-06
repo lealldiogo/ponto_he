@@ -41,7 +41,6 @@ class TrabalhosController < ApplicationController
   end
 
   def user_update
-    #byebug
     @trabalho = Trabalho.find(params[:id])
     if @trabalho.update(user_trabalho_params)
       redirect_to apontamento_path, info: "Apontamento de horas enviado para validação do gestor"
@@ -83,9 +82,29 @@ class TrabalhosController < ApplicationController
   end
 
   def paraiba
+    @periodo = params_para_data(params)
+    @set_trabalhos_equipe = SetTrabalhosEquipe.new
     @funcionarios = User.where(admin: false, equipe: "Paraíba", ativo: true)
+    @set_trabalhos_funcionarios = []
+    @funcionarios.each do |func|
+      trabalhos = []
+      ((@periodo[1]-@periodo[0]).to_i + 1).times do |i|
+        # Ache ou crie um trabalho do usuário para a data
+        if Trabalho.exists?(data: @periodo[1] - i, user_id: func.id)
+          query_trabalho = Trabalho.where(data: @periodo[1] - i, user_id: func.id)
+          query_trabalho.each do |trabalho|
+            trabalhos << trabalho
+          end
+        else
+          trabalhos << Trabalho.new(data: @periodo[1] - i, user_id: func.id, status: "Pendente")
+        end
+      end
+      @set_trabalhos_funcionarios << [SetTrabalhosFuncionario.new(user_id: func.id),trabalhos]
+    end
+    if @funcionarios.length != @set_trabalhos_funcionarios.length
+      flash[:warning] = "Pode ser que a validação não funcione para algum funcionario"
+    end
   end
-
 
   def set_trabalhos_equipes
     ste = SetTrabalhosEquipe.new(ste_params)
@@ -119,7 +138,43 @@ class TrabalhosController < ApplicationController
     end
   end
 
+  def admin_update_recife
+    @trabalho = Trabalho.find(params[:id])
+    if @trabalho.update(admin_trabalho_params)
+      redirect_to recife_path, info: "Horas extras validadas com sucesso"
+      # if @trabalho.user.equipe == "Recife"
+      #   redirect_to recife_path, info: "Horas extras validadas com sucesso"
+      # else
+      #   redirect_to paraiba_path, info: "Horas extras validadas com sucesso"
+      # end
+    else
+      redirect_to recife_path, info: "Algo deu errado... por favor, tente de novo"
+      # if @trabalho.user.equipe == "Recife"
+      #   redirect_to recife_path, info: "Algo deu errado... por favor, tente de novo"
+      # else
+      #   redirect_to paraiba_path, info: "Algo deu errado... por favor, tente de novo"
+      # end
+    end
+  end
 
+  def admin_update_paraiba
+    @trabalho = Trabalho.find(params[:id])
+    if @trabalho.update(admin_trabalho_params)
+      redirect_to paraiba_path, info: "Horas extras validadas com sucesso"
+      # if @trabalho.user.equipe == "Recife"
+      #   redirect_to recife_path, info: "Horas extras validadas com sucesso"
+      # else
+      #   redirect_to paraiba_path, info: "Horas extras validadas com sucesso"
+      # end
+    else
+      redirect_to paraiba_path, info: "Algo deu errado... por favor, tente de novo"
+      # if @trabalho.user.equipe == "Recife"
+      #   redirect_to recife_path, info: "Algo deu errado... por favor, tente de novo"
+      # else
+      #   redirect_to paraiba_path, info: "Algo deu errado... por favor, tente de novo"
+      # end
+    end
+  end
 
   def admin_update
     @trabalho = Trabalho.find(params[:id])
@@ -161,4 +216,5 @@ class TrabalhosController < ApplicationController
   def stf_params
     params.require(:set_trabalhos_funcionario).permit(:user_id, :inicio_periodo, :fim_periodo)
   end
+
 end

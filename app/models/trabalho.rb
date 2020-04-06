@@ -60,7 +60,7 @@ class Trabalho < ApplicationRecord
       end
     end
     jornada = horas + (minutos.to_f/60).round(2)
-    byebug
+    # byebug
     if jornada == 0
       errors.add(:saida, "não pode ser igual a Entrada")
     else
@@ -83,7 +83,7 @@ class Trabalho < ApplicationRecord
       else
         (jornada - 10) > 0 ? self.horas_extras = jornada - 10 : 0
       end
-      byebug
+      # byebug
       # else
       #   if (self.data.strftime("%A") == "Saturday") || (self.data.strftime("%A") == "Sunday")
       #     self.horas_extras = jornada
