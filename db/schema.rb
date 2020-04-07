@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200407221537) do
+ActiveRecord::Schema.define(version: 20200407222232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 20200407221537) do
     t.boolean  "sem_he",       default: false
     t.integer  "veiculo_id"
     t.float    "horas_extras", default: 0.0
+    t.integer  "jornada_base"
     t.index ["obra_id"], name: "index_trabalhos_on_obra_id", using: :btree
     t.index ["user_id"], name: "index_trabalhos_on_user_id", using: :btree
     t.index ["veiculo_id"], name: "index_trabalhos_on_veiculo_id", using: :btree

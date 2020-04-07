@@ -18,6 +18,7 @@ class Trabalho < ApplicationRecord
 
   # check how to handle valor_he correctly
   before_create :valor_he_padrao
+  before_create :determinar_jornada_base
   before_create :calcular_jornada
   before_save :atualizar_status
 
@@ -111,6 +112,16 @@ class Trabalho < ApplicationRecord
     Trabalho.create()
   end
 
+  def determinar_jornada_base
+    if (self.data.strftime("%A") == "Saturday") || (self.data.strftime("%A") == "Sunday")
+      self.jornada_base = 0
+    elsif self.data.strftime("%A") == "Friday"
+      self.jornada_base = 9
+    else
+      self.jornada_base = 10
+    end
+  end
+
   def valor_he_padrao
     #DONE: definir valor de hora extra padrão com base no dia da semana
     #TODO: criar array com datas dos feriados no recife e na paraíba(ignorar municipais nesse caso?)
@@ -128,6 +139,8 @@ class Trabalho < ApplicationRecord
         self.valor_he = 1.5
       # end
       end
+    else
+      self.valor_he = Grupo.joins(:membros).where(membros: {user: User.last}).where("inicio_exce < ?", self.data).where("fim_exce > ?", self.data).first.valor_he
     end
   end
 
