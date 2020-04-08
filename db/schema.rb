@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200407222232) do
+ActiveRecord::Schema.define(version: 20200408214723) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20200407222232) do
     t.boolean  "selec_valor"
     t.boolean  "selec_duplo_trab"
     t.integer  "jornada_exce"
+    t.boolean  "selec_jornada"
   end
 
   create_table "membros", force: :cascade do |t|

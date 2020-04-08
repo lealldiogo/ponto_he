@@ -108,8 +108,50 @@ class Trabalho < ApplicationRecord
     Trabalho.create()
   end
 
-  def determinar_jornada_base
+  def sem_hora_extra?
+    #TODO: pular validações caso não haja hora extra no dia
+    self.sem_he
+  end
+
+  def multiplas_he?
+    #TODO: adicionar checkbox nos grupos e refatorar a abordagem geral,
+    #caso decida realmente fazer isso.
+    data_exce = false
+    if self.user.grupos.any?
+      self.user.grupos.each do |grupo|
+        if (self.data >= grupo.inicio_exce) && (self.data <= grupo.fim_exce)
+          data_exce = grupo.selec_duplo_trab
+        end
+      end
+    end
+    return data_exce
+  end
+
+  def condicoes_data
     if !data_inclusa_excecao?
+      if (Date.today - self.data) > 7
+        errors.add(:data, "não pode ser anterior a " + (Date.today - 7).strftime("%d/%m/%Y"))
+      elsif (Date.today - self.data) < 0
+        errors.add(:data, "não pode ser uma data futura")
+      end
+    end
+  end
+
+  def data_inclusa_excecao?
+    data_exce = false
+    if self.user.grupos.any?
+      self.user.grupos.each do |grupo|
+        if (self.data >= grupo.inicio_exce) && (self.data <= grupo.fim_exce)
+          data_exce = true
+          break
+        end
+      end
+    end
+    return data_exce
+  end
+
+  def determinar_jornada_base
+    if !data_inclui_excecao_jornada?
       if (self.data.strftime("%A") == "Saturday") || (self.data.strftime("%A") == "Sunday")
         self.jornada_base = 0
       elsif self.data.strftime("%A") == "Friday"
@@ -122,12 +164,25 @@ class Trabalho < ApplicationRecord
     end
   end
 
+  def data_inclui_excecao_jornada?
+    data_exce = false
+    if self.user.grupos.any?
+      self.user.grupos.each do |grupo|
+        if (self.data >= grupo.inicio_exce) && (self.data <= grupo.fim_exce)
+          data_exce = grupo.selec_jornada
+          break
+        end
+      end
+    end
+    return data_exce
+  end
+
   def valor_he_padrao
     #DONE: definir valor de hora extra padrão com base no dia da semana
     #TODO: criar array com datas dos feriados no recife e na paraíba(ignorar municipais nesse caso?)
     #TODO: adicionar um include?(self.data) como condição para valor_he = 100%
     # feriados = Feriado.all
-    if !data_inclusa_excecao?
+    if !data_inclui_excecao_valor?
       if self.data.strftime("%A") == "Sunday"
         self.valor_he = 2
       elsif self.data.strftime("%A") == "Saturday"
@@ -144,47 +199,17 @@ class Trabalho < ApplicationRecord
     end
   end
 
-  def condicoes_data
-    if !data_inclusa_excecao?
-      if (Date.today - self.data) > 7
-        errors.add(:data, "não pode ser anterior a " + (Date.today - 7).strftime("%d/%m/%Y"))
-      elsif (Date.today - self.data) < 0
-        errors.add(:data, "não pode ser uma data futura")
-      end
-    end
-  end
-
-  def sem_hora_extra?
-    #TODO: pular validações caso não haja hora extra no dia
-    self.sem_he
-  end
-
-  def multiplas_he?
-    #TODO: adicionar checkbox nos grupos e refatorar a abordagem geral,
-    #caso decida realmente fazer isso.
+  def data_inclui_excecao_valor?
     data_exce = false
     if self.user.grupos.any?
       self.user.grupos.each do |grupo|
         if (self.data >= grupo.inicio_exce) && (self.data <= grupo.fim_exce)
-          data_exce = true
-        end
-      end
-    end
-    return data_exce
-  end
-
-  def data_inclusa_excecao?
-    data_exce = false
-    if self.user.grupos.any?
-      self.user.grupos.each do |grupo|
-        if (self.data >= grupo.inicio_exce) && (self.data <= grupo.fim_exce)
-          data_exce = true
+          data_exce = grupo.selec_valor
           break
         end
       end
     end
     return data_exce
   end
-
 
 end

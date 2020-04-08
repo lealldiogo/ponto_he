@@ -1,14 +1,15 @@
 <div class="container">
   <h1>EDITAR GRUPO</h1>
   <div class="row">
-
     <%= simple_form_for @grupo do |f| %>
       <%= f.error_notification %>
 
       <div class="form-inputs">
         <%= f.input :nome, label: "Nome do Grupo",required: true, autofocus: true %>
-        <%= f.input :valor_he_exce, label: "Valor da Hora Extra", collection: [1.5, 1.7, 2.0], required: true, autofocus: true %>
-        <%= f.input :jornada_exce, label: "Jornada",required: true, autofocus: true %>
+        <%= f.input :selec_valor, as: :boolean, label: "O grupo terá exceção para o Valor da Hora Extra?", required: true, autofocus: true %>
+        <%= f.input :valor_he_exce, label: "Valor da Hora Extra", disabled: !@grupo.selec_valor, collection: [1.5, 1.7, 2.0], required: true, autofocus: true %>
+        <%= f.input :selec_jornada, as: :boolean, label: "O grupo terá exceção para a Jornada de Trabalho?",required: true, autofocus: true %>
+        <%= f.input :jornada_exce, label: "Jornada",required: true, disabled: !@grupo.selec_jornada, autofocus: true %>
         <%= f.input :inicio_exce, label: "Início",required: true, autofocus: true %>
         <%= f.input :fim_exce, label: "Fim",required: true, autofocus: true %>
         <%= f.input :inicio_antigo, as: :hidden, input_html: { value: @grupo.inicio_exce } %>
@@ -25,3 +26,24 @@
 
   </div>
 </div>
+
+<script>
+  $(document).ready(function(){
+    $('#grupo_selec_valor').change(function() {
+      var valorInput = $('#grupo_valor_he_exce');
+      if ($(this).is( ':checked' )) {
+        valorInput.prop('disabled', false);
+      } else {
+        valorInput.prop('disabled', true);
+      };
+    });
+    $('#grupo_selec_jornada').change(function() {
+      var jornadaInput = $('#grupo_jornada_exce');
+      if ($(this).is( ':checked' )) {
+        jornadaInput.prop('disabled', false);
+      } else {
+        jornadaInput.prop('disabled', true);
+      };
+    });
+  });
+</script>
