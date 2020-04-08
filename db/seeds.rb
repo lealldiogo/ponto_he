@@ -101,6 +101,6 @@ veiculo3.save!
 # trabalho_ronaldo3.save!
 # trabalho_ronaldo4.save!
 
-grupo1 = Grupo.new(nome: "Seed", valor_he_exce: 2, inicio_exce: Date.new(2019,4,15), fim_exce: Date.new(2019,5,15))
+grupo1 = Grupo.new(nome: "Seed", selec_valor: true, selec_duplo_trab: false, selec_jornada: true, jornada_exce: 9, valor_he_exce: 2, inicio_exce: Date.new(2019,4,15), fim_exce: Date.new(2019,5,15))
 grupo1.users << [pedro, ronaldo]
 grupo1.save!

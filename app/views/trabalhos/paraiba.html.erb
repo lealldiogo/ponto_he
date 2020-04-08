@@ -3,15 +3,38 @@
 <% end %>
 <div class="container">
   <h1>PARAÍBA</h1>
-  <div class="row justify-content-center align-items-center">
-    <% @funcionarios.each do |funcionario| %>
-      <% if verificar_pendencia(funcionario) %>
-        <%= link_to funcionario.apelido, trabalhos_funcionario_path(funcionario), class: "trabalho-pendente btn btn-primary btn-block", style: "font-weight: bold" %>
-      <% else %>
-        <%= link_to funcionario.apelido, trabalhos_funcionario_path(funcionario), class: "trabalho-validado btn btn-primary btn-block", style: "font-weight: bold" %>
-      <% end %>
-      <%#=  render 'trabalhos/infos_funcionario', funcionario: func %>
+  <%= render 'shared/datas_tecon', reload_path: paraiba_path, cabecalho: "" %>
+  <%= simple_form_for @set_trabalhos_equipe do |ste| %>
+    <%= ste.input :inicio_periodo, as: :hidden, input_html: { value: @periodo[0] } %>
+    <%= ste.input :fim_periodo, as: :hidden, input_html: { value: @periodo[1] } %>
+    <%= ste.input :equipe, as: :hidden, input_html: { value: "Paraíba" } %>
+    <%= ste.button :submit, "Atualizar equipe" %>
+  <% end %>
+  <% @funcionarios.each_with_index do |funcionario,i| %>
+    <% if verificar_pendencia(funcionario) %>
+      <div class="row justify-content-center align-items-center card-funcionario trabalho-pendente">
+        <h4><%= funcionario.apelido %></h4>
+        <%= link_to "Detalhes", trabalhos_funcionario_path(funcionario), class: "btn btn-primary" %>
+        <%= simple_form_for @set_trabalhos_funcionarios[i][0] do |stf| %>
+          <%= stf.input :inicio_periodo, as: :hidden, input_html: { value: @periodo[0] } %>
+          <%= stf.input :fim_periodo, as: :hidden, input_html: { value: @periodo[1] } %>
+          <%= stf.input :user_id, as: :hidden, input_html: { value: funcionario.id }  %>
+          <%= stf.button :submit, "Atualizar funcionario" %>
+        <% end %>
+        <%= render 'trabalhos/formulario_validacao', funcionario: funcionario, trabalhos: @set_trabalhos_funcionarios[i][1] %>
+      </div>
+    <% else %>
+      <div class="row justify-content-center align-items-center card-funcionario trabalho-validado">
+        <h4><%= funcionario.apelido %></h4>
+        <%= link_to "Detalhes", trabalhos_funcionario_path(funcionario), class: "btn btn-primary" %>
+        <%= simple_form_for @set_trabalhos_funcionarios[i][0] do |stf| %>
+          <%= stf.input :inicio_periodo, as: :hidden, input_html: { value: @periodo[0] } %>
+          <%= stf.input :fim_periodo, as: :hidden, input_html: { value: @periodo[1] } %>
+          <%= stf.input :user_id, as: :hidden, input_html: { value: funcionario.id }  %>
+          <%= stf.button :submit, "Atualizar funcionario" %>
+        <% end %>
+        <%= render 'trabalhos/formulario_validacao', funcionario: funcionario, trabalhos: @set_trabalhos_funcionarios[i][1] %>
+      </div>
     <% end %>
-  </div>
-  <%#= link_to "Voltar", admin_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+  <% end %>
 </div>

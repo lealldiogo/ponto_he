@@ -30,10 +30,10 @@ class PagesController < ApplicationController
   end
 
   def test
-    flash[:warning] = "WARNING"
-    flash[:alert] = "ALERT"
-    flash[:notice] = "NOTICE"
-    flash[:info] = "INFO"
+    # flash[:warning] = "WARNING"
+    # flash[:alert] = "ALERT"
+    # flash[:notice] = "NOTICE"
+    # flash[:info] = "INFO"
   end
 
   def admin

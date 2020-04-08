@@ -47,4 +47,14 @@ Rails.application.routes.draw do
   get "baixar_relatorio", to: 'relatorios#baixar_relatorio'
 
   get "test", to: 'pages#test'
+
+  post "set_trabalhos_equipes", to: 'trabalhos#set_trabalhos_equipes', as: :set_trabalhos_equipes
+  post "set_trabalhos_funcionarios", to: 'trabalhos#set_trabalhos_funcionarios', as: :set_trabalhos_funcionarios
+
+  put "admin_trabalho_recife/:id", to: 'trabalhos#admin_update_recife', as: :admin_trabalho_recife
+  patch "admin_trabalho_recife/:id", to: 'trabalhos#admin_update_recife' #, as: :admin_trabalho_recife
+
+  put "admin_trabalho_paraiba/:id", to: 'trabalhos#admin_update_paraiba', as: :admin_trabalho_paraiba
+  patch "admin_trabalho_paraiba/:id", to: 'trabalhos#admin_update_paraiba' #, as: :admin_trabalho_paraiba
+
 end

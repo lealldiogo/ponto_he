@@ -5,7 +5,8 @@ class Grupo < ApplicationRecord
   attr_accessor :inicio_antigo
   attr_accessor :fim_antigo
 
-  validates :valor_he_exce, inclusion: { in: [1.5, 1.7, 2] }
+  validates :valor_he_exce, inclusion: { in: [1.5, 1.7, 2.0] }
+  validates :jornada_exce, inclusion: { in: [0, 9, 10] }
 
   validate :inicio_ante_fim
   validate :overlap_periodos
@@ -49,7 +50,12 @@ class Grupo < ApplicationRecord
       trabalhos = Trabalho.where(data: self.inicio_exce..self.fim_exce, user_id: func.id)
       trabalhos.each do |trab|
         if trab.status != "Validado"
-          trab.update_columns(valor_he: self.valor_he_exce)
+          if self.selec_valor
+            trab.update_columns(valor_he: self.valor_he_exce)
+          end
+          if self.selec_jornada
+            trab.update_columns(jornada_base: self.jornada_exce)
+          end
         end
       end
     end
@@ -69,11 +75,13 @@ class Grupo < ApplicationRecord
       trabalhos.each do |trab|
         if trab.status != "Validado"
           if trab.data.strftime("%A") == "Sunday"
-            trab.update_columns(valor_he: 2)
+            trab.update_columns(valor_he: 2, jornada_base: 0)
           elsif trab.data.strftime("%A") == "Saturday"
-            trab.update_columns(valor_he: 1.7)
+            trab.update_columns(valor_he: 1.7, jornada_base: 0)
+          elsif trab.data.strftime("%A") == "Friday"
+            trab.update_columns(valor_he: 1.5, jornada_base: 9)
           else
-            trab.update_columns(valor_he: 1.5)
+            trab.update_columns(valor_he: 1.5, jornada_base: 10)
           end
         end
       end
@@ -94,11 +102,13 @@ class Grupo < ApplicationRecord
       trabalhos.each do |trab|
         if trab.status != "Validado"
           if trab.data.strftime("%A") == "Sunday"
-            trab.update_columns(valor_he: 2)
+            trab.update_columns(valor_he: 2, jornada_base: 0)
           elsif trab.data.strftime("%A") == "Saturday"
-            trab.update_columns(valor_he: 1.7)
+            trab.update_columns(valor_he: 1.7, jornada_base: 0)
+          elsif trab.data.strftime("%A") == "Friday"
+            trab.update_columns(valor_he: 1.5, jornada_base: 9)
           else
-            trab.update_columns(valor_he: 1.5)
+            trab.update_columns(valor_he: 1.5, jornada_base: 10)
           end
         end
       end
