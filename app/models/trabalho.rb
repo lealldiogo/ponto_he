@@ -16,6 +16,8 @@ class Trabalho < ApplicationRecord
   validates :valor_he, inclusion: { in: [1.5, 1.7, 2.0], allow_blank: true}
   # validates :valor_he, inclusion: { in: [1.5, 1.7, 2], allow_blank: true}, on: :create
 
+  validates :jornada_base, inclusion: { in: [0, 9, 10], allow_blank: true }
+
   # check how to handle valor_he correctly
   before_create :valor_he_padrao
   before_create :determinar_jornada_base
@@ -65,6 +67,7 @@ class Trabalho < ApplicationRecord
     if jornada == 0
       errors.add(:saida, "não pode ser igual a Entrada")
     else
+      (jornada - self.jornada_base) > 0 ? self.horas_extras = jornada - self.jornada_base : 0
       # if outro_dia
       #   #TODO: Criar função novo_dia() para criar um novo trabalho para o novo dia uma vez que vira a noite.
       #   novo_dia
@@ -77,13 +80,6 @@ class Trabalho < ApplicationRecord
       #   #   minutos = 0
       #   # end
       #   jornada = horas + (minutos.to_f/60).round(2)
-      if (self.data.strftime("%A") == "Saturday") || (self.data.strftime("%A") == "Sunday")
-        self.horas_extras = jornada
-      elsif self.data.strftime("%A") == "Friday"
-        (jornada - 9) > 0 ? self.horas_extras = jornada - 9 : 0
-      else
-        (jornada - 10) > 0 ? self.horas_extras = jornada - 10 : 0
-      end
       # byebug
       # else
       #   if (self.data.strftime("%A") == "Saturday") || (self.data.strftime("%A") == "Sunday")
@@ -113,12 +109,16 @@ class Trabalho < ApplicationRecord
   end
 
   def determinar_jornada_base
-    if (self.data.strftime("%A") == "Saturday") || (self.data.strftime("%A") == "Sunday")
-      self.jornada_base = 0
-    elsif self.data.strftime("%A") == "Friday"
-      self.jornada_base = 9
+    if !data_inclusa_excecao?
+      if (self.data.strftime("%A") == "Saturday") || (self.data.strftime("%A") == "Sunday")
+        self.jornada_base = 0
+      elsif self.data.strftime("%A") == "Friday"
+        self.jornada_base = 9
+      else
+        self.jornada_base = 10
+      end
     else
-      self.jornada_base = 10
+      self.jornada_base = Grupo.joins(:membros).where(membros: {user: User.last}).where("inicio_exce < ?", self.data).where("fim_exce > ?", self.data).first.jornada_exce
     end
   end
 
@@ -140,7 +140,7 @@ class Trabalho < ApplicationRecord
       # end
       end
     else
-      self.valor_he = Grupo.joins(:membros).where(membros: {user: User.last}).where("inicio_exce < ?", self.data).where("fim_exce > ?", self.data).first.valor_he
+      self.valor_he = Grupo.joins(:membros).where(membros: {user: User.last}).where("inicio_exce < ?", self.data).where("fim_exce > ?", self.data).first.valor_he_exce
     end
   end
 

@@ -43,7 +43,7 @@ class GruposController < ApplicationController
   private
 
   def grupo_params
-    params.require(:grupo).permit(:nome, :valor_he_exce, :inicio_exce, :fim_exce, :inicio_antigo, :fim_antigo, user_ids: [])
+    params.require(:grupo).permit(:nome, :valor_he_exce, :inicio_exce, :fim_exce, :inicio_antigo, :fim_antigo, :jornada_exce, user_ids: [])
   end
 
 end

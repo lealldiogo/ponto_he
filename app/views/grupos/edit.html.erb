@@ -7,7 +7,8 @@
 
       <div class="form-inputs">
         <%= f.input :nome, label: "Nome do Grupo",required: true, autofocus: true %>
-        <%= f.input :valor_he_exce, label: "Valor da Hora Extra", collection: [1.5, 1.7, 2], required: true, autofocus: true %>
+        <%= f.input :valor_he_exce, label: "Valor da Hora Extra", collection: [1.5, 1.7, 2.0], required: true, autofocus: true %>
+        <%= f.input :jornada_exce, label: "Jornada",required: true, autofocus: true %>
         <%= f.input :inicio_exce, label: "Início",required: true, autofocus: true %>
         <%= f.input :fim_exce, label: "Fim",required: true, autofocus: true %>
         <%= f.input :inicio_antigo, as: :hidden, input_html: { value: @grupo.inicio_exce } %>
