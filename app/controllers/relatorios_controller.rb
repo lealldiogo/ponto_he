@@ -12,32 +12,36 @@ class RelatoriosController < ApplicationController
   def equipe_obra_imprimivel
     # Os trabalhos ainda não estão sendo filtrados por data
     @periodo = params_para_data(params)
-    case params[:cabecalho]
+    range_periodo = @periodo[0]..@periodo[1]
+    @cabecalho = params[:cabecalho]
+    case @cabecalho
     when "EQUIPE"
-      @cabecalho = params[:identif]
-      if @cabecalho == "REC"
-        @funcionarios = User.where(equipe: "Recife").joins(:trabalhos).where(trabalhos: {sem_he: false}).where.not(trabalhos: {status: "Pendente"}).distinct
-      elsif @cabecalho == "PB"
-        @funcionarios = User.where(equipe: "Paraíba").joins(:trabalhos).where(trabalhos: {sem_he: false}).where.not(trabalhos: {status: "Pendente"}).distinct
+      @identif = params[:identif]
+      if @identif == "REC"
+        @funcionarios = User.where(equipe: "Recife").joins(:trabalhos).where(trabalhos: {sem_he: false, data: range_periodo, status: "Validado"}).distinct
+      elsif @identif == "PB"
+        @funcionarios = User.where(equipe: "Paraíba").joins(:trabalhos).where(trabalhos: {sem_he: false, data: range_periodo, status: "Validado"}).distinct
       else
-        @funcionarios = User.joins(:trabalhos).where(trabalhos: {sem_he: false}).where.not(trabalhos: {status: "Pendente"}).distinct
+        @funcionarios = User.joins(:trabalhos).where(trabalhos: {sem_he: false, data: range_periodo, status: "Validado"}).distinct
       end
     when "OBRA"
       @obra = Obra.find(params[:identif])
-      @cabecalho = @obra.nome
-      @funcionarios = User.joins(:trabalhos).where(trabalhos: {obra_id: @obra.id}).distinct
+      @identif = @obra.nome
+      @funcionarios = User.joins(:trabalhos).where(trabalhos: {obra_id: @obra.id, sem_he: false, data: range_periodo, status: "Validado"}).distinct
     when "GRUPO"
       @grupo = Grupo.find(params[:identif])
-      @cabecalho = @grupo.nome
-      @funcionarios = @grupo.users
+      @identif = @grupo.nome
+      @funcionarios = @grupo.users.joins(:trabalhos).where(trabalhos: {sem_he: false, data: range_periodo, status: "Validado"}).distinct
+      # Como lidar com períodos fora dos grupos? No estou usando o grupo apenas para filtrar usuários
+      # if (@grupo.inicio_exce > @periodo[1]) || (@grupo.fim_exce < @periodo[0])
+      #   redirect_to grupos_para_relatorios_path, alert: "Período selecionado fora do grupo"
+      # end
     else
       redirect_to relatorios_path, alert: "Não foi possível identificar o tipo do relatório. Por favor, tente novamente"
     end
   end
 
-  def user_relatorio
-    @user = User.find(params[:id])
-  end
+  # Funções abaixo eram utilizadas para baixar o relatório em excel
 
   def baixar_relatorio
     @user = User.find(params[:user_id])

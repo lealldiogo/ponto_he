@@ -50,8 +50,8 @@ class Trabalho < ApplicationRecord
       if self.saida.hour != 0 || self.saida.min != 0
         # byebug
         novo_dia_saida = self.saida
-        novo_dia = Trabalho.create(data: (self.data + 1), entrada: Time.parse("00:00:00"), saida: novo_dia_saida, user_id: self.user.id, obra_id: self.obra.id, sem_he: false, veiculo_id: self.veiculo.id, status: "Pendente")
-        self.saida = Time.parse("00:00:00")
+        novo_dia = Trabalho.create(data: (self.data + 1), entrada: Time.parse("00:00:00 UTC"), saida: novo_dia_saida, user_id: self.user.id, obra_id: self.obra.id, sem_he: false, veiculo_id: self.veiculo.id, status: "Pendente")
+        self.saida = Time.parse("00:00:00 UTC")
       end
     else
       if self.entrada.min > self.saida.min
@@ -160,7 +160,7 @@ class Trabalho < ApplicationRecord
         self.jornada_base = 10
       end
     else
-      self.jornada_base = Grupo.joins(:membros).where(membros: {user: User.last}).where("inicio_exce < ?", self.data).where("fim_exce > ?", self.data).first.jornada_exce
+      self.jornada_base = User.find(self.user_id).grupos.where("inicio_exce < ?", self.data).where("fim_exce > ?", self.data).first.jornada_exce
     end
   end
 
@@ -195,7 +195,7 @@ class Trabalho < ApplicationRecord
       # end
       end
     else
-      self.valor_he = Grupo.joins(:membros).where(membros: {user: User.last}).where("inicio_exce < ?", self.data).where("fim_exce > ?", self.data).first.valor_he_exce
+      self.valor_he = User.find(self.user_id).grupos.where("inicio_exce < ?", self.data).where("fim_exce > ?", self.data).first.valor_he_exce
     end
   end
 

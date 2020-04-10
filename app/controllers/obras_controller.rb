@@ -1,5 +1,6 @@
 class ObrasController < ApplicationController
-    def new
+
+  def new
     @obra = Obra.new
   end
 

@@ -3,13 +3,13 @@
   <% columns = 18 %>
   <div class="text-center" style="display: grid; grid-template: repeat(<%= rows %>, 1fr) / repeat(<%= columns %>, 1fr);">
     <div class="titulo-funcionario">
-      H.EXTRA
+      HORAS EXTRAS POR EMPREGADO
     </div>
     <div class="horarios">
       HORARIOS
     </div>
     <div class="empregado">
-      EMPREGADO
+      NOME
     </div>
     <div class="celula-vazia" style="grid-row: 2 / 3; grid-column: 3 / 19;">
       <!-- Mudar para objeto usuario -->
@@ -28,13 +28,13 @@
     <% horas_totais = 0 %>
     <% ((@periodo[1]-@periodo[0]).to_i + 1).times do |i| %>
       <div class="dia-da-semana" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;">
-        <%= (@periodo[1] - i).strftime("%a") %>
+        <%= traduzir_dia((@periodo[1] - i).strftime("%a")) %>
       </div>
       <div class="dia-data" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;">
         <%= (@periodo[1] - i).strftime("%d/%m") %>
       </div>
       <%# byebug %>
-      <% if @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).nil? || @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).sem_he || @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).status == "Pendente" %>
+      <% if @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).nil? || @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).sem_he || @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).status != "Validado" %>
         <% 5.times do |c| %>
           <div class="celula-vazia" style="grid-row: <%= i + 5 %> / <%= i + 6 %>; grid-column: <%= 2*c + 3 %> / <%= 2*c + 5 %>;" >
             -
@@ -42,7 +42,7 @@
         <% end %>
       <% else %>
         <% soma_dia = valor_he_dia(@funcionario, @funcionario.trabalhos.find_by(data: (@periodo[1] - i))) %>
-        <% jornada_he = calcular_jornada(@funcionario.trabalhos.find_by(data: (@periodo[1] - i))) %>
+        <% jornada_he = @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).horas_extras %>
         <div class="dia-entrada" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;" >
           <%= @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).entrada.strftime("%H:%M") %>
         </div>

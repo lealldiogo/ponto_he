@@ -21,6 +21,7 @@ gem 'cloudinary'
 gem 'bootstrap-datepicker-rails'
 # gem 'rails-assets-bootstrap-datepicker', source: 'https://rails-assets.org'
 
+# Gems abaixo foram utilizadas para baixar os relatorios em excel (xlsx)
 gem 'rubyzip', '>= 1.2.1'
 gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c8ac844'
 gem 'axlsx_rails'

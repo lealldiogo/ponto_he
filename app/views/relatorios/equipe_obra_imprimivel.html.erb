@@ -3,7 +3,7 @@
   <% columns = 3 %>
   <div class="text-center" style="display: grid; grid-template: repeat(<%= rows %>, 1fr) / repeat(<%= columns %>, 1fr);">
     <div class="titulo-equipe">
-      H.E - <%= @cabecalho %> <%= @periodo[0].strftime("%d/%m") %> a <%= @periodo[1].strftime("%d/%m") %> pago em __/__/2019
+      H.E - <%= @identif %> <%= @periodo[0].strftime("%d/%m") %> a <%= @periodo[1].strftime("%d/%m") %> pago em __/__/2019
     </div>
     <div class="declara">
       RECEBEMOS DA TECON ENGENHARIA O VALOR ABAIXO REFERENTE ÀS HORAS EXTRAS
@@ -19,7 +19,7 @@
     <% moa_somas = 0 %>
     <% i = 0 %>
     <% @funcionarios.each do |func| %>
-      <% soma_func = soma_he_funcionario(func, @periodo) %>
+      <% soma_func = @cabecalho == "OBRA" ? soma_he_func_obra(func, @periodo, @obra) : soma_he_funcionario(func, @periodo) %>
       <div class="nome-funcionario" style="grid-row: <%= i + 4 %> / <%= i + 5 %>;">
         <%= func.nome_completo %>
       </div>

@@ -29,24 +29,20 @@ Rails.application.routes.draw do
   get "user_imprimivel/:id", to: 'relatorios#user_imprimivel', as: :user_imprimivel
   get "equipe_obra_imprimivel", to: 'relatorios#equipe_obra_imprimivel'
 
-  get "relatorios", to: 'pages#relatorios'
-  get "relatorios_recife", to: 'pages#relatorios_recife'
-  get "relatorios_paraiba", to: 'pages#relatorios_paraiba'
-  get "obras_para_relatorios", to: 'pages#obras_para_relatorios'
-  get "relatorios_obra/:id", to: 'pages#relatorios_obra', as: :relatorios_obra
-  get "grupos_para_relatorios", to: 'pages#grupos_para_relatorios'
-  get "relatorios_grupo/:id", to: 'pages#relatorios_grupo', as: :relatorios_grupo
-  get "funcionarios_para_relatorios", to: 'pages#funcionarios_para_relatorios'
-  get "relatorios_funcionario/:id", to: 'pages#relatorios_funcionario', as: :relatorios_funcionario
-  get "paraiba_para_relatorios", to: 'pages#paraiba_para_relatorios'
-  get "recife_para_relatorios", to: 'pages#recife_para_relatorios'
-  get "relatorios_todos", to: 'pages#relatorios_todos'
-  get "relatorios_equipe", to: 'pages#relatorios_equipe'
+  get "relatorios", to: 'relatorios_flow#relatorios'
+  get "relatorios_recife", to: 'relatorios_flow#relatorios_recife'
+  get "relatorios_paraiba", to: 'relatorios_flow#relatorios_paraiba'
+  get "obras_para_relatorios", to: 'relatorios_flow#obras_para_relatorios'
+  get "relatorios_obra/:id", to: 'relatorios_flow#relatorios_obra', as: :relatorios_obra
+  get "grupos_para_relatorios", to: 'relatorios_flow#grupos_para_relatorios'
+  get "relatorios_grupo/:id", to: 'relatorios_flow#relatorios_grupo', as: :relatorios_grupo
+  get "funcionarios_para_relatorios", to: 'relatorios_flow#funcionarios_para_relatorios'
+  get "relatorios_funcionario/:id", to: 'relatorios_flow#relatorios_funcionario', as: :relatorios_funcionario
+  get "paraiba_para_relatorios", to: 'relatorios_flow#paraiba_para_relatorios'
+  get "recife_para_relatorios", to: 'relatorios_flow#recife_para_relatorios'
+  get "relatorios_todos", to: 'relatorios_flow#relatorios_todos'
+  get "relatorios_equipe", to: 'relatorios_flow#relatorios_equipe'
 
-  get "user_relatorio/:id", to: 'relatorios#user_relatorio', as: :user_relatorio
-  get "baixar_relatorio", to: 'relatorios#baixar_relatorio'
-
-  get "test", to: 'pages#test'
 
   post "set_trabalhos_equipes", to: 'trabalhos#set_trabalhos_equipes', as: :set_trabalhos_equipes
   post "set_trabalhos_funcionarios", to: 'trabalhos#set_trabalhos_funcionarios', as: :set_trabalhos_funcionarios
@@ -56,5 +52,11 @@ Rails.application.routes.draw do
 
   put "admin_trabalho_paraiba/:id", to: 'trabalhos#admin_update_paraiba', as: :admin_trabalho_paraiba
   patch "admin_trabalho_paraiba/:id", to: 'trabalhos#admin_update_paraiba' #, as: :admin_trabalho_paraiba
+
+  get "test", to: 'pages#test'
+
+  # Páginas usadas para baixar o relatório em excel
+  get "user_relatorio/:id", to: 'relatorios#user_relatorio', as: :user_relatorio
+  get "baixar_relatorio", to: 'relatorios#baixar_relatorio'
 
 end
