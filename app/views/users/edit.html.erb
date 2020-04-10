@@ -1,3 +1,6 @@
+<%= content_for :botao_voltar do %>
+  <%= link_to "<", cadastros_path, class: "btn btn-danger", style: "font-weight: bold" %>
+<% end %>
 <div class="container">
   <h1>ALTERAÇÃO DE CADASTRO</h1>
   <%#= render "users/user_form" %>
@@ -18,9 +21,8 @@
 
     <div class="form-actions">
       <!-- Não posso deletar uma vez que os trabalhos pertencem ao usuário -->
-      <%= link_to "Deletar", user_path(@user, user: {ativo: false}), method: :put, data: { confirm: "Tem certeza que quer deletar este usuário?" }, class: "btn btn-default btn-danger" , style: "font-weight: bold"%>
-      <%= f.button :submit, "Atualizar", class:"btn btn-success", style: "font-weight: bold" %>
-      <%= link_to "Voltar", cadastros_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+      <%= link_to "Deletar", user_path(@user, user: {ativo: false}), method: :put, data: { confirm: "Tem certeza que quer deletar este usuário?" }, class: "btn btn-danger btn-block" , style: "font-weight: bold"%>
+      <%= f.button :submit, "Atualizar", class:"btn btn-success btn-block", style: "font-weight: bold" %>
     </div>
   <% end %>
 </div>

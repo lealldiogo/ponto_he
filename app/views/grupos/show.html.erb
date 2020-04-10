@@ -1,5 +1,5 @@
 <%= content_for :botao_voltar do %>
-  <%= link_to "<", grupos_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+  <%= link_to "<", grupos_path, class: "btn btn-danger", style: "font-weight: bold" %>
 <% end %>
 <div class="container">
   <h1>GRUPO <%= @grupo.nome %></h1>
@@ -26,7 +26,6 @@
     <h4><%= @grupo.valor_he_exce %></h4>
   </div>
   <div class="row">
-    <%= link_to "Editar", edit_grupo_path(@grupo), class: "btn btn-default btn-warning", style: "font-weight: bold" %>
-    <%#= link_to "Voltar", grupos_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+    <%= link_to "Editar", edit_grupo_path(@grupo), class: "btn btn-warning btn-block", style: "font-weight: bold" %>
   </div>
 </div>

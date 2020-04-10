@@ -55,6 +55,10 @@ veiculo2.save!
 veiculo3 = Veiculo.new(nome: "Ônibus")
 veiculo3.save!
 
+grupo1 = Grupo.new(nome: "Seed", selec_valor: true, selec_duplo_trab: false, selec_jornada: true, jornada_exce: 9, valor_he_exce: 2, inicio_exce: Date.new(2020,2,15), fim_exce: Date.new(2020,3,15))
+grupo1.users << [pedro, ronaldo]
+grupo1.save!
+
 # trabalho_pedro1 = Trabalho.new(data: Date.today - 6, entrada: Time.parse("18:00:00"), saida: Time.parse("22:00:00"), status: "Validado")
 # trabalho_pedro2 = Trabalho.new(data: Date.today - 5, entrada: Time.parse("15:00:00"), saida: Time.parse("22:00:00"), status: "Validado")
 # trabalho_pedro3 = Trabalho.new(data: Date.today - 4, entrada: Time.parse("18:00:00"), saida: Time.parse("20:00:00"), status: "Validado")
@@ -101,6 +105,3 @@ veiculo3.save!
 # trabalho_ronaldo3.save!
 # trabalho_ronaldo4.save!
 
-grupo1 = Grupo.new(nome: "Seed", selec_valor: true, selec_duplo_trab: false, selec_jornada: true, jornada_exce: 9, valor_he_exce: 2, inicio_exce: Date.new(2019,4,15), fim_exce: Date.new(2019,5,15))
-grupo1.users << [pedro, ronaldo]
-grupo1.save!

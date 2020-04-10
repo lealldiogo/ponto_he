@@ -1,3 +1,6 @@
+<%= content_for :botao_voltar do %>
+  <%= link_to "<", grupos_path, class: "btn btn-danger", style: "font-weight: bold" %>
+<% end %>
 <div class="container">
   <h1>EDITAR GRUPO</h1>
   <div class="row">
@@ -18,9 +21,8 @@
       </div>
 
       <div class="form-actions">
-        <%= link_to "Deletar", grupo_path(@grupo), method: :delete, data: { confirm: "Tem certeza que quer deletar este grupo?" }, class: "btn btn-default btn-danger" , style: "font-weight: bold"%>
-        <%= f.button :submit, "Cadastrar", class: "btn btn-success", style: "font-weight: bold" %>
-        <%= link_to "Voltar", grupos_path, class: "btn btn-default btn-danger", style: "font-weight: bold" %>
+        <%= link_to "Deletar", grupo_path(@grupo), method: :delete, data: { confirm: "Tem certeza que quer deletar este grupo?" }, class: "btn btn-danger btn-block" , style: "font-weight: bold"%>
+        <%= f.button :submit, "Cadastrar", class: "btn btn-success btn-block", style: "font-weight: bold" %>
       </div>
     <% end %>
 
