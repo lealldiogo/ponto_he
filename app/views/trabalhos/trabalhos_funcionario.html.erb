@@ -9,6 +9,28 @@
   <%= render 'shared/datas_tecon', reload_path: trabalhos_funcionario_path, cabecalho: "FUNC" %>
 
   <table class="table">
+    <tbody>
+      <tr>
+        <%= simple_form_for @trabalho_manual, url: admin_manual_path do |f| %>
+          <td><%= f.input :data %></td>
+          <td><%= f.input :entrada %></td>
+          <td><%= f.input :saida %></td>
+          <td><%= f.association :obra, collection: Obra.where(ativo: true), label_method: :nome, value_method: :id %></td>
+          <td><%= f.association :veiculo, collection: Veiculo.where(ativo: true), label_method: :nome, value_method: :id %></td>
+          <td><%= f.input :valor_he, collection: [1.5, 1.7, 2.0] %></td>
+          <td><%= f.input :jornada_base, collection: [0, 9, 10] %></td>
+          <td><%= f.input :status, collection: ["Enviado", "Validado"] %></td>
+
+          <%= f.association :user, as: :hidden, input_html: { value: @funcionario.id } %>
+          <%= f.input :lancamento_manual, as: :hidden, input_html: { value: true } %>
+
+          <td><%= f.button :submit, "Confirmar" %></td>
+        <% end %>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table">
 
     <thead class="thead-dark">
       <tr>
@@ -20,6 +42,7 @@
         <th scope="col">Obra</th>
         <th scope="col">Veículo</th>
         <th scope="col">Valor H.E</th>
+        <th scope="col">Jornada Base</th>
         <th scope="col">Status</th>
       </tr>
     </thead>
@@ -62,6 +85,7 @@
             <td><%= "-" %></td>
             <td><%= "-" %></td>
             <td><%= "-" %></td>
+            <td><%= "-" %></td>
             <td><%= trab.status %></td>
           <% else %>
             <%= simple_form_for trab, url: admin_trabalho_path(trab) do |f| %>
@@ -75,6 +99,7 @@
               <td><%= f.association :veiculo, collection: Veiculo.where(ativo: true), label_method: :nome, value_method: :id %></td>
               <%= f.association :user, as: :hidden, input_html: { value: @funcionario.id } %>
               <td><%= f.input :valor_he, collection: [1.5, 1.7, 2.0] %></td>
+              <td><%= f.input :jornada_base, collection: [0, 9, 10] %></td>
               <td>
                 <%= trab.status %>
                 <br>

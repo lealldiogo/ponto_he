@@ -3,9 +3,11 @@ class Trabalho < ApplicationRecord
   belongs_to :obra, optional: true
   belongs_to :veiculo, optional: true
 
+  attr_accessor :lancamento_manual
+
   validates :data, presence: true
-  validates :data, uniqueness: { scope: :user }, unless: :multiplas_he?
-  validate :condicoes_data
+  validates :data, uniqueness: { scope: :user }, unless: :lancamento_manual # :multiplas_he?
+  validate :condicoes_data, unless: :lancamento_manual
 
   validates :obra, presence: true, unless: :sem_hora_extra?
   validates :veiculo, presence: true, unless: :sem_hora_extra?

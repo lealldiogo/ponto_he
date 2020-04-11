@@ -26,61 +26,80 @@
     </div>
     <% soma_total = 0 %>
     <% horas_totais = 0 %>
-    <% ((@periodo[1]-@periodo[0]).to_i + 1).times do |i| %>
-      <div class="dia-da-semana" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;">
-        <%= traduzir_dia((@periodo[1] - i).strftime("%a")) %>
-      </div>
-      <div class="dia-data" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;">
-        <%= (@periodo[1] - i).strftime("%d/%m") %>
-      </div>
+    <%  no_linhas = (@periodo[1]-@periodo[0]).to_i %>
+    <% i = 0 %>
+    <% while i < no_linhas do %>
+      <% if @funcionario.trabalhos.where(data: (@periodo[1] - i), sem_he: false, status: "Validado").empty? %>
       <%# byebug %>
-      <% if @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).nil? || @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).sem_he || @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).status != "Validado" %>
+      <%# if @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).nil? || @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).sem_he || @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).status != "Validado" %>
+        <div class="dia-da-semana" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;">
+          <%= traduzir_dia((@periodo[1] - i).strftime("%a")) %>
+        </div>
+        <div class="dia-data" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;">
+          <%= (@periodo[1] - i).strftime("%d/%m") %>
+        </div>
         <% 5.times do |c| %>
           <div class="celula-vazia" style="grid-row: <%= i + 5 %> / <%= i + 6 %>; grid-column: <%= 2*c + 3 %> / <%= 2*c + 5 %>;" >
             -
         </div>
         <% end %>
+        <% 2.times do |x| %>
+          <div class="celula-vazia" style="grid-row: <%= i + 5 %> / <%= i + 6 %>; grid-column: <%= 3*x + 13 %> / <%= 3*x + 16 %>;" >
+          </div>
+        <% end %>
+        <% i += 1 %>
       <% else %>
-        <% soma_dia = valor_he_dia(@funcionario, @funcionario.trabalhos.find_by(data: (@periodo[1] - i))) %>
-        <% jornada_he = @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).horas_extras %>
-        <div class="dia-entrada" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;" >
-          <%= @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).entrada.strftime("%H:%M") %>
-        </div>
-        <div class="dia-saida" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;" >
-          <%= @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).saida.strftime("%H:%M") %>
-        </div>
-        <div class="dia-he" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;" >
-          <%= jornada_he %>
-        </div>
-        <div class="dia-valor" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;" >
-          <%= humanized_money_with_symbol(soma_dia) %>
-        </div>
-        <div class="dia-obra" style="grid-row: <%= i + 5 %> / <%= i + 6 %>;" >
-          <%= @funcionario.trabalhos.find_by(data: (@periodo[1] - i)).obra.nome %>
-        </div>
-        <% horas_totais += jornada_he %>
-        <% soma_total += soma_dia %>
-      <% end %>
-      <% 2.times do |x| %>
-      <div class="celula-vazia" style="grid-row: <%= i + 5 %> / <%= i + 6 %>; grid-column: <%= 3*x + 13 %> / <%= 3*x + 16 %>;" >
-        </div>
+        <% no_mesmo_dia = @funcionario.trabalhos.where(data: (@periodo[1] - i), sem_he: false, status: "Validado").count %>
+        <% no_mesmo_dia.times do |t| %>
+          <div class="dia-da-semana" style="grid-row: <%= i + t + 5 %> / <%= i + t + 6 %>;">
+            <%= traduzir_dia((@periodo[1] - i).strftime("%a")) %>
+          </div>
+          <div class="dia-data" style="grid-row: <%= i + t + 5 %> / <%= i + t + 6 %>;">
+            <%= (@periodo[1] - i).strftime("%d/%m") %>
+          </div>
+          <% soma_dia = valor_he_dia(@funcionario, @funcionario.trabalhos.where(data: (@periodo[1] - i), sem_he: false, status: "Validado")[t]) %>
+          <% jornada_he = @funcionario.trabalhos.where(data: (@periodo[1] - i), sem_he: false, status: "Validado")[t].horas_extras %>
+          <div class="dia-entrada" style="grid-row: <%= i + t + 5 %> / <%= i + t + 6 %>;" >
+            <%= @funcionario.trabalhos.where(data: (@periodo[1] - i), sem_he: false, status: "Validado")[t].entrada.strftime("%H:%M") %>
+          </div>
+          <div class="dia-saida" style="grid-row: <%= i + t + 5 %> / <%= i + t + 6 %>;" >
+            <%= @funcionario.trabalhos.where(data: (@periodo[1] - i), sem_he: false, status: "Validado")[t].saida.strftime("%H:%M") %>
+          </div>
+          <div class="dia-he" style="grid-row: <%= i + t + 5 %> / <%= i + t + 6 %>;" >
+            <%= jornada_he %>
+          </div>
+          <div class="dia-valor" style="grid-row: <%= i + t + 5 %> / <%= i + t + 6 %>;" >
+            <%= humanized_money_with_symbol(soma_dia) %>
+          </div>
+          <div class="dia-obra" style="grid-row: <%= i + t + 5 %> / <%= i + t + 6 %>;" >
+            <%= @funcionario.trabalhos.where(data: (@periodo[1] - i), sem_he: false, status: "Validado")[t].obra.nome %>
+          </div>
+          <% horas_totais += jornada_he %>
+          <% soma_total += soma_dia %>
+          <% 2.times do |x| %>
+            <div class="celula-vazia" style="grid-row: <%= i + t + 5 %> / <%= i + t + 6 %>; grid-column: <%= 3*x + 13 %> / <%= 3*x + 16 %>;" >
+            </div>
+          <% end %>
+        <% end %>
+        <% i += no_mesmo_dia %>
+        <% no_linhas += no_mesmo_dia %>
       <% end %>
     <% end %>
-    <div class="valor-total" style="grid-row: <%= 6 + (@periodo[1]-@periodo[0]).to_i %> / <%= 7 + (@periodo[1]-@periodo[0]).to_i %>;">
+    <div class="valor-total" style="grid-row: <%= 6 + no_linhas %> / <%= 7 + no_linhas %>;">
       VALOR TOTAL
     </div>
     <% 3.times do |c| %>
-      <div class="celula-vazia" style="grid-row: <%= 6 + (@periodo[1]-@periodo[0]).to_i %> / <%= 7 + (@periodo[1]-@periodo[0]).to_i %>; grid-column: <%= 2*c + 3 %> / <%= 2*c + 5 %>;" >
+      <div class="celula-vazia" style="grid-row: <%= 6 + no_linhas %> / <%= 7 + no_linhas %>; grid-column: <%= 2*c + 3 %> / <%= 2*c + 5 %>;" >
       </div>
     <% end %>
-    <div class="celula-vazia" style="grid-row: <%= 6 + (@periodo[1]-@periodo[0]).to_i %> / <%= 7 + (@periodo[1]-@periodo[0]).to_i %>; grid-column: <%= 6 + 3 %> / <%= 6 + 5 %>;" >
+    <div class="celula-vazia" style="grid-row: <%= 6 + no_linhas %> / <%= 7 + no_linhas %>; grid-column: <%= 6 + 3 %> / <%= 6 + 5 %>;" >
       <%= horas_totais %>
     </div>
-    <div class="celula-vazia" style="grid-row: <%= 6 + (@periodo[1]-@periodo[0]).to_i %> / <%= 7 + (@periodo[1]-@periodo[0]).to_i %>; grid-column: <%= 8 + 3 %> / <%= 8 + 5 %>;" >
+    <div class="celula-vazia" style="grid-row: <%= 6 + no_linhas %> / <%= 7 + no_linhas %>; grid-column: <%= 8 + 3 %> / <%= 8 + 5 %>;" >
       <%= humanized_money_with_symbol(soma_total) %>
     </div>
     <% 2.times do |x| %>
-    <div class="celula-vazia" style="grid-row: <%= 6 + (@periodo[1]-@periodo[0]).to_i %> / <%= 7 + (@periodo[1]-@periodo[0]).to_i %>; grid-column: <%= 3*x + 13 %> / <%= 3*x + 16 %>;" >
+    <div class="celula-vazia" style="grid-row: <%= 6 + no_linhas %> / <%= 7 + no_linhas %>; grid-column: <%= 3*x + 13 %> / <%= 3*x + 16 %>;" >
       </div>
     <% end %>
     <div class="entrada">

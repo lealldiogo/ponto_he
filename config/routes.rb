@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   get "relatorios_todos", to: 'relatorios_flow#relatorios_todos'
   get "relatorios_equipe", to: 'relatorios_flow#relatorios_equipe'
 
-
+  post "admin_manual", to: 'trabalhos#admin_manual', as: :admin_manual
   post "set_trabalhos_equipes", to: 'trabalhos#set_trabalhos_equipes', as: :set_trabalhos_equipes
   post "set_trabalhos_funcionarios", to: 'trabalhos#set_trabalhos_funcionarios', as: :set_trabalhos_funcionarios
 

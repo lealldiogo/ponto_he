@@ -7,6 +7,7 @@ class TrabalhosController < ApplicationController
     if params[:commit] == "Relatório"
       redirect_to user_imprimivel_path(@funcionario, fim: params[:fim], inicio: params[:inicio])
     else
+      @trabalho_manual = Trabalho.new(user_id: @funcionario.id, status: "Pendente")
       periodo = params_para_data(params)
       @trabalhos = []
       ((periodo[1]-periodo[0]).to_i + 1).times do |i|
@@ -195,6 +196,25 @@ class TrabalhosController < ApplicationController
     end
   end
 
+  def admin_manual
+    @trabalho = Trabalho.new(admin_manual_params)
+    if @trabalho.save!
+      redirect_to trabalhos_funcionario_path(@trabalho.user), info: "Horas extras validadas com sucesso"
+      # if @trabalho.user.equipe == "Recife"
+      #   redirect_to recife_path, info: "Horas extras validadas com sucesso"
+      # else
+      #   redirect_to paraiba_path, info: "Horas extras validadas com sucesso"
+      # end
+    else
+      redirect_to trabalhos_funcionario_path(@trabalho.user), info: "Algo deu errado... por favor, tente de novo"
+      # if @trabalho.user.equipe == "Recife"
+      #   redirect_to recife_path, info: "Algo deu errado... por favor, tente de novo"
+      # else
+      #   redirect_to paraiba_path, info: "Algo deu errado... por favor, tente de novo"
+      # end
+    end
+  end
+
   private
 
   def user_trabalho_params
@@ -206,7 +226,7 @@ class TrabalhosController < ApplicationController
   end
 
   def admin_trabalho_params
-    params.require(:trabalho).permit(:data, :entrada, :saida, :user_id, :obra_id, :veiculo_id, :sem_he, :status)
+    params.require(:trabalho).permit(:data, :entrada, :saida, :user_id, :obra_id, :veiculo_id, :sem_he, :status, :valor_he, :jornada_base)
   end
 
   def ste_params
@@ -215,6 +235,10 @@ class TrabalhosController < ApplicationController
 
   def stf_params
     params.require(:set_trabalhos_funcionario).permit(:user_id, :inicio_periodo, :fim_periodo)
+  end
+
+  def admin_manual_params
+    params.require(:trabalho).permit(:data, :entrada, :saida, :user_id, :obra_id, :veiculo_id, :sem_he, :status, :valor_he, :jornada_base, :data, :lancamento_manual)
   end
 
 end
