@@ -4,24 +4,24 @@ class TrabalhosController < ApplicationController
 
   def trabalhos_funcionario
     @funcionario = User.find(params[:id])
-    if params[:commit] == "Relatório"
-      redirect_to user_imprimivel_path(@funcionario, fim: params[:fim], inicio: params[:inicio])
-    else
-      @trabalho_manual = Trabalho.new(user_id: @funcionario.id, status: "Pendente")
-      periodo = params_para_data(params)
-      @trabalhos = []
-      ((periodo[1]-periodo[0]).to_i + 1).times do |i|
-        # Ache ou crie um trabalho do usuário para a data
-        if Trabalho.exists?(data: periodo[1] - i, user_id: @funcionario.id)
-          query_trabalho = Trabalho.where(data: periodo[1] - i, user_id: @funcionario.id)
-          query_trabalho.each do |trabalho|
-            @trabalhos << trabalho
-          end
-        else
-          @trabalhos << Trabalho.new(data: periodo[1] - i, user_id: @funcionario.id, status: "Pendente")
+    # if params[:commit] == "Relatório"
+    #   redirect_to user_imprimivel_path(@funcionario, fim: params[:fim], inicio: params[:inicio])
+    # else
+    # end
+    @trabalho_manual = Trabalho.new(user_id: @funcionario.id, status: "Pendente")
+    periodo = params_para_data(params)
+    @trabalhos = []
+    ((periodo[1]-periodo[0]).to_i + 1).times do |i|
+      # Ache ou crie um trabalho do usuário para a data
+      if Trabalho.exists?(data: periodo[1] - i, user_id: @funcionario.id)
+        query_trabalho = Trabalho.where(data: periodo[1] - i, user_id: @funcionario.id)
+        query_trabalho.each do |trabalho|
+          @trabalhos << trabalho
         end
-        #@trabalhos << Trabalho.find_or_create_by(data: periodo[1] - i, user_id: @funcionario.id)
+      else
+        @trabalhos << Trabalho.new(data: periodo[1] - i, user_id: @funcionario.id, status: "Pendente")
       end
+      #@trabalhos << Trabalho.find_or_create_by(data: periodo[1] - i, user_id: @funcionario.id)
     end
   end
 
@@ -198,6 +198,8 @@ class TrabalhosController < ApplicationController
 
   def admin_manual
     @trabalho = Trabalho.new(admin_manual_params)
+    # aparentemente não precisou da linha abaixo
+    #Date.strptime(params[:fim], "%d/%m/%Y")
     if @trabalho.save!
       redirect_to trabalhos_funcionario_path(@trabalho.user), info: "Horas extras validadas com sucesso"
       # if @trabalho.user.equipe == "Recife"

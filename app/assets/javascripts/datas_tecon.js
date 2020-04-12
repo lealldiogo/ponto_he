@@ -1,6 +1,6 @@
 
 $(document).ready(function(){
-  $('.datas-tecon input').datepicker({
+  $('input.datas-tecon').datepicker({
     format: "dd/mm/yyyy",
     language: "pt-BR",
     autoclose: true

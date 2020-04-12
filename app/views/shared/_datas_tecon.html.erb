@@ -4,13 +4,13 @@
     <div class="col-xs-3 text-right">
       <p><strong>Filtrar datas</strong></p>
     </div>
-    <div class="col-xs-3 datas-tecon">
+    <div class="col-xs-3">
       <!-- <p>Início</p> -->
-      <input type="text" name="inicio" placeholder="Início" class="form-control">
+      <input type="text" name="inicio" placeholder="Início" class="datas-tecon form-control">
     </div>
     <div class="col-xs-3 datas-tecon">
       <!-- <p>Fim</p> -->
-      <input type="text" name="fim" placeholder="Fim" class="form-control">
+      <input type="text" name="fim" placeholder="Fim" class="datas-tecon form-control">
     </div>
     <% if ((cabecalho.present?) && (cabecalho != "FUNC")) %>
       <input type="hidden" name="cabecalho" value="<%= cabecalho %>" >
@@ -32,15 +32,16 @@
   <% end %>
 </div>
 <%#= javascript_include_tag 'datas_tecon' %>
-<script>
-  $(document).ready(function(){
-    $('.datas-tecon input').datepicker({
-      format: "dd/mm/yyyy",
-      language: "pt-BR",
-      autoclose: true
-    });
-  });
-</script>
+<!-- Já incluido no application.js -->
+<!-- <script>
+  // $(document).ready(function(){
+  //   $('input.datas-tecon').datepicker({
+  //     format: "dd/mm/yyyy",
+  //     language: "pt-BR",
+  //     autoclose: true
+  //   });
+  // });
+</script> -->
 
 <!--   <div class="row">
     <%#= form_tag apontamento_path, method: :get, class: "form-group" do %>
